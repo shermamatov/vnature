@@ -1,0 +1,51 @@
+<svg
+  width={177}
+  height={183}
+  viewBox="0 0 177 183"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  preserveAspectRatio="xMidYMid meet"
+>
+  <g filter="url(#filter0_d_662_9)">
+    <ellipse cx="88.5" cy={82} rx="83.5" ry={82} fill="#00499F" />
+    <path
+      d="M166 82C166 123.872 131.405 158 88.5 158C45.5949 158 11 123.872 11 82C11 40.1284 45.5949 6 88.5 6C131.405 6 166 40.1284 166 82Z"
+      stroke="#A0CCFF"
+      stroke-width={12}
+    />
+  </g>
+  <defs>
+    <filter
+      id="filter0_d_662_9"
+      x="0.2"
+      y={0}
+      width="176.6"
+      height="182.8"
+      filterUnits="userSpaceOnUse"
+      color-interpolation-filters="sRGB"
+    >
+      <feflood flood-opacity={0} result="BackgroundImageFix" />
+      <fecolormatrix
+        in="SourceAlpha"
+        type="matrix"
+        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+        result="hardAlpha"
+      />
+      <femorphology
+        radius={4}
+        operator="erode"
+        in="SourceAlpha"
+        result="effect1_dropShadow_662_9"
+      />
+      <feoffset dy={14} />
+      <fegaussianblur stdDeviation="4.4" />
+      <fecomposite in2="hardAlpha" operator="out" />
+      <fecolormatrix
+        type="matrix"
+        values="0 0 0 0 0.0375807 0 0 0 0 0.280352 0 0 0 0 0.751615 0 0 0 0.39 0"
+      />
+      <feblend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_662_9" />
+      <feblend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_662_9" result="shape" />
+    </filter>
+  </defs>
+</svg>
