@@ -18,30 +18,32 @@ const TourView = () => {
         beforeChange: (current, next) => {
             setActiveSlide(next);
         },
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    infinite: true,
+                    dots: true,
+                },
+            },
+        ],
         // afterChange: (current) => setActiveSlide(current),
     };
     return (
-        <div>
-            <div className="mt-10 rounded-[10px] font-montserrat bg-gradient-to-b from-[#bbd7f9] to-[#deedff]/40 border p-4">
-                <p className="text-lg text-left text-black">
-                    Окунитесь в волшебство природы озера Сары-Челек в
-                    Кыргызстане! Здесь, среди покачивающихся травяных полян, вас
-                    обволакивает свежий горный воздух, напоенный ароматами
-                    цветов. Озеро само по себе – это изумрудное зеркало,
-                    ласкающее взгляд своей невероятной чистотой и отражающее
-                    величественные вершины Тянь-Шаня. Живописные тропы вокруг
-                    приглашают на вдохновляющие прогулки, а закаты, окрашивающие
-                    небеса в оттенки огня, создают удивительную картину,
-                    запечатлеваемую в сердцах каждого путешественника. Освежите
-                    свой разум и душу этим райским уголком природы!
+        <div id="viewAnchor">
+            <div className="mt-4 md:mt-10 rounded-[10px] font-montserrat bg-gradient-to-b from-[#bbd7f9] to-[#deedff]/40 border p-4">
+                <p className="text-sm md:text-lg text-left text-black">
+                    {tour.description}
                 </p>
             </div>
             <div>
-                <div className="flex justify-between my-16">
+                <div className="flex flex-col md:flex-row justify-between my-8 md:my-16">
                     <p className="text-2xl font-semibold">
                         Впечатления этого путешествия
                     </p>
-                    <div className="flex items-center">
+                    <div className="md:flex hidden items-center mt-0">
                         <svg
                             className="cursor-pointer"
                             onClick={sliderRef?.slickPrev}
@@ -81,13 +83,49 @@ const TourView = () => {
                             />
                         </svg>
                     </div>
+                    <div className="flex md:hidden items-center mt-4">
+                        <svg
+                            width={24}
+                            height={22}
+                            onClick={sliderRef?.slickPrev}
+                            viewBox="0 0 17 16"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="flex-grow-0 flex-shrink-0 cursor-pointer"
+                            preserveAspectRatio="xMidYMid meet"
+                        >
+                            <path
+                                d="M16 9C16.5523 9 17 8.55228 17 8C17 7.44772 16.5523 7 16 7L16 9ZM0.292893 7.29289C-0.097631 7.68342 -0.0976311 8.31658 0.292893 8.70711L6.65685 15.0711C7.04738 15.4616 7.68054 15.4616 8.07107 15.0711C8.46159 14.6805 8.46159 14.0474 8.07107 13.6569L2.41421 8L8.07107 2.34315C8.46159 1.95262 8.46159 1.31946 8.07107 0.928931C7.68054 0.538407 7.04738 0.538407 6.65685 0.928931L0.292893 7.29289ZM16 7L1 7L1 9L16 9L16 7Z"
+                                fill="#5C91F3"
+                            />
+                        </svg>
+                        <p className="text-2xl text-[#00499f] font-semibold mx-8 noselect">
+                            {parseInt(activeSlide / 3 + 1)}/
+                            {tour.memories.length / 3}
+                        </p>
+                        <svg
+                            width={24}
+                            height={22}
+                            onClick={sliderRef?.slickNext}
+                            viewBox="0 0 17 16"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="flex-grow-0 flex-shrink-0 cursor-pointer"
+                            preserveAspectRatio="xMidYMid meet"
+                        >
+                            <path
+                                d="M1 7C0.447715 7 -4.82823e-08 7.44772 0 8C4.82823e-08 8.55228 0.447715 9 1 9L1 7ZM16.7071 8.70711C17.0976 8.31658 17.0976 7.68342 16.7071 7.29289L10.3431 0.928931C9.95262 0.538407 9.31946 0.538407 8.92893 0.928931C8.53841 1.31946 8.53841 1.95262 8.92893 2.34315L14.5858 8L8.92893 13.6569C8.53841 14.0474 8.53841 14.6805 8.92893 15.0711C9.31946 15.4616 9.95262 15.4616 10.3431 15.0711L16.7071 8.70711ZM1 9L16 9L16 7L1 7L1 9Z"
+                                fill="#00499F"
+                            />
+                        </svg>
+                    </div>
                 </div>
                 <Slider ref={setSliderRef} {...sliderSettings}>
                     {tour.memories.map((item, index) => (
                         <div key={index} className="px-2">
-                            <div className="w-[95%]  rounded-[10px] bg-[#e2effe]">
-                                <div className="p-4">
-                                    <p className="text-xl text-left text-black">
+                            <div className="w-[100%]  rounded-[10px] bg-[#e2effe]">
+                                <div className="p-2 md:p-4">
+                                    <p className="text-sm md:text-xl md:text-left text-left text-black">
                                         {item.memoriesTitle}
                                     </p>
                                 </div>

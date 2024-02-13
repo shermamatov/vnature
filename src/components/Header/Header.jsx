@@ -12,10 +12,10 @@ const Header = () => {
         <div className="overflow-hidden">
             <div
                 className={`${
-                    pathname !== "/"
+                    pathname !== "/" && pathname !== "/admin/add"
                         ? "bg-[#00499FA6]"
-                        : "backdrop-blur-sm backdrop-brightness-50 absolute z-20"
-                } flex items-center text-white w-[100%] h-24 z-10 `}
+                        : "backdrop-blur-sm backdrop-brightness-50 absolute z-30 "
+                } flex items-center text-white w-[100%] h-24 z-30`}
             >
                 <div className="content md:hidden flex justify-between items-center">
                     <img className="w-36" src={logo} alt="" />

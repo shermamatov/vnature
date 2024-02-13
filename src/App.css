@@ -15,6 +15,7 @@
     background-color: #00499f;
     border-radius: 2px;
 }
+
 .navPanel {
     position: sticky;
     top: 0px;
@@ -24,6 +25,17 @@
     z-index: 11;
 }
 
+.navPanel::-webkit-scrollbar {
+    width: 0px;
+    background: rgba(255, 255, 255, 0);
+}
+
 .whiteTextImportant li {
     color: white !important;
+}
+
+@media (max-width: 768px) {
+    .navPanel {
+        padding: 20px 0px 0px;
+    }
 }

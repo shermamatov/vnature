@@ -8,7 +8,7 @@ import whatsapp from "../../assets/whatsappBlackIcon.svg";
 import telegram from "../../assets/telegramBlackIcon.svg";
 const Footer = () => {
     return (
-        <div className="mt-40">
+        <div className="mt-40 relative z-20 bg-white py-8">
             <div className="content font-montserrat">
                 <div>
                     <img className="w-44 mob:w-52 md:w-64" src={logo} alt="" />
