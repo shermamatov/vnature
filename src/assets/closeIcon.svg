@@ -1,20 +1,4 @@
-import React from "react";
-
-const TourProgrammModal = ({ setProgrammState }) => {
-    return (
-        <div
-            onClick={() => setProgrammState(false)}
-            className="fixed top-0 bottom-0 left-0 right-0 backdrop-blur-sm backdrop-brightness-75 z-20 flex justify-center items-center"
-        >
-            <div
-                onClick={(e) => e.stopPropagation()}
-                className="max-w-screen-md w-[90%] bg-white rounded-lg p-6 "
-            >
-                <div className="flex justify-between">
-                    <h3 className="text-xl font-semibold text-left text-black">
-                        Программа может быть изменена
-                    </h3>
-                    <svg
+<svg
                         onClick={() => setProgrammState(false)}
                         width={20}
                         height={20}
@@ -51,15 +35,3 @@ const TourProgrammModal = ({ setProgrammState }) => {
                             />
                         </defs>
                     </svg>
-                </div>
-                <hr className="my-4" />
-                <p>
-                    Маршрут может измениться из - за погоды и других
-                    непридвиденных внешних обстоятельтсв
-                </p>
-            </div>
-        </div>
-    );
-};
-
-export default TourProgrammModal;

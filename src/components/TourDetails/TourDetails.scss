@@ -11,3 +11,52 @@
     -ms-user-select: none;
     user-select: none;
 }
+
+.form_shadow {
+    box-shadow: 1px 10px 35px 0 rgba(0, 73, 159, 0.36);
+    background: #fff;
+}
+
+.tableSection {
+    width: 10%;
+    aspect-ratio: 1/1;
+    height: auto;
+    border: 1px solid #00499f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: 500;
+}
+
+@media (max-width: 1200px) {
+    .tableSection {
+        font-size: 14px;
+    }
+    .tableSection2 {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 920px) {
+    .tableSection {
+        font-size: 12px;
+    }
+    .tableSection2 {
+        font-size: 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    .tableSection {
+        font-size: 10px;
+    }
+    .tableSection2 {
+        font-size: 5px;
+    }
+    .avatar_parent > .MuiAvatar-root {
+        width: 30px;
+        height: 30px;
+        font-size: 0.75rem;
+    }
+}

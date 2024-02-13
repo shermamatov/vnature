@@ -9,7 +9,7 @@ const Block3 = () => {
                 Наши туры
             </h2>
             <div className="mt-16">
-                <div className="content grid grid-cols-2 gap-8">
+                <div className="content grid grid-cols-1 md:grid-cols-2 gap-8">
                     {tours.map((item, index) => (
                         <TourCard key={index} item={item} />
                     ))}

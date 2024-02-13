@@ -1,21 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { tour } from "../../../consts";
 
-const TourProgrammModal = ({ setProgrammState }) => {
+const PriceModal = ({ setModal }) => {
+    let [arr, setArr] = useState([]);
+    useEffect(() => {
+        let arr2 = [];
+        for (let i in tour.price) {
+            arr2.push(tour.price[i]);
+        }
+        setArr(arr2);
+    }, []);
     return (
-        <div
-            onClick={() => setProgrammState(false)}
-            className="fixed top-0 bottom-0 left-0 right-0 backdrop-blur-sm backdrop-brightness-75 z-20 flex justify-center items-center"
-        >
-            <div
-                onClick={(e) => e.stopPropagation()}
-                className="max-w-screen-md w-[90%] bg-white rounded-lg p-6 "
-            >
+        <div>
+            <div className="w-[90vw] m-auto bg-white rounded-lg p-6 ">
                 <div className="flex justify-between">
-                    <h3 className="text-xl font-semibold text-left text-black">
-                        Программа может быть изменена
-                    </h3>
+                    <p className="mb-8 text-3xl font-semibold">
+                        Цены в долларах США
+                    </p>
                     <svg
-                        onClick={() => setProgrammState(false)}
+                        onClick={() => setModal(false)}
                         width={20}
                         height={20}
                         viewBox="0 0 20 20"
@@ -52,14 +55,31 @@ const TourProgrammModal = ({ setProgrammState }) => {
                         </defs>
                     </svg>
                 </div>
-                <hr className="my-4" />
-                <p>
-                    Маршрут может измениться из - за погоды и других
-                    непридвиденных внешних обстоятельтсв
-                </p>
+                <div className="rounded-sm border border-[#00499f]">
+                    <div className="flex justify-between">
+                        <div className="tableSection tableSection2">
+                            Количество людей
+                        </div>
+                        {arr.map((item, index) => (
+                            <div className="tableSection" key={index}>
+                                {index + 1}
+                            </div>
+                        ))}
+                    </div>
+                    <div className="flex justify-between">
+                        <div className="tableSection tableSection2">
+                            Цена за человека
+                        </div>
+                        {arr.map((item, index) => (
+                            <div className="tableSection" key={index}>
+                                {item}
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         </div>
     );
 };
 
-export default TourProgrammModal;
+export default PriceModal;
