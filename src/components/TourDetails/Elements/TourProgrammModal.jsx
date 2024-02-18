@@ -1,6 +1,8 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const TourProgrammModal = ({ setProgrammState }) => {
+    let lang = useSelector((item) => item.tours.lang);
     return (
         <div
             onClick={() => setProgrammState(false)}
@@ -11,8 +13,10 @@ const TourProgrammModal = ({ setProgrammState }) => {
                 className="max-w-screen-md w-[90%] bg-white rounded-lg p-6 "
             >
                 <div className="flex justify-between">
-                    <h3 className="text-xl font-semibold text-left text-black">
-                        Программа может быть изменена
+                    <h3 className="text-base md:text-xl font-semibold text-left text-black">
+                        {lang === "rus"
+                            ? "Программа может быть изменена"
+                            : "The program may be modified"}
                     </h3>
                     <svg
                         onClick={() => setProgrammState(false)}
@@ -25,7 +29,7 @@ const TourProgrammModal = ({ setProgrammState }) => {
                         className="w-5 h-5 relative cursor-pointer"
                         preserveAspectRatio="none"
                     >
-                        <g clip-path="url(#clip0_2304_661)">
+                        <g clipPath="url(#clip0_2304_661)">
                             <path d="M20 0H0V20H20V0Z" fill="url(#pattern0)" />
                         </g>
                         <defs>
@@ -52,10 +56,11 @@ const TourProgrammModal = ({ setProgrammState }) => {
                         </defs>
                     </svg>
                 </div>
-                <hr className="my-4" />
+                <hr className="my-4 text-xs md:text-sm" />
                 <p>
-                    Маршрут может измениться из - за погоды и других
-                    непридвиденных внешних обстоятельтсв
+                    {lang === "rus"
+                        ? "Маршрут может измениться из - за погоды и других непридвиденных внешних обстоятельтсв"
+                        : "The route may change due to - weather and other unproven external circumstances"}
                 </p>
             </div>
         </div>

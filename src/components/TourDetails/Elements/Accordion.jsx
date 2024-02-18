@@ -4,14 +4,17 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "../TourDetails.scss";
+import { useSelector } from "react-redux";
 export default function AccordionElement({
     item,
+    itemEng = null,
     isModal = false,
     setModal = null,
     setOneItem = null,
+    setOneItemEng = null,
 }) {
     const [expanded, setExpanded] = React.useState(false);
-
+    let lang = useSelector((item) => item.tours.lang);
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     };
@@ -37,8 +40,8 @@ export default function AccordionElement({
                         {/* <div className="rounded-[8px] text-[8px] md:text-sm bg-[#177aee] md:py-2 py-1 md:px-8 px-3 text-white">
                             День {item?.day}
                         </div> */}
-                        <button className="rounded-[8px] text-[8px] h-6 w-16 bg-[#177aee] text-white">
-                            День {item?.day}
+                        <button className="rounded-[8px] text-[8px] md:text-[12px] h-6 md:h-8 md:w-20 w-16 bg-[#177aee] text-white">
+                            {lang === "rus" ? "День" : "Day"} {item?.day}
                         </button>
                         <div className="text-xs md:text-lg text-black ml-4 md:ml-8">
                             {item?.dayTitle}
@@ -50,6 +53,7 @@ export default function AccordionElement({
                                         e.stopPropagation();
                                         setModal(true);
                                         setOneItem(item);
+                                        setOneItemEng(itemEng);
                                     }}
                                     className="px-4 bg-purple-500 text-white rounded-md ml-4 h-full"
                                 >

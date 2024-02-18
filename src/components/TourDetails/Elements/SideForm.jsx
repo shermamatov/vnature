@@ -1,16 +1,19 @@
 import React from "react";
-import { tour } from "../../../consts";
+import { useSelector } from "react-redux";
+import { translateLevel } from "../../../store/reducers/tourReducer";
+// import { tour } from "../../../consts";
 
-const SideForm = ({ setModal }) => {
+const SideForm = ({ setPriceModal, tour }) => {
+    let lang = useSelector((item) => item.tours.lang);
     return (
         <div className="md:sticky top-8">
             <div
-                onClick={() => setModal(true)}
+                onClick={() => setPriceModal(true)}
                 className="flex justify-end cursor-pointer"
             >
                 <div className="flex justify-center items-center relative gap-2.5 w-[70%] py-3 rounded-[10px] bg-[#00499f]">
                     <p className="flex-grow-0 flex-shrink-0 text-lg font-normal font-montserrat text-center text-white">
-                        $ Цена тура
+                        $ {lang === "rus" ? "Цена тура" : "Tour price"}
                     </p>
                 </div>
             </div>
@@ -28,9 +31,11 @@ const SideForm = ({ setModal }) => {
                                 "linear-gradient(to bottom, #cbe3ff 24.9%, #a0ccff 97.9%)",
                         }}
                     >
-                        <p className="text-lg text-left text-black">Дней</p>
+                        <p className="text-lg text-left text-black">
+                            {lang === "rus" ? "Дней" : "Days"}
+                        </p>
                         <p className="text-xl text-left text-black">
-                            {tour.daysCount}
+                            {tour?.daysCount}
                         </p>
                     </div>
                     <div
@@ -40,37 +45,45 @@ const SideForm = ({ setModal }) => {
                                 "linear-gradient(to bottom, #cbe3ff 24.9%, #a0ccff 97.9%)",
                         }}
                     >
-                        <p className="text-lg text-left text-black">Возраст</p>
+                        <p className="text-lg text-left text-black">
+                            {lang === "rus" ? "Возраст" : "Age"}
+                        </p>
                         <p className="text-xl text-left text-black">
-                            от {tour.age}
+                            {lang === "rus" ? "от" + tour?.age : tour?.age}
                         </p>
                     </div>
                     <div className=" aspect-[14/9] p-3 rounded-[10px] flex flex-col justify-between border-2 border-[#99c8ff]">
                         <p className="text-lg text-left text-[#00499f]">
-                            Сложность
+                            {lang === "rus" ? "Сложность" : "Level"}
                         </p>
                         <p className="text-xl font-medium text-left text-[#00499f]">
-                            {tour.level}
+                            {lang === "rus"
+                                ? tour?.level
+                                : translateLevel(tour?.level)}
                         </p>
                     </div>
                 </div>
                 <p className="text-lg text-start font-medium my-8 text-black">
-                    Заезд
+                    {lang === "rus" ? "Заезд" : "Arrival"}
                 </p>
                 <input
                     className="border-2 rounded-sm w-full h-12 pl-2 border-[#99c8ff]"
                     type="text"
-                    placeholder="заявка"
+                    placeholder={`${lang === "rus" ? "заявка" : "request"}`}
                 />
                 <button className="bg-[#00499f] w-full h-12 text-white text-xl font-normal mt-4">
-                    Оставить заявку
+                    {lang === "rus" ? "Оставить заявку" : "Leave a request"}
                 </button>
                 <p className="text-base my-4 text-center text-black">
-                    не требует оплаты сейчас
+                    {lang === "rus"
+                        ? "Не требует оплаты сейчас"
+                        : "Does not require payment now"}
                 </p>
             </div>
             <p className="text-lg text-center text-[#00499f] mt-6">
-                Задать вопрос в WhatsApp
+                {lang === "rus"
+                    ? "Задать вопрос в WhatsApp"
+                    : "Ask a question in WhatsApp"}
             </p>
         </div>
     );

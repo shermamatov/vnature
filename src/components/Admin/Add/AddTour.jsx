@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from "react";
-import "./Admin.css";
+import "../Admin.css";
 import {
     deleteObject,
     getDownloadURL,
     ref,
     uploadBytesResumable,
 } from "firebase/storage";
-// import { storage } from "../fire";
 import { useDispatch } from "react-redux";
-// import { addTour } from "../store/reducers/tourReducer";
-import { storage } from "../../fire";
-import { addTour } from "../../store/reducers/tourReducer";
-import AddMemoriesModal from "../elements/AddMemoriesModal";
-import EditMemoriesModal from "../elements/EditMemoriesModal";
-import AccordionElement2 from "../TourDetails/Elements/AccordionElement2";
-import AddModal from "../elements/AddModal";
-import EditModal from "../elements/EditModal";
-import AccordionElement from "../TourDetails/Elements/Accordion";
+import { storage } from "../../../fire";
+import { addTour, deleteFile } from "../../../store/reducers/tourReducer";
+import AddMemoriesModal from "../../elements/AddMemoriesModal";
+import EditMemoriesModal from "../../elements/EditMemoriesModal";
+import AccordionElement2 from "../../TourDetails/Elements/AccordionElement2";
+import AddModal from "../../elements/AddModal";
+import EditModal from "../../elements/EditModal";
+import AccordionElement from "../../TourDetails/Elements/Accordion";
+import { months } from "../../../consts";
+import { useNavigate } from "react-router-dom";
+
 const AddTour = () => {
     let [inputCount, setInputCount] = useState([1, 1, 1, 1, 1, 1]);
     let [memoriesModal, setMemoriesModal] = useState(false);
@@ -25,22 +26,30 @@ const AddTour = () => {
     let [importantModalEdit, setImportantModalEdit] = useState(false);
     let [dayModalEdit, setDayModalEdit] = useState(false);
     let dispatch = useDispatch();
+    let navigate = useNavigate();
     // ! modal states
     let [oneMemories, setOneMemories] = useState({});
+    let [oneMemoriesEng, setOneMemoriesEng] = useState({});
     let [oneImportant, setOneImportant] = useState({});
+    let [oneImportantEng, setOneImportantEng] = useState({});
     let [oneDay, setOneDay] = useState({});
+    let [oneDayEng, setOneDayEng] = useState({});
     // ! data states
     let [title, setTitle] = useState("");
-    let [level, setLevel] = useState("");
+    let [titleEng, setTitleEng] = useState("");
+    let [slogan, setSlogan] = useState("");
+    let [sloganEng, setSloganEng] = useState("");
+    let [description, setDescription] = useState("");
+    let [descriptionEng, setDescriptionEng] = useState("");
+    let [level, setLevel] = useState("средняя");
     let [days, setDays] = useState(1);
     let [cardImg, setCardImg] = useState("");
-    let [description, setDescription] = useState("");
     let [galery, setGalery] = useState([null, null, null, null, null, null]);
     let [programmDesc, setProgrammDesc] = useState("");
+    let [programmDescEng, setProgrammDescEng] = useState("");
     let [age, setAge] = useState(7);
-    let [slogan, setSlogan] = useState("");
-    let [month1, setMonth1] = useState(5);
-    let [month2, setMonth2] = useState(8);
+    let [month1, setMonth1] = useState("1");
+    let [month2, setMonth2] = useState("3");
     let [price1, setPrice1] = useState(0);
     let [price2, setPrice2] = useState(0);
     let [price3, setPrice3] = useState(0);
@@ -51,24 +60,55 @@ const AddTour = () => {
     let [price8, setPrice8] = useState(0);
     let [price9, setPrice9] = useState(0);
     let [price10, setPrice10] = useState(0);
-    let [memories, setMemories] = useState([]);
-    let [important, setImportant] = useState([]);
-    let [programmDays, setProgrammDays] = useState([]);
     let [include, setInclude] = useState("");
+    let [includeEng, setIncludeEng] = useState("");
     let [notInclude, setNotInclude] = useState("");
+    let [notIncludeEng, setNotIncludeEng] = useState("");
+    let [memories, setMemories] = useState([]);
+    let [memoriesEng, setMemoriesEng] = useState([]);
+
+    let [important, setImportant] = useState([]);
+    let [importantEng, setImportantEng] = useState([]);
+
+    let [programmDays, setProgrammDays] = useState([]);
+    let [programmDaysEng, setProgrammDaysEng] = useState([]);
     const [uploadProgress, setUploadProgress] = useState(null);
 
-    function deleteFile(deleteItem) {
-        const deleteRef = ref(storage, deleteItem);
-        deleteObject(deleteRef)
-            .then(() => {
-                console.log("удалено");
-                // File deleted successfully
-            })
-            .catch((error) => {
-                console.log("ОШИБКА" + error);
-                // Uh-oh, an error occurred!
-            });
+    function dataCheck() {
+        if (
+            title &&
+            titleEng &&
+            slogan &&
+            sloganEng &&
+            description &&
+            descriptionEng &&
+            level &&
+            days &&
+            cardImg &&
+            galery[0] !== null &&
+            galery[1] !== null &&
+            galery[2] !== null &&
+            galery[3] !== null &&
+            galery[4] !== null &&
+            galery[5] !== null &&
+            programmDesc &&
+            programmDescEng &&
+            age &&
+            include &&
+            notInclude &&
+            includeEng &&
+            notIncludeEng &&
+            memories.length !== 0 &&
+            memoriesEng.length !== 0 &&
+            importantEng.length !== 0 &&
+            importantEng.length !== 0 &&
+            programmDays.length !== 0 &&
+            programmDaysEng.length !== 0
+        ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     const uploadFile = (
@@ -175,19 +215,12 @@ const AddTour = () => {
         let filtredGalery = [...galery]?.filter((item) => item !== null);
         let obj = {
             title,
+            titleEng,
             slogan,
-            cardImg,
+            sloganEng,
             daysCount: days,
             level,
             age,
-            galery: filtredGalery,
-            description,
-            programmDescription: programmDesc,
-            programmDays: programmDays,
-            include,
-            notInclude,
-            reviews: [],
-            important,
             season: { start: month1, end: month2 },
             price: {
                 price1,
@@ -201,10 +234,30 @@ const AddTour = () => {
                 price9,
                 price10,
             },
+            mainImg: cardImg,
+            galery: filtredGalery,
+            description,
+            descriptionEng,
+            programmDescription: programmDesc,
+            programmDescriptionEng: programmDescEng,
+            programmDays,
+            programmDaysEng,
+            include,
+            includeEng,
+            notInclude,
+            notIncludeEng,
+            important,
+            importantEng,
             memories,
+            memoriesEng,
+            reviews: [],
         };
-        console.log(obj);
-        // dispatch(addTour(obj));
+        try {
+            dispatch(addTour(obj));
+            navigate("/admin");
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     function addMemories(memoriesTitle, memoriesImage) {
@@ -215,9 +268,19 @@ const AddTour = () => {
         });
         setMemories(psevdoMemoriesArr);
     }
-
+    function addMemoriesEng(memoriesTitle, memoriesImage) {
+        let psevdoMemoriesArr = [...memoriesEng];
+        psevdoMemoriesArr.push({
+            memoriesTitle: memoriesTitle,
+            memoriesImage: memoriesImage,
+        });
+        setMemoriesEng(psevdoMemoriesArr);
+    }
     function deleteMemories(index) {
         let psevdoMemoriesArr = memories.filter(
+            (item, itemIndex) => itemIndex !== index
+        );
+        let psevdoMemoriesArrEng = memoriesEng.filter(
             (item, itemIndex) => itemIndex !== index
         );
         let deleteItem = memories.find(
@@ -225,12 +288,17 @@ const AddTour = () => {
         );
         deleteFile(deleteItem.memoriesImage);
         setMemories(psevdoMemoriesArr);
+        setMemoriesEng(psevdoMemoriesArrEng);
     }
-
     function editMemories(item, index) {
         let psevdoMemoriesArr = [...memories];
         psevdoMemoriesArr.splice(index, 1, item);
         setMemories(psevdoMemoriesArr);
+    }
+    function editMemoriesEng(item, index) {
+        let psevdoMemoriesArr = [...memoriesEng];
+        psevdoMemoriesArr.splice(index, 1, item);
+        setMemoriesEng(psevdoMemoriesArr);
     }
 
     function addImportant(importantTitle, importantDesc) {
@@ -241,24 +309,47 @@ const AddTour = () => {
         });
         setImportant(psevdoImportant);
     }
+    function addImportantEng(importantTitle, importantDesc) {
+        let psevdoImportant = [...importantEng];
+        psevdoImportant.push({
+            importantTitle,
+            importantDesc,
+        });
+        setImportantEng(psevdoImportant);
+    }
 
     function editImportant(item, index) {
         let psevdoImportant = [...important];
         psevdoImportant.splice(index, 1, item);
         setImportant(psevdoImportant);
     }
+    function editImportantEng(item, index) {
+        let psevdoImportant = [...importantEng];
+        psevdoImportant.splice(index, 1, item);
+        setImportantEng(psevdoImportant);
+    }
 
     function deleteImportant(index) {
         let psevdoImportant = important.filter(
             (item, itemIndex) => itemIndex !== index
         );
+        let psevdoImportantEng = importantEng.filter(
+            (item, itemIndex) => itemIndex !== index
+        );
         setImportant(psevdoImportant);
+        setImportantEng(psevdoImportantEng);
     }
 
     function editProgrammDay(item, index) {
         let psevdoDay = [...programmDays];
         psevdoDay.splice(index, 1, item);
         setProgrammDays(psevdoDay);
+    }
+
+    function editProgrammDayEng(item, index) {
+        let psevdoDay = [...programmDaysEng];
+        psevdoDay.splice(index, 1, item);
+        setProgrammDaysEng(psevdoDay);
     }
 
     useEffect(() => {
@@ -271,24 +362,10 @@ const AddTour = () => {
                     day: i + 1,
                 });
                 setProgrammDays(psevdo);
+                setProgrammDaysEng(psevdo);
             }
         }
     }, [days]);
-
-    let months = [
-        "Январь",
-        "Февраль",
-        "Март",
-        "Апрель",
-        "Май",
-        "Июнь",
-        "Июль",
-        "Август",
-        "Сентябрь",
-        "Октябрь",
-        "Ноябрь",
-        "Декабрь",
-    ];
 
     return (
         <div>
@@ -300,9 +377,10 @@ const AddTour = () => {
             {memoriesModal && (
                 <div
                     onClick={() => setMemoriesModal(false)}
-                    className="fixed z-20 top-0 bottom-0 left-0 right-0 backdrop-blur-sm flex justify-center items-center"
+                    className="fixed z-20 top-0 bottom-0 left-0 right-0 backdrop-blur-sm flex justify-center"
                 >
                     <AddMemoriesModal
+                        addMemoriesEng={addMemoriesEng}
                         uploadFile={uploadFile}
                         setMemoriesModal={setMemoriesModal}
                         addMemories={addMemories}
@@ -315,10 +393,12 @@ const AddTour = () => {
                     className="fixed z-20 top-0 bottom-0 left-0 right-0 backdrop-blur-sm flex justify-center items-center"
                 >
                     <EditMemoriesModal
+                        editMemoriesEng={editMemoriesEng}
                         uploadFile={uploadFile}
                         setMemoriesModal={setMemoriesModalEdit}
                         editMemories={editMemories}
                         oneMemories={oneMemories}
+                        oneMemoriesEng={oneMemoriesEng}
                     />
                 </div>
             )}
@@ -327,7 +407,11 @@ const AddTour = () => {
                     onClick={() => setImportantModal(false)}
                     className="fixed z-20 top-0 bottom-0 left-0 right-0 backdrop-blur-sm flex justify-center items-center"
                 >
-                    <AddModal add={addImportant} setModal={setImportantModal} />
+                    <AddModal
+                        addEng={addImportantEng}
+                        add={addImportant}
+                        setModal={setImportantModal}
+                    />
                 </div>
             )}
             {importantModalEdit && (
@@ -336,6 +420,8 @@ const AddTour = () => {
                     className="fixed z-20 top-0 bottom-0 left-0 right-0 backdrop-blur-sm flex justify-center items-center"
                 >
                     <EditModal
+                        oneItemEng={oneImportantEng}
+                        editFunctionEng={editImportantEng}
                         editFunction={editImportant}
                         oneItem={oneImportant}
                         setModal={setImportantModalEdit}
@@ -350,7 +436,9 @@ const AddTour = () => {
                 >
                     <EditModal
                         editFunction={editProgrammDay}
+                        editFunctionEng={editProgrammDayEng}
                         oneItem={oneDay}
+                        oneItemEng={oneDayEng}
                         setModal={setDayModalEdit}
                         isDay={true}
                     />
@@ -368,12 +456,20 @@ const AddTour = () => {
                         >
                             название тура
                         </label>
-                        <input
-                            onChange={(e) => setTitle(e.target.value)}
-                            placeholder="название тура"
-                            className="input"
-                            type="text"
-                        />
+                        <div className="grid md:gap-2 grid-cols-1 md:grid-cols-2">
+                            <input
+                                onChange={(e) => setTitle(e.target.value)}
+                                placeholder="название тура на русском"
+                                className="input"
+                                type="text"
+                            />
+                            <input
+                                onChange={(e) => setTitleEng(e.target.value)}
+                                placeholder="название тура на английском"
+                                className="input"
+                                type="text"
+                            />
+                        </div>
                     </div>
                     <div className="mt-2 p-2 backdrop-blur-sm">
                         <label
@@ -382,12 +478,20 @@ const AddTour = () => {
                         >
                             слоган
                         </label>
-                        <input
-                            onChange={(e) => setSlogan(e.target.value)}
-                            placeholder="слоган тура"
-                            className="input"
-                            type="text"
-                        />
+                        <div className="grid md:gap-2 grid-cols-1 md:grid-cols-2">
+                            <input
+                                onChange={(e) => setSlogan(e.target.value)}
+                                placeholder="слоган тура на русском"
+                                className="input"
+                                type="text"
+                            />
+                            <input
+                                onChange={(e) => setSloganEng(e.target.value)}
+                                placeholder="слоган тура на английском"
+                                className="input"
+                                type="text"
+                            />
+                        </div>
                     </div>
                     <div className="mt-2 p-2 backdrop-blur-sm">
                         <label
@@ -400,7 +504,7 @@ const AddTour = () => {
                             onChange={(e) => setDays(e.target.value)}
                             placeholder="количество дней"
                             className="input"
-                            type="text"
+                            type="number"
                         />
                     </div>
                     <div className="mt-2 p-2 backdrop-blur-sm">
@@ -455,7 +559,7 @@ const AddTour = () => {
                         >
                             сезонность тура
                         </label>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-2">
                             <select
                                 // defaultValue={month1}
                                 onChange={(e) => setMonth1(e.target.value)}
@@ -487,66 +591,68 @@ const AddTour = () => {
                         >
                             цена тура пишите в числах
                         </label>
-                        <input
-                            onChange={(e) => setPrice1(e.target.value)}
-                            placeholder="цена за 1 человека"
-                            className="input"
-                            type="number"
-                        />
-                        <input
-                            onChange={(e) => setPrice2(e.target.value)}
-                            placeholder="цена за 2 человека"
-                            className="input"
-                            type="number"
-                        />
-                        <input
-                            onChange={(e) => setPrice3(e.target.value)}
-                            placeholder="цена за 3 человека"
-                            className="input"
-                            type="number"
-                        />
-                        <input
-                            onChange={(e) => setPrice4(e.target.value)}
-                            placeholder="цена за 4 человека"
-                            className="input"
-                            type="number"
-                        />
-                        <input
-                            onChange={(e) => setPrice5(e.target.value)}
-                            placeholder="цена за 5 человек"
-                            className="input"
-                            type="number"
-                        />
-                        <input
-                            onChange={(e) => setPrice6(e.target.value)}
-                            placeholder="цена за 6 человек"
-                            className="input"
-                            type="number"
-                        />
-                        <input
-                            onChange={(e) => setPrice7(e.target.value)}
-                            placeholder="цена за 7 человек"
-                            className="input"
-                            type="number"
-                        />
-                        <input
-                            onChange={(e) => setPrice8(e.target.value)}
-                            placeholder="цена за 8 человек"
-                            className="input"
-                            type="number"
-                        />
-                        <input
-                            onChange={(e) => setPrice9(e.target.value)}
-                            placeholder="цена за 9 человек"
-                            className="input"
-                            type="number"
-                        />
-                        <input
-                            onChange={(e) => setPrice10(e.target.value)}
-                            placeholder="цена за 10 человек"
-                            className="input"
-                            type="number"
-                        />
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-1">
+                            <input
+                                onChange={(e) => setPrice1(e.target.value)}
+                                placeholder="цена за 1 человека"
+                                className="input"
+                                type="number"
+                            />
+                            <input
+                                onChange={(e) => setPrice2(e.target.value)}
+                                placeholder="цена за 2 человека"
+                                className="input"
+                                type="number"
+                            />
+                            <input
+                                onChange={(e) => setPrice3(e.target.value)}
+                                placeholder="цена за 3 человека"
+                                className="input"
+                                type="number"
+                            />
+                            <input
+                                onChange={(e) => setPrice4(e.target.value)}
+                                placeholder="цена за 4 человека"
+                                className="input"
+                                type="number"
+                            />
+                            <input
+                                onChange={(e) => setPrice5(e.target.value)}
+                                placeholder="цена за 5 человек"
+                                className="input"
+                                type="number"
+                            />
+                            <input
+                                onChange={(e) => setPrice6(e.target.value)}
+                                placeholder="цена за 6 человек"
+                                className="input"
+                                type="number"
+                            />
+                            <input
+                                onChange={(e) => setPrice7(e.target.value)}
+                                placeholder="цена за 7 человек"
+                                className="input"
+                                type="number"
+                            />
+                            <input
+                                onChange={(e) => setPrice8(e.target.value)}
+                                placeholder="цена за 8 человек"
+                                className="input"
+                                type="number"
+                            />
+                            <input
+                                onChange={(e) => setPrice9(e.target.value)}
+                                placeholder="цена за 9 человек"
+                                className="input"
+                                type="number"
+                            />
+                            <input
+                                onChange={(e) => setPrice10(e.target.value)}
+                                placeholder="цена за 10 человек"
+                                className="input"
+                                type="number"
+                            />
+                        </div>
                     </div>
                     <div className="mt-2 p-4 backdrop-blur-sm flex flex-col items-center">
                         <label
@@ -608,11 +714,20 @@ const AddTour = () => {
                         >
                             описание тура
                         </label>
-                        <textarea
-                            onChange={(e) => setDescription(e.target.value)}
-                            placeholder="описание тура"
-                            className="inputArea h-[200px]"
-                        ></textarea>
+                        <div className="grid md:gap-2 grid-cols-1 md:grid-cols-2">
+                            <textarea
+                                onChange={(e) => setDescription(e.target.value)}
+                                placeholder="описание тура на русском"
+                                className="inputArea h-[200px]"
+                            ></textarea>
+                            <textarea
+                                onChange={(e) =>
+                                    setDescriptionEng(e.target.value)
+                                }
+                                placeholder="описание тура на английсокм"
+                                className="inputArea h-[200px]"
+                            ></textarea>
+                        </div>
                     </div>
                     <div className="mt-2 p-2 shadowInput backdrop-blur-sm">
                         <label
@@ -697,13 +812,26 @@ const AddTour = () => {
                             className="input"
                             type="text"
                         /> */}
-                        <textarea
-                            onChange={(e) => setProgrammDesc(e.target.value)}
-                            placeholder="описание программы"
-                            id="programmDesc"
-                            className="inputArea h-[200px] text-xs sm:text-base"
-                            type="text"
-                        ></textarea>
+                        <div className="grid md:gap-2 grid-cols-1 md:grid-cols-2">
+                            <textarea
+                                onChange={(e) =>
+                                    setProgrammDesc(e.target.value)
+                                }
+                                placeholder="описание программы на русском"
+                                id="programmDesc"
+                                className="inputArea h-[200px] text-xs sm:text-base"
+                                type="text"
+                            ></textarea>
+                            <textarea
+                                onChange={(e) =>
+                                    setProgrammDescEng(e.target.value)
+                                }
+                                placeholder="описание программы на английском"
+                                id="programmDesc"
+                                className="inputArea h-[200px] text-xs sm:text-base"
+                                type="text"
+                            ></textarea>
+                        </div>
                     </div>
                     <div className="mt-2 p-2 shadowInput backdrop-blur-sm">
                         <label
@@ -728,6 +856,11 @@ const AddTour = () => {
                                 isModal={true}
                                 setModal={setDayModalEdit}
                                 setOneItem={setOneDay}
+                                setOneItemEng={setOneDayEng}
+                                itemEng={{
+                                    ...programmDaysEng[index],
+                                    id: index,
+                                }}
                             />
                         ))}
                     </div>
@@ -746,6 +879,8 @@ const AddTour = () => {
                                 deleteFunction={deleteImportant}
                                 setModal={setImportantModalEdit}
                                 setOneItem={setOneImportant}
+                                setOneItemEng={setOneImportantEng}
+                                itemEng={{ ...importantEng[index], id: index }}
                                 isModal={true}
                             />
                         ))}
@@ -765,11 +900,18 @@ const AddTour = () => {
                         >
                             включено в стоимость тура
                         </label>
-                        <textarea
-                            onChange={(e) => setInclude(e.target.value)}
-                            placeholder="включено в стоимость..."
-                            className="inputArea"
-                        ></textarea>
+                        <div className="grid md:gap-2 grid-cols-1 md:grid-cols-2">
+                            <textarea
+                                onChange={(e) => setInclude(e.target.value)}
+                                placeholder="включено в стоимость на русском..."
+                                className="inputArea"
+                            ></textarea>
+                            <textarea
+                                onChange={(e) => setIncludeEng(e.target.value)}
+                                placeholder="включено в стоимость на английском..."
+                                className="inputArea"
+                            ></textarea>
+                        </div>
                     </div>
                     <div className="mt-2 p-2 backdrop-blur-sm">
                         <label
@@ -778,11 +920,20 @@ const AddTour = () => {
                         >
                             НЕ включено в стоимость тура
                         </label>
-                        <textarea
-                            onChange={(e) => setNotInclude(e.target.value)}
-                            placeholder="НЕ включено в стоимость..."
-                            className="inputArea"
-                        ></textarea>
+                        <div className="grid md:gap-2 grid-cols-1 md:grid-cols-2">
+                            <textarea
+                                onChange={(e) => setNotInclude(e.target.value)}
+                                placeholder="НЕ включено в стоимость на русском..."
+                                className="inputArea"
+                            ></textarea>
+                            <textarea
+                                onChange={(e) =>
+                                    setNotIncludeEng(e.target.value)
+                                }
+                                placeholder="НЕ включено в стоимость на английском..."
+                                className="inputArea"
+                            ></textarea>
+                        </div>
                     </div>
                     <div className="mt-2 p-2 shadowInput backdrop-blur-sm">
                         <label
@@ -797,6 +948,10 @@ const AddTour = () => {
                                     onClick={() => {
                                         setMemoriesModalEdit(true);
                                         setOneMemories({ ...item, id: index });
+                                        setOneMemoriesEng({
+                                            ...memoriesEng[index],
+                                            id: index,
+                                        });
                                     }}
                                     key={index}
                                     className="w-[1fr] relative rounded-[10px] bg-[#ffff] h-auto"
@@ -878,8 +1033,12 @@ const AddTour = () => {
                         </div>
                     </div>
                     <button
-                        onClick={dataConstructor}
-                        className="doneButton mt-8 bg-green-500 text-white"
+                        onClick={() => dataCheck() && dataConstructor()}
+                        className={`doneButton mt-8 ${
+                            dataCheck()
+                                ? "bg-green-500 text-white"
+                                : "bg-gray-500 text-white"
+                        }`}
                     >
                         готово
                     </button>

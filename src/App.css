@@ -30,12 +30,17 @@
     background: rgba(255, 255, 255, 0);
 }
 
+.hiddenScrollBar::-webkit-scrollbar {
+    width: 0px;
+    background: rgba(255, 255, 255, 0);
+}
+
 .whiteTextImportant li {
     color: white !important;
 }
 
 @media (max-width: 768px) {
     .navPanel {
-        padding: 20px 0px 0px;
+        padding: 20px 0px 20px;
     }
 }

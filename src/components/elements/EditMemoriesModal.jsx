@@ -5,12 +5,16 @@ const EditMemoriesModal = ({
     uploadFile,
     editMemories,
     oneMemories,
+    oneMemoriesEng,
+    editMemoriesEng,
 }) => {
     let [memoriesTitle, setMemoriesTitle] = useState("");
+    let [memoriesTitleEng, setMemoriesTitleEng] = useState("");
     let [memoriesImage, setMemoriesImage] = useState("");
     useEffect(() => {
         setMemoriesTitle(oneMemories.memoriesTitle);
         setMemoriesImage(oneMemories.memoriesImage);
+        setMemoriesTitleEng(oneMemoriesEng.memoriesTitle);
     }, []);
     function handler() {
         editMemories(
@@ -20,8 +24,16 @@ const EditMemoriesModal = ({
             },
             oneMemories.id
         );
+        editMemoriesEng(
+            {
+                memoriesImage,
+                memoriesTitle: memoriesTitleEng,
+            },
+            oneMemories.id
+        );
         setMemoriesModal(false);
     }
+
     return (
         <div
             onClick={(e) => e.stopPropagation()}
@@ -73,6 +85,12 @@ const EditMemoriesModal = ({
                 placeholder="описание тура"
                 className="inputArea"
             ></textarea>
+            <textarea
+                value={memoriesTitleEng}
+                onChange={(e) => setMemoriesTitleEng(e.target.value)}
+                placeholder="описание тура"
+                className="inputArea"
+            ></textarea>
             <div
                 style={{
                     backgroundImage: `url(${memoriesImage})`,
@@ -112,10 +130,13 @@ const EditMemoriesModal = ({
             </div>
             <button
                 onClick={() => {
-                    memoriesTitle && memoriesImage && handler();
+                    memoriesTitle &&
+                        memoriesImage &&
+                        memoriesTitleEng &&
+                        handler();
                 }}
                 className={`doneButton mt-4 ${
-                    memoriesImage && memoriesTitle
+                    memoriesImage && memoriesTitle && memoriesTitleEng
                         ? "bg-green-500 text-white"
                         : "bg-gray-500 text-black"
                 } `}

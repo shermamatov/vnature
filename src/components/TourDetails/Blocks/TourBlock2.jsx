@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { tour } from "../../../consts";
+// import { tour } from "../../../consts";
 import "../../../App.css";
 import TourView from "../Sections/TourView";
 import TourProgram from "../Sections/TourProgram";
 import TourImportant from "../Sections/TourImportant";
 import NavigationPanel from "../Elements/NavigationPanel";
 import SideForm from "../Elements/SideForm";
-const TourBlock2 = ({ setModal }) => {
+import { useSelector } from "react-redux";
+const TourBlock2 = ({ setPriceModal, tour }) => {
     let [section, setSection] = useState(1);
+    let lang = useSelector((item) => item.tours.lang);
     document.querySelectorAll('a[href^="#"').forEach((link) => {
         link.addEventListener("click", function (e) {
             e.preventDefault();
@@ -28,17 +30,21 @@ const TourBlock2 = ({ setModal }) => {
                 <div className="mt-8 my-0 md:my-8">
                     <div className="flex justify-between items-center">
                         <h1 className="text-2xl md:text-5xl font-medium font-montserrat">
-                            {tour.title}
+                            {lang === "rus"
+                                ? tour?.title || "название тура"
+                                : tour?.titleEng || "tour title"}
                         </h1>
                         <button
-                            onClick={() => setModal(true)}
+                            onClick={() => setPriceModal(true)}
                             className="block text-xs md:hidden py-1 px-6 text-white rounded-md bg-[#00499f]"
                         >
-                            $ Цена тура
+                            $ {lang === "rus" ? "Цена тура" : "Tour price"}
                         </button>
                     </div>
                     <h2 className="text-lg md:text-2xl font-normal font-montserrat mt-4">
-                        {tour.slogan}
+                        {lang === "rus"
+                            ? tour?.slogan || "слоган тура"
+                            : tour?.sloganEng || "slogan title"}
                     </h2>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-10 gap-8">
@@ -47,12 +53,12 @@ const TourBlock2 = ({ setModal }) => {
                             section={section}
                             setSection={setSection}
                         />
-                        <TourView />
-                        <TourProgram />
-                        <TourImportant />
+                        <TourView tour={tour} />
+                        <TourProgram tour={tour} />
+                        <TourImportant tour={tour} />
                     </div>
                     <div className="md:block hidden col-span-1 md:col-span-3 mt-6">
-                        <SideForm setModal={setModal} />
+                        <SideForm tour={tour} setPriceModal={setPriceModal} />
                     </div>
                     {/* <div className="col-span-1 md:col-span-3 mt-6">
                         <div className="md:sticky top-8">

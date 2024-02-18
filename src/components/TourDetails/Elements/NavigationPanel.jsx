@@ -1,6 +1,8 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const NavigationPanel = ({ section, setSection }) => {
+    let lang = useSelector((item) => item.tours.lang);
     return (
         <ul className="flex overflow-auto md:justify-between list-none text-base md:text-xl font-medium font-montserrat sticky top-8 navPanel">
             <li
@@ -9,7 +11,9 @@ const NavigationPanel = ({ section, setSection }) => {
                 }}
                 className={`${section === 1 && "underLine"} cursor-pointer`}
             >
-                <a href="#viewAnchor">Обзор</a>
+                <a href="#viewAnchor">
+                    {lang === "rus" ? "Обзор" : "Overview"}
+                </a>
             </li>
             <li
                 className={`ml-8 ${
@@ -20,7 +24,9 @@ const NavigationPanel = ({ section, setSection }) => {
                 }}
             >
                 {/* Программа */}
-                <a href="#programmAnchor">Программа</a>
+                <a href="#programmAnchor">
+                    {lang === "rus" ? "Программа" : "Program"}
+                </a>
             </li>
             <li
                 className={`ml-8 ${
@@ -29,7 +35,7 @@ const NavigationPanel = ({ section, setSection }) => {
                 onClick={() => setSection(3)}
             >
                 <a className="md:w-auto w-28 flex " href="#importantAnchor">
-                    Важно знать
+                    {lang === "rus" ? "Важно знать" : "Important"}
                 </a>
             </li>
             <li
@@ -38,7 +44,9 @@ const NavigationPanel = ({ section, setSection }) => {
                 } cursor-pointer`}
                 onClick={() => setSection(4)}
             >
-                <a href="#bronAnchor">Бронирование</a>
+                <a href="#bronAnchor">
+                    {lang === "rus" ? "Бронирование" : "Booking"}
+                </a>
             </li>
             <li
                 className={`ml-8 ${
@@ -46,7 +54,9 @@ const NavigationPanel = ({ section, setSection }) => {
                 } cursor-pointer`}
                 onClick={() => setSection(5)}
             >
-                <a href="#reviewsAnchor">Отзывы</a>
+                <a href="#reviewsAnchor">
+                    {lang === "rus" ? "Отзывы" : "Reviews"}
+                </a>
             </li>
         </ul>
     );

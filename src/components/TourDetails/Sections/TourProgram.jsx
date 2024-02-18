@@ -1,32 +1,46 @@
 import React, { useState } from "react";
-import { tour } from "../../../consts";
+// import { tour } from "../../../consts";
 import AccordionElement from "../Elements/Accordion";
 import TourProgrammModal from "../Elements/TourProgrammModal";
+import { useSelector } from "react-redux";
 
-const TourProgram = () => {
+const TourProgram = ({ tour }) => {
     let [programmState, setProgrammState] = useState(false);
+    let lang = useSelector((item) => item.tours.lang);
+    function checkerLangProgramm() {
+        return lang === "rus" ? tour?.programmDays : tour?.programmDaysEng;
+    }
     return (
         <>
             {programmState && (
                 <TourProgrammModal setProgrammState={setProgrammState} />
             )}
             <div id="programmAnchor" className="mt-16">
-                <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
-                    <h2 className="text-3xl font-bold">Программа</h2>
+                <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 md:mb-8">
+                    <h2 className="text-3xl font-bold">
+                        {lang === "rus" ? "Программа" : "Program"}
+                    </h2>
                     <p
                         onClick={() => setProgrammState(true)}
-                        className="underline md:mt-0 mt-4 text-lg font-normal cursor-pointer"
+                        className="underline md:mt-0 mt-2 text-base md:text-lg font-normal cursor-pointer"
                     >
-                        Программа может быть изменена
+                        {lang === "rus"
+                            ? "Программа может быть изменена"
+                            : "The program may be modified"}
                     </p>
                 </div>
-                <p className="text-lg md:text-xl font-normal">
-                    {tour.programmDescription}
+                <p className="text-base md:text-xl font-normal">
+                    {lang === "rus"
+                        ? tour?.programmDescription ||
+                          "Кыргызстан — это страна с потрясающей природой, о которой можно говорить многими словами. Вот несколько вариантов описания:"
+                        : tour?.programmDescriptionEng ||
+                          "Kyrgyzstan is a country with an amazing nature that can be talked about in many words. Here"}
                 </p>
                 <div>
-                    <p className="text-lg md:text-xl font-normal mt-8">
-                        Мы рекомендуем вам наших проверенных партнёров с лучшим
-                        сервисом
+                    <p className="text-base md:text-xl font-normal mt-8">
+                        {lang === "rus"
+                            ? "Мы рекомендуем вам наших проверенных партнёров с лучшим сервисом"
+                            : "We recommend our trusted partners with the best service"}
                     </p>
                     <a
                         className="text-[#00499f] font-medium underline mt-2"
@@ -35,15 +49,17 @@ const TourProgram = () => {
                         “TES HOTEL”
                     </a>
                 </div>
-                <p className="text-lg md:text-xl font-normal mt-6">
-                    - Где вам организуют встречу из аэропорта и проводы в
-                    аэропорт
+                <p className="text-base md:text-xl font-normal mt-6">
+                    {lang === "rus"
+                        ? "- Где вам организуют встречу из аэропорта и проводы в аэропорт"
+                        : "- Where you will be arranged to meet from airport and send-off to the airport"}
                 </p>
-                <p className="text-lg md:text-xl font-normal mt-6">
-                    - Также приготовят щедрый завтрак и свежесваренный кофе -
-                    как и нужно для отличного старта дня
+                <p className="text-base md:text-xl font-normal mt-6">
+                    {lang === "rus"
+                        ? "- Также приготовят щедрый завтрак и свежесваренный кофе -как и нужно для отличного старта дня"
+                        : "- Also prepare a generous breakfast and freshly brewed coffee -as necessary for a great start to the day"}
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 md:mt-16">
                     {tour?.galery?.slice(0, 4)?.map((item, index) => (
                         <img
                             className="object-cover aspect-[16/9] rounded-md"
@@ -55,10 +71,12 @@ const TourProgram = () => {
                 </div>
                 <div className="mt-8">
                     <p className="text-base text-left text-[#7d7d7d]">
-                        Карта схематично отображает перемещение в туре по дням*
+                        {lang === "rus"
+                            ? "Карта схематично отображает перемещение в туре по дням*"
+                            : "Map schematically displays the movement on tour days*"}
                     </p>
                     <div className="w-full border border-black opacity-40 mt-2"></div>
-                    {tour?.programmDays?.map((item, index) => (
+                    {checkerLangProgramm()?.map((item, index) => (
                         <div key={index}>
                             <AccordionElement item={item} />
                             <div className="w-full border border-black opacity-40"></div>
