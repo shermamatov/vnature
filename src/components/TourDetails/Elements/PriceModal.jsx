@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { tour } from "../../../consts";
+import { useSelector } from "react-redux";
 
-const PriceModal = ({ setModal }) => {
+const PriceModal = ({ setPriceModal, tour }) => {
+    let lang = useSelector((item) => item.tours.lang);
     let [arr, setArr] = useState([]);
     useEffect(() => {
         let arr2 = [];
-        for (let i in tour.price) {
-            arr2.push(tour.price[i]);
+        for (let i in tour?.price) {
+            arr2.push(tour?.price[i]);
         }
         setArr(arr2);
-    }, []);
+    }, [tour]);
     return (
         <div>
             <div className="w-[90vw] m-auto bg-white rounded-lg p-6 ">
                 <div className="flex justify-between">
                     <p className="mb-8 text-3xl font-semibold">
-                        Цены в долларах США
+                        {lang === "rus"
+                            ? "Цены в долларах США"
+                            : "Prices in US dollars"}
                     </p>
                     <svg
-                        onClick={() => setModal(false)}
+                        onClick={() => setPriceModal(false)}
                         width={20}
                         height={20}
                         viewBox="0 0 20 20"
@@ -28,7 +31,7 @@ const PriceModal = ({ setModal }) => {
                         className="w-5 h-5 relative cursor-pointer"
                         preserveAspectRatio="none"
                     >
-                        <g clip-path="url(#clip0_2304_661)">
+                        <g clipPath="url(#clip0_2304_661)">
                             <path d="M20 0H0V20H20V0Z" fill="url(#pattern0)" />
                         </g>
                         <defs>
@@ -58,7 +61,9 @@ const PriceModal = ({ setModal }) => {
                 <div className="rounded-sm border border-[#00499f]">
                     <div className="flex justify-between">
                         <div className="tableSection tableSection2">
-                            Количество людей
+                            {lang === "rus"
+                                ? " Количество людей"
+                                : "Number of people"}
                         </div>
                         {arr.map((item, index) => (
                             <div className="tableSection" key={index}>
@@ -68,7 +73,9 @@ const PriceModal = ({ setModal }) => {
                     </div>
                     <div className="flex justify-between">
                         <div className="tableSection tableSection2">
-                            Цена за человека
+                            {lang === "rus"
+                                ? "Цена за человека"
+                                : "Price per person"}
                         </div>
                         {arr.map((item, index) => (
                             <div className="tableSection" key={index}>

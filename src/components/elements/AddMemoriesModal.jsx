@@ -1,18 +1,25 @@
 import React, { useState } from "react";
 // import closeIcon from "../../assets/closeIcon.svg";
-const AddMemoriesModal = ({ setMemoriesModal, uploadFile, addMemories }) => {
+const AddMemoriesModal = ({
+    setMemoriesModal,
+    uploadFile,
+    addMemories,
+    addMemoriesEng,
+}) => {
     let [memoriesTitle, setMemoriesTitle] = useState("");
+    let [memoriesTitleEng, setMemoriesTitleEng] = useState("");
     let [memoriesImage, setMemoriesImage] = useState("");
 
     function handler() {
         addMemories(memoriesTitle, memoriesImage);
+        addMemoriesEng(memoriesTitleEng, memoriesImage);
         setMemoriesModal(false);
     }
 
     return (
         <div
             onClick={(e) => e.stopPropagation()}
-            className="max-w-screen-sm w-[90%] bg-white rounded-lg p-6 "
+            className="overflow-y-scroll hiddenScrollBar  max-w-screen-sm w-[90%] h-auto bg-white rounded-lg p-6 "
         >
             <div className="flex justify-between items-center mb-4">
                 <p className="text-2xl font-bold">впечатления</p>
@@ -56,7 +63,12 @@ const AddMemoriesModal = ({ setMemoriesModal, uploadFile, addMemories }) => {
             </div>
             <textarea
                 onChange={(e) => setMemoriesTitle(e.target.value)}
-                placeholder="описание тура"
+                placeholder="описание тура на русском"
+                className="inputArea h-[200px]"
+            ></textarea>
+            <textarea
+                onChange={(e) => setMemoriesTitleEng(e.target.value)}
+                placeholder="описание тура на английском"
                 className="inputArea h-[200px]"
             ></textarea>
             <div
@@ -98,10 +110,13 @@ const AddMemoriesModal = ({ setMemoriesModal, uploadFile, addMemories }) => {
             </div>
             <button
                 onClick={() => {
-                    memoriesImage && memoriesTitle && handler();
+                    memoriesImage &&
+                        memoriesTitle &&
+                        memoriesTitleEng &&
+                        handler();
                 }}
                 className={`doneButton mt-4 ${
-                    memoriesImage && memoriesTitle
+                    memoriesImage && memoriesTitle && memoriesTitleEng
                         ? "bg-green-500 text-white"
                         : "bg-gray-500 text-black"
                 } `}

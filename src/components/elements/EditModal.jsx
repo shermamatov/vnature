@@ -1,34 +1,70 @@
 import React, { useEffect, useState } from "react";
 
-const EditModal = ({ setModal, oneItem, editFunction, isDay }) => {
+const EditModal = ({
+    setModal = console.log("hello"),
+    oneItem = {},
+    editFunction = console.log("hello"),
+    editFunctionEng = console.log("hello"),
+    isDay,
+    oneItemEng,
+}) => {
     let [title, setTitle] = useState("");
     let [desc, setDesc] = useState("");
+    let [titleEng, setTitleEng] = useState("");
+    let [descEng, setDescEng] = useState("");
+
     useEffect(() => {
         if (isDay) {
-            setTitle(oneItem.dayTitle);
-            setDesc(oneItem.dayDesc);
+            setTitle(oneItem?.dayTitle);
+            setDesc(oneItem?.dayDesc);
+            setTitleEng(oneItemEng?.dayTitle);
+            setDescEng(oneItemEng?.dayDesc);
         } else {
-            setTitle(oneItem.importantTitle);
-            setDesc(oneItem.importantDesc);
+            setTitle(oneItem?.importantTitle);
+            setDesc(oneItem?.importantDesc);
+            setTitleEng(oneItemEng?.importantTitle);
+            setDescEng(oneItemEng?.importantDesc);
         }
     }, []);
+
+    function editDay() {
+        editFunction(
+            {
+                dayTitle: title,
+                dayDesc: desc,
+                day: oneItem.day,
+            },
+            oneItem.id
+        );
+        editFunctionEng(
+            {
+                dayTitle: titleEng,
+                dayDesc: descEng,
+                day: oneItemEng.day,
+            },
+            oneItemEng.id
+        );
+    }
+
+    function editImportant() {
+        editFunction(
+            {
+                importantTitle: title,
+                importantDesc: desc,
+            },
+            oneItem.id
+        );
+        editFunctionEng(
+            {
+                importantTitle: titleEng,
+                importantDesc: descEng,
+            },
+            oneItemEng.id
+        );
+    }
+
     function handler() {
-        isDay
-            ? editFunction(
-                  {
-                      dayTitle: title,
-                      dayDesc: desc,
-                      day: oneItem.day,
-                  },
-                  oneItem.id
-              )
-            : editFunction(
-                  {
-                      importantTitle: title,
-                      importantDesc: desc,
-                  },
-                  oneItem.id
-              );
+        isDay ? editDay() : editImportant();
         setModal(false);
     }
     return (
@@ -79,7 +115,14 @@ const EditModal = ({ setModal, oneItem, editFunction, isDay }) => {
             <input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="заголовок для важно знать"
+                placeholder="заголовок для важно знать на русском"
+                className="input"
+                type="text"
+            />
+            <input
+                value={titleEng}
+                onChange={(e) => setTitleEng(e.target.value)}
+                placeholder="заголовок для важно знать на английском"
                 className="input"
                 type="text"
             />
@@ -94,16 +137,24 @@ const EditModal = ({ setModal, oneItem, editFunction, isDay }) => {
                 value={desc}
                 onChange={(e) => setDesc(e.target.value)}
                 // id="importantKnow"
-                placeholder={"описание для важно знать"}
+                placeholder={"описание для важно знать на русском"}
+                className="h-[200px] inputArea text-xs sm:text-base"
+                type="text"
+            ></textarea>
+            <textarea
+                value={descEng}
+                onChange={(e) => setDescEng(e.target.value)}
+                // id="importantKnow"
+                placeholder={"описание для важно знать на английском"}
                 className="h-[200px] inputArea text-xs sm:text-base"
                 type="text"
             ></textarea>
             <button
                 onClick={() => {
-                    title && desc && handler();
+                    title && desc && titleEng && descEng && handler();
                 }}
                 className={`doneButton mt-4 ${
-                    title && desc
+                    title && desc && titleEng && descEng
                         ? "bg-green-500 text-white"
                         : "bg-gray-500 text-black"
                 }`}

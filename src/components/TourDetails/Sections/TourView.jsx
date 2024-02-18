@@ -1,29 +1,33 @@
 import React, { useState } from "react";
 import "../TourDetails.scss";
-import { tour } from "../../../consts";
+// import { tour } from "../../../consts";
 import Slider from "react-slick";
+import { useSelector } from "react-redux";
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
 
-const TourView = () => {
+const TourView = ({ tour }) => {
+    let lang = useSelector((item) => item?.tours?.lang);
     const [sliderRef, setSliderRef] = useState(null);
     const [activeSlide, setActiveSlide] = useState(1);
-
+    let slideCount = 3;
+    let adapSlideCount = 2;
     const sliderSettings = {
         // removes default buttons
         arrows: false,
-        slidesToShow: 3,
-        slidesToScroll: 3,
+        slidesToShow: slideCount,
+        slidesToScroll: slideCount,
         infinite: true,
+        initialSlide: 1,
         beforeChange: (current, next) => {
-            setActiveSlide(next);
+            setActiveSlide(next < 0 ? 0 : next);
         },
         responsive: [
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
+                    slidesToShow: adapSlideCount,
+                    slidesToScroll: adapSlideCount,
                     infinite: true,
                     dots: true,
                 },
@@ -31,17 +35,26 @@ const TourView = () => {
         ],
         // afterChange: (current) => setActiveSlide(current),
     };
+    function checkerLangMemories() {
+        return lang === "rus" ? tour?.memories : tour?.memoriesEng;
+    }
     return (
         <div id="viewAnchor">
             <div className="mt-4 md:mt-10 rounded-[10px] font-montserrat bg-gradient-to-b from-[#bbd7f9] to-[#deedff]/40 border p-4">
                 <p className="text-sm md:text-lg text-left text-black">
-                    {tour.description}
+                    {lang === "rus"
+                        ? tour?.description ||
+                          "Кыргызстан — это страна с потрясающей природой, о которой можно говорить многими словами. Вот несколько вариантов описания:"
+                        : tour?.descriptionEng ||
+                          "Kyrgyzstan is a country with an amazing nature that can be talked about in many words. Here"}
                 </p>
             </div>
             <div>
                 <div className="flex flex-col md:flex-row justify-between my-8 md:my-16">
                     <p className="text-2xl font-semibold">
-                        Впечатления этого путешествия
+                        {lang === "rus"
+                            ? "Впечатления этого путешествия"
+                            : "Travel Experience"}
                     </p>
                     <div className="md:flex hidden items-center mt-0">
                         <svg
@@ -62,8 +75,10 @@ const TourView = () => {
                             />
                         </svg>
                         <p className="text-3xl text-[#00499f] font-semibold mx-8 noselect">
-                            {parseInt(activeSlide / 3 + 1)}/
-                            {tour.memories.length / 3}
+                            {Math.ceil(activeSlide / slideCount + 1)}/
+                            {Math.ceil(
+                                checkerLangMemories()?.length / slideCount
+                            ) || 1}
                         </p>
                         <svg
                             className="cursor-pointer"
@@ -100,8 +115,10 @@ const TourView = () => {
                             />
                         </svg>
                         <p className="text-2xl text-[#00499f] font-semibold mx-8 noselect">
-                            {parseInt(activeSlide / 3 + 1)}/
-                            {tour.memories.length / 3}
+                            {Math.ceil(activeSlide / adapSlideCount + 1)}/
+                            {Math.ceil(
+                                checkerLangMemories()?.length / adapSlideCount
+                            ) || 1}
                         </p>
                         <svg
                             width={24}
@@ -121,17 +138,17 @@ const TourView = () => {
                     </div>
                 </div>
                 <Slider ref={setSliderRef} {...sliderSettings}>
-                    {tour.memories.map((item, index) => (
+                    {checkerLangMemories()?.map((item, index) => (
                         <div key={index} className="px-2">
                             <div className="w-[100%]  rounded-[10px] bg-[#e2effe]">
                                 <div className="p-2 md:p-4">
                                     <p className="text-sm md:text-xl md:text-left text-left text-black">
-                                        {item.memoriesTitle}
+                                        {item?.memoriesTitle}
                                     </p>
                                 </div>
                                 <img
                                     className="w-full rounded-[10px] aspect-square object-cover"
-                                    src={item.memoriesImage}
+                                    src={item?.memoriesImage}
                                     alt=""
                                 />
                             </div>

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 
-const AddModal = ({ setModal, add }) => {
+const AddModal = ({ setModal, add, addEng }) => {
     let [title, setTitle] = useState("");
     let [desc, setDesc] = useState("");
+    let [titleEng, setTitleEng] = useState("");
+    let [descEng, setDescEng] = useState("");
     return (
         <div
             onClick={(e) => e.stopPropagation()}
@@ -50,7 +52,13 @@ const AddModal = ({ setModal, add }) => {
             </div>
             <input
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="заголовок для важно знать"
+                placeholder="заголовок для важно знать на русском"
+                className="input"
+                type="text"
+            />
+            <input
+                onChange={(e) => setTitleEng(e.target.value)}
+                placeholder="заголовок для важно знать на английском"
                 className="input"
                 type="text"
             />
@@ -64,13 +72,21 @@ const AddModal = ({ setModal, add }) => {
             <textarea
                 onChange={(e) => setDesc(e.target.value)}
                 // id="importantKnow"
-                placeholder={"описание для важно знать"}
+                placeholder={"описание для важно знать на русском"}
+                className="inputArea text-xs sm:text-base"
+                type="text"
+            ></textarea>
+            <textarea
+                onChange={(e) => setDescEng(e.target.value)}
+                // id="importantKnow"
+                placeholder={"описание для важно знать на английском"}
                 className="inputArea text-xs sm:text-base"
                 type="text"
             ></textarea>
             <button
                 onClick={() => {
                     add(title, desc);
+                    addEng(titleEng, descEng);
                     setModal(false);
                 }}
                 className="doneButton mt-4 bg-green-500 text-white"

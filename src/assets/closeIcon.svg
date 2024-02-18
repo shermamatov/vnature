@@ -9,7 +9,7 @@
                         className="w-5 h-5 relative cursor-pointer"
                         preserveAspectRatio="none"
                     >
-                        <g clip-path="url(#clip0_2304_661)">
+                        <g clipPath="url(#clip0_2304_661)">
                             <path d="M20 0H0V20H20V0Z" fill="url(#pattern0)" />
                         </g>
                         <defs>

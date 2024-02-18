@@ -1,10 +1,11 @@
-import { Breadcrumbs, Link } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import shapka from "../../assets/shapka_banner.JPG";
+import { useSelector } from "react-redux";
 
 const AboutUs = () => {
     let navigate = useNavigate();
+    let lang = useSelector((item) => item.tours.lang);
     return (
         <div className="relative">
             <img
@@ -14,39 +15,50 @@ const AboutUs = () => {
             />
             <div className="content font-montserrat relative z-10">
                 <div className="h-[55vh] whiteTextImportant flex justify-center items-center flex-col">
-                    <Breadcrumbs aria-label="breadcrumb">
-                        <p
-                            onClick={() => navigate("/")}
-                            className="text-2xl text-[#00499F] cursor-pointer font-montserrat"
-                        >
-                            Главная
-                        </p>
-                        <p
-                            onClick={() => navigate("/")}
-                            className="text-2xl text-white cursor-pointer font-montserrat"
-                        >
-                            О нас
-                        </p>
-                    </Breadcrumbs>
-                    <h1 className="text-4xl text-white mt-6">
-                        <span className="font-medium text-center text-white">
-                            О компании
-                        </span>
-                        <span className="font-bold text-center capitalize text-white ml-2">
-                            VNATURE
-                        </span>
+                    <h1 className="text-2xl md:text-4xl text-white mt-6">
+                        {lang === "rus" ? (
+                            <>
+                                <span className="font-medium text-center text-white">
+                                    О компании
+                                </span>
+                                <span className="font-bold text-center capitalize text-white ml-2">
+                                    VNATURE
+                                </span>
+                            </>
+                        ) : (
+                            <>
+                                <span className="font-medium text-center text-white">
+                                    About
+                                </span>
+                                <span className="font-bold text-center capitalize text-white ml-2">
+                                    VNATURE
+                                </span>
+                            </>
+                        )}
                     </h1>
                 </div>
-                <div className="max-w-screen-lg w-[100%] m-auto mt-16">
+                <div className="max-w-screen-lg w-[100%] m-auto mt-8 md:mt-16">
                     <p
                         style={{ textShadow: "2px 8px 5px rgba(0,0,0,0.22)" }}
-                        className="text-2xl font-medium italic text-left text-black"
+                        className="text-base md:text-2xl font-medium italic text-left text-black"
                     >
-                        Наша жизненная философия звучит так: <br />
-                        <br /> “Как можно дарить любовь, если она отсутсвует в
-                        тебе?” Мы же дарим вам страсть к путешествиям, потому
-                        что в наших сердцах уже пребывает эта любовь к
-                        невероятным приключениям
+                        {lang === "rus" ? (
+                            <>
+                                Наша жизненная философия звучит так: <br />
+                                <br /> “Как можно дарить любовь, если она
+                                отсутсвует в тебе?” Мы же дарим вам страсть к
+                                путешествиям, потому что в наших сердцах уже
+                                пребывает эта любовь к невероятным приключениям
+                            </>
+                        ) : (
+                            <>
+                                Our philosophy of life is this: <br /> <br />{" "}
+                                "How can you give love if it’s not in you?" We
+                                give you a passion for travel, because in our
+                                hearts this love for incredible adventures
+                                resides
+                            </>
+                        )}
                     </p>
                     <img
                         className="mt-8 rounded-md m-auto object-cover aspect-[16/9]"
@@ -54,24 +66,58 @@ const AboutUs = () => {
                         alt=""
                     />
                 </div>
-                <p className="text-xl font-medium text-left text-black mt-16 ">
-                    Мы знаем, что каждый из наших гостей обязательно вернется в
-                    Кыргызстан, ведь тот, кто приезжает сюда раз, оставляет свое
-                    сердце здесь навсегда. <br /> <br /> Эти незабываемые
-                    путешествия не только открыли эту удивительную страну с
-                    новой стороны, но и, каким-то неведомым образом, помогли
-                    осознать, чего мы стоим. Мы все вдохновлены на большее – те,
-                    кому посчастливилось родиться в Кыргызстане, и те, кто
-                    увидел его впервые! <br /> <br /> Мы покажем вам землю своих
-                    предков с древнейшей историей и богатейшим культурным
-                    наследием – землю с самым чистым и непорочным духом, землю,
-                    где живет многонациональный, гостеприимный и самый щедрый
-                    народ. Землю с уникальной природой и особенной красотой.
-                    <br /> <br />
-                    Нашу землю, наш дом, наш Кыргызстан! Молодой, уверенный и
-                    открытый всему миру! Мы рады каждому гостю, каждому другу!
-                    Добро пожаловать в Кыргызстан – в удивительную страну
-                    небесных гор!
+                <p className="text-base md:text-xl font-medium text-left text-black mt-8 md:mt-16 ">
+                    {lang === "rus" ? (
+                        <>
+                            Мы знаем, что каждый из наших гостей обязательно
+                            вернется в Кыргызстан, ведь тот, кто приезжает сюда
+                            раз, оставляет свое сердце здесь навсегда. <br />{" "}
+                            <br /> Эти незабываемые путешествия не только
+                            открыли эту удивительную страну с новой стороны, но
+                            и, каким-то неведомым образом, помогли осознать,
+                            чего мы стоим. Мы все вдохновлены на большее – те,
+                            кому посчастливилось родиться в Кыргызстане, и те,
+                            кто увидел его впервые! <br /> <br /> Мы покажем вам
+                            землю своих предков с древнейшей историей и
+                            богатейшим культурным наследием – землю с самым
+                            чистым и непорочным духом, землю, где живет
+                            многонациональный, гостеприимный и самый щедрый
+                            народ. Землю с уникальной природой и особенной
+                            красотой.
+                            <br /> <br />
+                            Нашу землю, наш дом, наш Кыргызстан! Молодой,
+                            уверенный и открытый всему миру! Мы рады каждому
+                            гостю, каждому другу! Добро пожаловать в Кыргызстан
+                            – в удивительную страну небесных гор! <br />
+                            <br />
+                        </>
+                    ) : (
+                        <>
+                            We know that each of our guests will definitely
+                            return to Kyrgyzstan, because those who come here
+                            once, leave their heart here forever. <br />
+                            <br />
+                            These unforgettable journeys have not only opened up
+                            this amazing country in a new way, but also, in some
+                            unknown way, helped to realize what we are worth. We
+                            are all inspired by more - those who were lucky
+                            enough to be born in Kyrgyzstan and those who saw
+                            him for the first time! <br />
+                            <br />
+                            We’ll show you land of their ancestors with the
+                            oldest history and the richest cultural heritage -
+                            the land with the most pure and pure spirit, the
+                            land where he lives multinational, hospitable and
+                            most generous people. Land with unique nature and
+                            special beauty. <br />
+                            <br />
+                            Our land, our home, our Kyrgyzstan! Young, confident
+                            and open to the whole world! We welcome everyone
+                            every friend! Welcome to Kyrgyzstan - to the amazing
+                            land of the mountains! <br />
+                            <br />
+                        </>
+                    )}
                 </p>
                 {/* <div className="max-w-screen-lg w-[100%] m-auto mt-16">
                     <p className="text-2xl italic text-left text-black">

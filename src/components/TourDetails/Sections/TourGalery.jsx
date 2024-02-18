@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { tour } from "../../../consts";
+import { useSelector } from "react-redux";
 import Slider from "react-slick";
-import { Avatar } from "@mui/material";
 
-const TourGalery = () => {
+const TourGalery = ({ tour }) => {
+    let lang = useSelector((item) => item.tours.lang);
     const [sliderRef, setSliderRef] = useState(null);
     const [activeSlide, setActiveSlide] = useState(1);
     let slideCount = 2;
     let adapSlideCount = 1;
     const sliderSettings = {
-        // removes default buttons
+        initialSlide: 1,
         arrows: false,
         slidesToShow: slideCount,
         slidesToScroll: slideCount,
@@ -25,6 +25,9 @@ const TourGalery = () => {
                     slidesToScroll: adapSlideCount,
                     infinite: true,
                     dots: true,
+                    beforeChange: (current, next) => {
+                        setActiveSlide(next < 0 ? 0 : next);
+                    },
                 },
             },
         ],
@@ -76,7 +79,9 @@ const TourGalery = () => {
                 </div>
             </div> */}
             <div className="flex flex-row justify-between mt-16 mb-8 md:my-16">
-                <p className="text-3xl md:text-5xl font-semibold">Галерея</p>
+                <p className="text-3xl md:text-5xl font-semibold">
+                    {lang === "rus" ? "Галерея" : "Gallery"}
+                </p>
                 <div className="md:flex hidden items-center mt-0">
                     <svg
                         className="cursor-pointer"
@@ -97,7 +102,7 @@ const TourGalery = () => {
                     </svg>
                     <p className="text-3xl text-[#00499f] font-semibold mx-8 noselect">
                         {Math.ceil(activeSlide / slideCount + 1)}/
-                        {Math.ceil(tour.galery.length / slideCount)}
+                        {Math.ceil(tour?.galery?.length / slideCount) || 1}
                     </p>
                     <svg
                         className="cursor-pointer"
@@ -135,7 +140,7 @@ const TourGalery = () => {
                     </svg>
                     <p className="text-2xl text-[#00499f] font-semibold mx-8 noselect">
                         {Math.ceil(activeSlide / adapSlideCount + 1)}/
-                        {Math.ceil(tour.galery.length / adapSlideCount)}
+                        {Math.ceil(tour?.galery?.length / adapSlideCount) || 1}
                     </p>
                     <svg
                         width={24}
@@ -155,8 +160,8 @@ const TourGalery = () => {
                 </div>
             </div>
             <Slider ref={setSliderRef} {...sliderSettings}>
-                {tour.galery.map((item, index) => (
-                    <div className="px-2">
+                {tour?.galery?.map((item, index) => (
+                    <div key={index} className="px-2">
                         <img
                             className="aspect-[16/9] object-cover rounded-md"
                             key={index}

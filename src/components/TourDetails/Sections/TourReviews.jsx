@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { tour } from "../../../consts";
 import Slider from "react-slick";
 import { Avatar } from "@mui/material";
-import TourGalery from "./TourGalery";
+import { useSelector } from "react-redux";
 
-const TourReviews = () => {
+const TourReviews = ({ tour }) => {
+    let lang = useSelector((item) => item.tours.lang);
     const [sliderRef, setSliderRef] = useState(null);
     const [activeSlide, setActiveSlide] = useState(1);
     let slideCount = 3;
@@ -37,14 +37,14 @@ const TourReviews = () => {
             children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
         };
     }
+
     const sliderSettings = {
-        // removes default buttons
         arrows: false,
         slidesToShow: slideCount,
         slidesToScroll: slideCount,
         infinite: true,
         beforeChange: (current, next) => {
-            setActiveSlide(next);
+            setActiveSlide(next < 0 ? 0 : next);
         },
         responsive: [
             {
@@ -57,14 +57,15 @@ const TourReviews = () => {
                 },
             },
         ],
-        // afterChange: (current) => setActiveSlide(current),
     };
 
     return (
         <div id="reviewsAnchor">
             <div>
                 <div className="flex flex-row justify-between mt-16 mb-8 md:my-16">
-                    <p className="text-3xl md:text-5xl font-semibold">Отзывы</p>
+                    <p className="text-3xl md:text-5xl font-semibold">
+                        {lang === "rus" ? "Отзывы" : "Reviews"}
+                    </p>
                     <div className="md:flex hidden items-center mt-0">
                         <svg
                             className="cursor-pointer"
@@ -85,7 +86,7 @@ const TourReviews = () => {
                         </svg>
                         <p className="text-3xl text-[#00499f] font-semibold mx-8 noselect">
                             {parseInt(activeSlide / slideCount + 1)}/
-                            {tour.reviews.length / slideCount}
+                            {tour?.reviews?.length / slideCount}
                         </p>
                         <svg
                             className="cursor-pointer"
@@ -123,7 +124,7 @@ const TourReviews = () => {
                         </svg>
                         <p className="text-2xl text-[#00499f] font-semibold mx-8 noselect">
                             {Math.ceil(activeSlide / adapSlideCount + 1)}/
-                            {Math.ceil(tour.reviews.length / adapSlideCount)}
+                            {Math.ceil(tour?.reviews?.length / adapSlideCount)}
                         </p>
                         <svg
                             width={24}
@@ -143,20 +144,20 @@ const TourReviews = () => {
                     </div>
                 </div>
                 <Slider ref={setSliderRef} {...sliderSettings}>
-                    {tour.reviews.map((item, index) => (
+                    {tour?.reviews?.map((item, index) => (
                         <div key={index} className="px-2 ">
                             <div className="rounded-[10px] bg-gradient-to-b from-[#aed8ff] to-[#eaf5ff]/[0.88] p-4">
                                 <div className="flex items-center avatar_parent">
-                                    <Avatar {...stringAvatar(item.name)} />
+                                    <Avatar {...stringAvatar(item?.name)} />
                                     <h3 className="ml-2 md:ml-4 text-sm md:text-lg font-medium">
-                                        {item.name}
+                                        {item?.name}
                                     </h3>
                                 </div>
                                 <p className="mt-4  text-xs md:text-base font-medium">
-                                    {item.reviewDesc}
+                                    {item?.reviewDesc}
                                 </p>
                                 <div className="flex justify-end mt-4">
-                                    <p>{item.date}</p>
+                                    <p>{item?.date}</p>
                                 </div>
                             </div>
                         </div>

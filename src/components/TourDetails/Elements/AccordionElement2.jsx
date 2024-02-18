@@ -6,10 +6,12 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "../TourDetails.scss";
 export default function AccordionElement2({
     item,
+    itemEng = {},
     isModal = false,
     deleteFunction = null,
     setModal = null,
     setOneItem = null,
+    setOneItemEng = console.log("hello"),
 }) {
     const [expanded, setExpanded] = React.useState(false);
 
@@ -37,7 +39,7 @@ export default function AccordionElement2({
                 >
                     <div className="flex items-center">
                         <div className="text-sm md:text-lg text-black">
-                            {item.importantTitle}
+                            {item?.importantTitle}
                         </div>
                         {isModal && (
                             <>
@@ -55,6 +57,7 @@ export default function AccordionElement2({
                                         e.stopPropagation();
                                         setModal(true);
                                         setOneItem(item);
+                                        setOneItemEng(itemEng);
                                     }}
                                     className="px-4 bg-purple-500 text-white rounded-md ml-4 h-full"
                                 >
@@ -66,7 +69,7 @@ export default function AccordionElement2({
                 </AccordionSummary>
                 <AccordionDetails>
                     <div className="-mt-4">
-                        {item.importantDesc.split(";").map((item, index) => (
+                        {item?.importantDesc.split(";").map((item, index) => (
                             <p className="md:text-sm text-xs mt-2 " key={index}>
                                 {item}
                             </p>

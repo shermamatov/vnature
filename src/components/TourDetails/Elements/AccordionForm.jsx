@@ -31,13 +31,13 @@ export default function AccordionForm({ item }) {
                 >
                     <div className="flex items-center">
                         <div className="text-lg text-black font-medium ">
-                            {item.title}
+                            {item?.title}
                         </div>
                     </div>
                 </AccordionSummary>
                 <AccordionDetails>
                     <ul className="list-disc px-2 -mt-4">
-                        {item.desc.split(";").map((item, index) => (
+                        {item?.desc?.split(";").map((item, index) => (
                             <li className="mt-1 font-medium" key={index}>
                                 {item}
                             </li>

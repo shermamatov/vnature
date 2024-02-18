@@ -7,6 +7,8 @@ import ContactUsPage from "../pages/ContactUsPage";
 import ReviewsPage from "../pages/ReviewsPage";
 import ToursListPage from "../pages/ToursListPage";
 import AddTourPage from "../pages/AddTourPage";
+import AdminPage from "../pages/AdminPage";
+import EditTourPage from "../pages/EditTourPage";
 
 const MainRout = () => {
     const userRoutes = [
@@ -17,6 +19,8 @@ const MainRout = () => {
         { link: "/reviews", element: <ReviewsPage />, id: 5 },
         { link: "/tours", element: <ToursListPage />, id: 6 },
         { link: "/admin/add", element: <AddTourPage />, id: 7 },
+        { link: "/admin", element: <AdminPage />, id: 8 },
+        { link: "/admin/edit/:id", element: <EditTourPage />, id: 9 },
         // { link: "/edit/:id", element: <EditPage />, id: 5 },
     ];
     return (

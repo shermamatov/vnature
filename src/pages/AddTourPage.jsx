@@ -1,5 +1,5 @@
 import React from "react";
-import AddTour from "../components/Admin/AddTour";
+import AddTour from "../components/Admin/Add/AddTour";
 
 const AddTourPage = () => {
     return (

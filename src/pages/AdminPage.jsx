@@ -1,7 +1,7 @@
 import React from "react";
-import EditTour from "../components/Admin/Edit/EditTour";
+import Admin from "../components/Admin/Admin/Admin";
 
-const EditTourPage = () => {
+const AdminPage = () => {
     return (
         <div>
             <img
@@ -10,10 +10,10 @@ const EditTourPage = () => {
                 alt=""
             />
             <div className="relative z-10 mt-32">
-                <EditTour />
+                <Admin />
             </div>
         </div>
     );
 };
 
-export default EditTourPage;
+export default AdminPage;
