@@ -15,9 +15,9 @@ const TourProgram = ({ tour }) => {
             {programmState && (
                 <TourProgrammModal setProgrammState={setProgrammState} />
             )}
-            <div id="programmAnchor" className="mt-16">
+            <div id="programmAnchor" className="mt-12">
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 md:mb-8">
-                    <h2 className="text-3xl font-bold">
+                    <h2 className="text-2xl font-semibold md:text-3xl md:font-bold">
                         {lang === "rus" ? "Программа" : "Program"}
                     </h2>
                     <p
@@ -36,8 +36,9 @@ const TourProgram = ({ tour }) => {
                         : tour?.programmDescriptionEng ||
                           "Kyrgyzstan is a country with an amazing nature that can be talked about in many words. Here"}
                 </p>
+                <div className="w-full h-[1px] bg-black mt-4 opacity-50"></div>
                 <div>
-                    <p className="text-base md:text-xl font-normal mt-8">
+                    <p className="text-base md:text-xl font-semibold mt-4">
                         {lang === "rus"
                             ? "Мы рекомендуем вам наших проверенных партнёров с лучшим сервисом"
                             : "We recommend our trusted partners with the best service"}
@@ -59,7 +60,7 @@ const TourProgram = ({ tour }) => {
                         ? "- Также приготовят щедрый завтрак и свежесваренный кофе -как и нужно для отличного старта дня"
                         : "- Also prepare a generous breakfast and freshly brewed coffee -as necessary for a great start to the day"}
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 md:mt-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-8 md:mt-16">
                     {tour?.galery?.slice(0, 4)?.map((item, index) => (
                         <img
                             className="object-cover aspect-[16/9] rounded-md"
@@ -70,7 +71,7 @@ const TourProgram = ({ tour }) => {
                     ))}
                 </div>
                 <div className="mt-8">
-                    <p className="text-base text-left text-[#7d7d7d]">
+                    <p className="text-[10px] md:text-base text-left text-[#7d7d7d]">
                         {lang === "rus"
                             ? "Карта схематично отображает перемещение в туре по дням*"
                             : "Map schematically displays the movement on tour days*"}

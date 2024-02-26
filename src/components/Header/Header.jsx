@@ -15,6 +15,7 @@ const Header = () => {
 
     let navigate = useNavigate();
     let dispatch = useDispatch();
+
     return (
         <div className="overflow-hidden">
             <BurgerMenu
@@ -24,37 +25,19 @@ const Header = () => {
             <div
                 className={`${
                     pathname !== "/" && pathname.slice(0, 6) !== "/admin"
-                        ? "bg-[#00499FA6]"
-                        : "backdrop-blur-sm backdrop-brightness-50 absolute z-30 "
-                } flex items-center text-white w-[100%] h-24 z-30`}
+                        ? "bg-[#00499FA6] h-16 md:h-24 rounded-br-lg rounded-bl-lg md:rounded-none"
+                        : "backdrop-blur-sm backdrop-brightness-50 absolute z-30 h-14 rounded-md md:rounded-none top-2 md:top-0 md:h-24"
+                } flex items-center text-white w-[100%] z-30`}
             >
                 <div className="content md:hidden flex justify-between items-center">
                     <img
                         onClick={() => navigate("/")}
-                        className="w-36"
+                        className="w-24 md:w-36"
                         src={logo}
                         alt=""
                     />
                     <div className="flex">
                         <div className="flex">
-                            <p
-                                onClick={() => {
-                                    localStorage.setItem("lang", "rus");
-                                    dispatch({
-                                        type: reduxTypes.SET_LANG,
-                                        payload: "rus",
-                                    });
-                                    dispatch(getTours());
-                                }}
-                                className={`font-body cursor-pointer font-bold text-base ${
-                                    lang === "rus" && "underline"
-                                }`}
-                            >
-                                RU
-                            </p>
-                            <p className="font-body font-bold text-base ml-1">
-                                /
-                            </p>
                             <p
                                 onClick={() => {
                                     localStorage.setItem("lang", "eng");
@@ -64,11 +47,29 @@ const Header = () => {
                                     });
                                     dispatch(getTours());
                                 }}
-                                className={`font-body cursor-pointer font-bold text-base ml-1 ${
+                                className={`font-body cursor-pointer font-bold text-sm md:text-base ml-1 ${
                                     lang === "eng" && "underline"
                                 }`}
                             >
                                 EN
+                            </p>
+                            <p className="font-body font-bold text-base ml-1">
+                                /
+                            </p>
+                            <p
+                                onClick={() => {
+                                    localStorage.setItem("lang", "rus");
+                                    dispatch({
+                                        type: reduxTypes.SET_LANG,
+                                        payload: "rus",
+                                    });
+                                    dispatch(getTours());
+                                }}
+                                className={`font-body cursor-pointer font-bold text-sm md:text-base ${
+                                    lang === "rus" && "underline"
+                                }`}
+                            >
+                                RU
                             </p>
                         </div>
                         <img
@@ -90,31 +91,42 @@ const Header = () => {
                         <ul className="flex ml-4 font-semibold text-sm lg:text-base">
                             <li
                                 onClick={() => navigate("/")}
-                                className="ml-4 cursor-pointer"
+                                className={`ml-4 cursor-pointer ${
+                                    pathname === "/" && "headerUnderLine"
+                                } `}
                             >
                                 {lang === "rus" ? "Главная" : "Home"}
                             </li>
                             <li
                                 onClick={() => navigate("/tours")}
-                                className="ml-4 cursor-pointer"
+                                className={`ml-4 cursor-pointer ${
+                                    pathname === "/tours" && "headerUnderLine"
+                                }`}
                             >
                                 {lang === "rus" ? "Туры" : "Tours"}
                             </li>
                             <li
                                 onClick={() => navigate("/about")}
-                                className="ml-4 cursor-pointer"
+                                className={`ml-4 cursor-pointer ${
+                                    pathname === "/about" && "headerUnderLine"
+                                }`}
                             >
                                 {lang === "rus" ? "О нас" : "About Us"}
                             </li>
                             <li
                                 onClick={() => navigate("/contacts")}
-                                className="ml-4 cursor-pointer"
+                                className={`ml-4 cursor-pointer ${
+                                    pathname === "/contacts" &&
+                                    "headerUnderLine"
+                                }`}
                             >
                                 {lang === "rus" ? "Контакты" : "Contacts"}
                             </li>
                             <li
                                 onClick={() => navigate("/reviews")}
-                                className="ml-4 cursor-pointer"
+                                className={`ml-4 cursor-pointer ${
+                                    pathname === "/reviews" && "headerUnderLine"
+                                }`}
                             >
                                 {lang === "rus" ? " Отзывы" : "Reviews"}
                             </li>
@@ -122,24 +134,6 @@ const Header = () => {
                     </div>
                     <div className="flex items-center">
                         <div className="flex">
-                            <p
-                                onClick={() => {
-                                    localStorage.setItem("lang", "rus");
-                                    dispatch({
-                                        type: reduxTypes.SET_LANG,
-                                        payload: "rus",
-                                    });
-                                    dispatch(getTours());
-                                }}
-                                className={`font-body cursor-pointer font-bold text-sm lg:text-base ${
-                                    lang === "rus" && "underline"
-                                }`}
-                            >
-                                RU
-                            </p>
-                            <p className="font-body font-bold text-sm lg:text-base ml-1">
-                                /
-                            </p>
                             <p
                                 onClick={() => {
                                     localStorage.setItem("lang", "eng");
@@ -155,22 +149,46 @@ const Header = () => {
                             >
                                 EN
                             </p>
+                            <p className="font-body font-bold text-sm lg:text-base ml-1">
+                                /
+                            </p>
+                            <p
+                                onClick={() => {
+                                    localStorage.setItem("lang", "rus");
+                                    dispatch({
+                                        type: reduxTypes.SET_LANG,
+                                        payload: "rus",
+                                    });
+                                    dispatch(getTours());
+                                }}
+                                className={`font-body cursor-pointer font-bold text-sm lg:text-base ${
+                                    lang === "rus" && "underline"
+                                }`}
+                            >
+                                RU
+                            </p>
                         </div>
-                        <img
-                            className="w-6 lg:w-8 ml-4"
-                            src={instagram}
-                            alt=""
-                        />
-                        <img
-                            className="w-6 lg:w-8 ml-4"
-                            src={whatsapp}
-                            alt=""
-                        />
-                        <img
-                            className="w-6 lg:w-8 ml-4"
-                            src={telegram}
-                            alt=""
-                        />
+                        <a href="#">
+                            <img
+                                className="w-6 lg:w-8 ml-4"
+                                src={instagram}
+                                alt=""
+                            />
+                        </a>
+                        <a href="https://wa.me/554034477">
+                            <img
+                                className="w-6 lg:w-8 ml-4"
+                                src={whatsapp}
+                                alt=""
+                            />
+                        </a>
+                        <a href="#">
+                            <img
+                                className="w-6 lg:w-8 ml-4"
+                                src={telegram}
+                                alt=""
+                            />
+                        </a>
                     </div>
                 </div>
             </div>

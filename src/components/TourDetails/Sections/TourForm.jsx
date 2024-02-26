@@ -2,37 +2,15 @@ import React from "react";
 import AccordionForm from "../Elements/AccordionForm";
 import { useSelector } from "react-redux";
 import { translateLevel } from "../../../store/reducers/tourReducer";
+import { months, monthsEng } from "../../../consts";
 
-const TourForm = ({ setPriceModal, setCalendar, setFormModal, tour }) => {
+const TourForm = ({
+    setPriceModal,
+    setCalendar = null,
+    setFormModal = null,
+    tour,
+}) => {
     let lang = useSelector((item) => item.tours.lang);
-    let months = [
-        "Январь",
-        "Февраль",
-        "Март",
-        "Апрель",
-        "Май",
-        "Июнь",
-        "Июль",
-        "Август",
-        "Сентябрь",
-        "Октябрь",
-        "Ноябрь",
-        "Декабрь",
-    ];
-    let monthsEng = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-    ];
 
     function checkerLangMonth() {
         if (lang === "rus") {
@@ -43,14 +21,17 @@ const TourForm = ({ setPriceModal, setCalendar, setFormModal, tour }) => {
     }
 
     return (
-        <div id="bronAnchor" className="mt-16 font-montserrat ">
+        <div id="bronAnchor" className="mt-12 md:mt-16 font-montserrat ">
+            <h2 className="block md:hidden text-2xl font-semibold md:text-3xl md:font-bold">
+                {lang === "rus" ? "Бронирование" : "Booking"}
+            </h2>
             <div
-                className="w-full p-4 content rounded-[10px] bg-white"
+                className="w-full mt-4 md:mt-0 p-4 rounded-[10px] bg-white"
                 style={{ boxShadow: "1px 10px 35px 0 rgba(0,73,159,0.36)" }}
             >
-                <div className="flex w-full md:w-[80%] flex-wrap justify-between m-auto">
+                <div className="flex w-full  flex-wrap justify-between m-auto">
                     <div
-                        className="w-[49%] md:w-[30%] p-3 rounded-[10px] flex flex-col justify-between"
+                        className="w-[47%] md:w-[24%] p-3 rounded-[10px] flex flex-col justify-between"
                         style={{
                             background:
                                 "linear-gradient(to bottom, #cbe3ff 24.9%, #a0ccff 97.9%)",
@@ -64,7 +45,7 @@ const TourForm = ({ setPriceModal, setCalendar, setFormModal, tour }) => {
                         </p>
                     </div>
                     <div
-                        className="w-[49%] md:w-[30%] p-3 rounded-[10px] flex flex-col justify-between"
+                        className="w-[47%] md:w-[24%] p-3 rounded-[10px] flex flex-col justify-between"
                         style={{
                             background:
                                 "linear-gradient(to bottom, #cbe3ff 24.9%, #a0ccff 97.9%)",
@@ -80,106 +61,51 @@ const TourForm = ({ setPriceModal, setCalendar, setFormModal, tour }) => {
                         </p>
                     </div>
                     <div
-                        className="w-[49%] md:w-[30%] p-3 rounded-[10px] flex flex-col justify-between mt-2"
+                        className="w-[47%] md:w-[24%] p-3 md:mt-0 mt-4 rounded-[10px] flex flex-col justify-between "
                         style={{
                             background:
                                 "linear-gradient(to bottom, #cbe3ff 24.9%, #a0ccff 97.9%)",
                         }}
                     >
-                        <p className="text-lg text-left text-black">
+                        <p className="text-lg text-left text-[#00499f]">
                             {lang === "rus" ? "Сложность" : "Level"}
                         </p>
-                        <p className="text-xl text-left text-black mt-4">
+                        <p className="text-xl text-left text-[#00499f] mt-4">
                             {lang === "rus"
                                 ? tour?.level
                                 : translateLevel(tour?.level)}
                         </p>
                     </div>
-                </div>
-                <div className="hidden md:flex justify-between items-center mt-8">
-                    <p className="text-xl font-medium text-center text-black">
-                        {lang === "rus" ? "Заезд" : "Arrival"}
-                    </p>
-                    <button
-                        onClick={() => setCalendar(true)}
-                        className="rounded-[10px] border border-[#00499f] h-[45px] font-light w-[40%] px-2"
+                    <div
+                        className="w-[47%] md:w-[24%] p-3 md:mt-0 mt-4 rounded-[10px] flex flex-col justify-between "
+                        style={{
+                            background:
+                                "linear-gradient(to bottom, #cbe3ff 24.9%, #a0ccff 97.9%)",
+                        }}
                     >
-                        <span>
-                            {checkerLangMonth()[tour?.season?.start - 1]}
-                        </span>{" "}
-                        -
-                        <span className="ml-1">
-                            {checkerLangMonth()[tour?.season?.end - 1]}
-                        </span>
-                    </button>
-                    {/* <select className="rounded-[10px] border border-[#00499f] h-[45px] font-light w-[40%] px-2">
-                        <option value="5,8">с Мая по Август</option>
-                    </select> */}
+                        <p className="text-lg text-left text-[#00499f]">
+                            {lang === "rus" ? "Сезонность" : "Season"}
+                        </p>
+                        <p className="text-xl text-left text-[#00499f] mt-4">
+                            <span>
+                                {checkerLangMonth()[tour?.season?.start - 1]}
+                            </span>
+                            -
+                            <span className="ml-1">
+                                {checkerLangMonth()[tour?.season?.end - 1]}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div className="w-full flex justify-center md:justify-end mt-8">
                     <button
                         onClick={() => setPriceModal(true)}
-                        className="py-1 px-8 text-white rounded-md bg-[#00499f]"
+                        className="py-2 px-8 text-white rounded-md bg-[#00499f]"
                     >
-                        {lang === "rus" ? "Цена тура" : "Tour price"}
+                        $ {lang === "rus" ? "Цена тура" : "Tour price"}
                     </button>
                 </div>
-                <div className="mt-8 md:hidden block">
-                    <div className="flex justify-between items-baseline">
-                        <p className="text-xl font-medium text-center text-black">
-                            {lang === "rus" ? "Заезд" : "Arrival"}
-                        </p>
-                        <button
-                            onClick={() => setPriceModal(true)}
-                            className="py-2 px-8 text-white rounded-md bg-[#00499f]"
-                        >
-                            {lang === "rus" ? "Цена тура" : "Tour price"}
-                        </button>
-                    </div>
-                    <button
-                        onClick={() => setCalendar(true)}
-                        className="rounded-[10px] mt-4 border border-[#00499f] h-[45px] font-light w-full px-2"
-                    >
-                        <span>
-                            {checkerLangMonth()[tour?.season?.start - 1]}
-                        </span>
-                        -
-                        <span className="ml-1">
-                            {checkerLangMonth()[tour?.season?.end - 1]}
-                        </span>
-                    </button>
-                    {/* <select className="rounded-[10px] mt-4 border border-[#00499f] h-[45px] font-light w-full px-2">
-                        <option value="5,8">с Мая по Август</option>
-                    </select> */}
-                </div>
-                <div>
-                    <div className="w-full mt-8 mb-2 h-[2px] opacity-50 bg-[#00499f]"></div>
-                    <AccordionForm
-                        item={{
-                            title:
-                                lang === "rus"
-                                    ? "Включено в стоимость"
-                                    : "Included in price",
-                            desc:
-                                lang === "rus"
-                                    ? tour?.include
-                                    : tour?.includeEng,
-                        }}
-                    />
-                    <div className="w-full mt-2 mb-2 h-[2px] opacity-50 bg-[#00499f]"></div>
-                    <AccordionForm
-                        item={{
-                            title:
-                                lang === "rus"
-                                    ? "Оплатить дополнительно"
-                                    : "Price does not include",
-                            desc:
-                                lang === "rus"
-                                    ? tour?.notInclude
-                                    : tour?.notIncludeEng,
-                        }}
-                    />
-                    <div className="w-full mt-2 mb-2 h-[2px] opacity-50 bg-[#00499f]"></div>
-                </div>
-                <div className="flex justify-between flex-wrap mt-8">
+                <div className="flex justify-between flex-wrap mt-4">
                     <button className="h-[42px] w-full md:w-[49%] rounded-md border border-[#00499f] text-[#00499f]">
                         {lang === "rus"
                             ? "Задать вопрос в WhatsApp"
@@ -191,7 +117,7 @@ const TourForm = ({ setPriceModal, setCalendar, setFormModal, tour }) => {
                     >
                         {lang === "rus" ? "Оставить заявку" : "Leave a request"}
                     </button>
-                    <button className="h-[42px] m-auto w-full md:w-[49%] mt-2 md:mt-4 rounded-md border border-[#00499f] text-[#00499f]">
+                    <button className="h-[42px] w-full md:w-[49%] mt-2 md:mt-4 rounded-md border border-[#00499f] text-[#00499f]">
                         {lang === "rus"
                             ? "Задать вопрос в Telegram"
                             : "Ask a question at Telegram"}
@@ -201,6 +127,11 @@ const TourForm = ({ setPriceModal, setCalendar, setFormModal, tour }) => {
                         className="block md:hidden h-[42px] w-full md:w-[49%] mt-2 text-white  rounded-md bg-[#0fa03f]"
                     >
                         {lang === "rus" ? "Оставить заявку" : "Leave a request"}
+                    </button>
+                    <button className="h-[42px] w-full md:w-[49%] mt-2 md:mt-4 rounded-md border font-medium border-none text-black">
+                        {lang === "rus"
+                            ? "Не требует оплаты сейчас"
+                            : "Does not require payment now"}
                     </button>
                 </div>
             </div>

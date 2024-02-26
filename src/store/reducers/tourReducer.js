@@ -5,10 +5,18 @@ import {
     doc,
     getDoc,
     getDocs,
+    query,
     updateDoc,
+    where,
 } from "firebase/firestore";
 import { db, storage } from "../../fire";
 import { deleteObject, ref } from "firebase/storage";
+import {
+    getAuth,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signOut,
+} from "firebase/auth";
 
 const stater = {
     tours: [],
@@ -16,37 +24,47 @@ const stater = {
     tourists: [],
     oneTour: {},
     oneReview: {},
+    oneTourReviews: [],
     lang: localStorage.getItem("lang") || "lang",
+    user: "",
 };
 
 const toursRef = collection(db, "tours");
-// const toursRefEng = collection(db, "toursEng");
+const toursReviewRef = collection(db, "reviews");
 
 export const reduxTypes = {
     GET_TOURS: "GET_TOURS",
     ADD_TOUR: "ADD_TOUR",
-    GET_REVIEWS: "GET_REVIEWS",
     ADD_REVIEW: "ADD_REVIEW",
-    GET_TOURISTS: "GET_TOURISTS",
     GET_ONE_TOUR: "GET_ONE_TOUR",
-    GET_ONE_REVIEW: "GET_ONE_REVIEW",
     SET_LANG: "SET_LANG",
+    SET_USER: "SET_USER",
+    GET_REVIEWS: "GET_REVIEWS",
+    GET_ONE_TOUR_REVIEWS: "GET_ONE_TOUR_REVIEWS",
+    GET_ONE_REVIEW: "GET_ONE_REVIEW",
 };
 
 export const tourReducer = (state = stater, action) => {
     switch (action.type) {
         case reduxTypes.GET_TOURS:
             return { ...state, tours: action.payload };
-        case reduxTypes.GET_REVIEWS:
-            return { ...state, reviews: action.payload };
-        case reduxTypes.GET_TOURISTS:
-            return { ...state, tourists: action.payload };
         case reduxTypes.GET_ONE_TOUR:
             return { ...state, oneTour: action.payload };
-        case reduxTypes.SET_LANG:
-            return { ...state, lang: action.payload };
         case reduxTypes.ADD_TOUR:
             return { ...state, tours: [...state.tours, action.payload] };
+
+        case reduxTypes.SET_LANG:
+            return { ...state, lang: action.payload };
+
+        case reduxTypes.SET_USER:
+            return { ...state, user: action.payload };
+
+        case reduxTypes.GET_REVIEWS:
+            return { ...state, reviews: action.payload };
+        case reduxTypes.ADD_REVIEW:
+            return { ...state, reviews: [...state.reviews, action.payload] };
+        case reduxTypes.GET_ONE_TOUR_REVIEWS:
+            return { ...state, oneTourReviews: action.payload };
         default:
             return state;
     }
@@ -152,4 +170,107 @@ export const deleteFile = (deleteItem) => {
             console.log("ОШИБКА" + error);
             // Uh-oh, an error occurred!
         });
+};
+
+export const handleLogin = (email, password, setErrorMess, navigate) => {
+    return (dispatch) => {
+        const auth = getAuth();
+        signInWithEmailAndPassword(auth, email, password)
+            .then((item) => {
+                navigate("/admin");
+                dispatch({
+                    type: reduxTypes.SET_USER,
+                    payload: item.user.email,
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+                switch (err.code) {
+                    case "auth/user-disabled":
+                        setErrorMess(err.message);
+                        break;
+                    case "auth/invalid-email":
+                        setErrorMess(err.message);
+                        break;
+                    case "auth/user-not-found":
+                        setErrorMess(err.message);
+                        break;
+                    case "auth/wrong-password":
+                        setErrorMess(err.message);
+                        break;
+                    case "auth/invalid-credential":
+                        setErrorMess(err.message);
+                        break;
+                    default:
+                        break;
+                }
+            });
+    };
+};
+
+export const handleLogout = () => {
+    const auth = getAuth();
+    signOut(auth);
+};
+
+export const authListener = () => {
+    return (dispatch) => {
+        let auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            console.log(user);
+            if (user) {
+                console.log(user);
+                dispatch({ type: reduxTypes.SET_USER, payload: user.email });
+            } else {
+                dispatch({ type: reduxTypes.SET_USER, payload: "" });
+            }
+        });
+    };
+};
+
+export const addReview = (review, setSuccess, setLoader) => {
+    return async () => {
+        try {
+            await addDoc(toursReviewRef, review);
+            setSuccess(true);
+            setLoader(false);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+};
+
+export const getReviews = () => {
+    return async (dispatch) => {
+        try {
+            let data = await getDocs(toursReviewRef);
+            dispatch({
+                type: reduxTypes.GET_REVIEWS,
+                payload: data.docs.map((doc) => ({
+                    ...doc.data(),
+                    id: doc.id,
+                })),
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    };
+};
+
+export const getOneTourReviews = (id) => {
+    return async (dispatch) => {
+        try {
+            let q = query(toursReviewRef, where("tourId", "==", id));
+            let data = await getDocs(q);
+            dispatch({
+                type: reduxTypes.GET_ONE_TOUR_REVIEWS,
+                payload: data.docs.map((doc) => ({
+                    ...doc.data(),
+                    id: doc.id,
+                })),
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    };
 };

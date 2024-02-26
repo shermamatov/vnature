@@ -1,22 +1,25 @@
-import React from "react";
-import shapka from "../../assets/shapka_banner.JPG";
-import { useNavigate } from "react-router-dom";
-import { Breadcrumbs } from "@mui/material";
+import React, { useEffect } from "react";
+import shapka from "../../assets/shapka_banner.webp";
 // import { tours } from "../../consts";
 import TourCard from "../Cards/TourCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getTours } from "../../store/reducers/tourReducer";
 const TourListBlock1 = () => {
     let tours = useSelector((item) => item.tours.tours);
     let lang = useSelector((item) => item.tours.lang);
+    let dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getTours());
+    }, []);
     return (
         <div className="relative">
             <img
-                className="absolute brightness-[.60] top-0 left-0 right-0 h-[55vh] w-[100%] object-cover object-bottom"
+                className="absolute brightness-[.60] top-0 left-0 right-0 h-[25vh] md:h-[55vh] w-[100%] object-cover object-bottom"
                 src={shapka}
                 alt=""
             />
             <div className="content font-montserrat relative z-10">
-                <div className="h-[55vh] whiteTextImportant flex justify-center items-center flex-col">
+                <div className="h-[25vh] md:h-[55vh] whiteTextImportant flex justify-center items-center flex-col">
                     <h1 className="text-4xl text-white mt-6">
                         <span className="font-medium text-center text-white">
                             {lang === "rus" ? "Туры" : "Tours"}

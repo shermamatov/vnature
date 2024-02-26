@@ -38,7 +38,10 @@ export default function AccordionForm({ item }) {
                 <AccordionDetails>
                     <ul className="list-disc px-2 -mt-4">
                         {item?.desc?.split(";").map((item, index) => (
-                            <li className="mt-1 font-medium" key={index}>
+                            <li
+                                className="mt-1 font-medium list-none"
+                                key={index}
+                            >
                                 {item}
                             </li>
                         ))}

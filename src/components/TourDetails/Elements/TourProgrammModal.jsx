@@ -12,10 +12,10 @@ const TourProgrammModal = ({ setProgrammState }) => {
                 onClick={(e) => e.stopPropagation()}
                 className="max-w-screen-md w-[90%] bg-white rounded-lg p-6 "
             >
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                     <h3 className="text-base md:text-xl font-semibold text-left text-black">
                         {lang === "rus"
-                            ? "Программа может быть изменена"
+                            ? "Программа может быть изменена из-за..."
                             : "The program may be modified"}
                     </h3>
                     <svg
@@ -26,7 +26,7 @@ const TourProgrammModal = ({ setProgrammState }) => {
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                         xmlnsXlink="http://www.w3.org/1999/xlink"
-                        className="w-5 h-5 relative cursor-pointer"
+                        className="w-5 h-4 md:h-5 relative cursor-pointer"
                         preserveAspectRatio="none"
                     >
                         <g clipPath="url(#clip0_2304_661)">

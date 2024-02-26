@@ -26,7 +26,10 @@ const Block3 = () => {
                 </div>
                 <div className="flex justify-center">
                     <button
-                        onClick={() => navigate("/tours")}
+                        onClick={() => {
+                            navigate("/tours");
+                            window.scrollTo(0, 0);
+                        }}
                         className="max-w-[240px] w-[70%] mt-8 text-white h-10 rounded-[5px] bg-[#00499f]"
                     >
                         {lang === "rus" ? "Еще туры" : "More tours"}

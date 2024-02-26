@@ -35,6 +35,25 @@
     }
 }
 
+.activeAccordion {
+    .accordionBtn {
+        background-color: #177aee !important;
+    }
+}
+
+.slick-next:before,
+.slick-prev:before {
+    font-size: 36px;
+}
+
+.slick-dots {
+    display: flex !important;
+    justify-content: center;
+    li {
+        width: auto;
+    }
+}
+
 @media (max-width: 1200px) {
     .tableSection {
         font-size: 14px;
@@ -46,7 +65,8 @@
 
 @media (max-width: 920px) {
     .tableSection {
-        font-size: 12px;
+        font-size: 10px;
+        font-weight: 600;
     }
     .tableSection2 {
         font-size: 8px;
@@ -55,15 +75,22 @@
 
 @media (max-width: 768px) {
     .tableSection {
-        font-size: 10px;
+        aspect-ratio: 3/4;
     }
     .tableSection2 {
-        font-size: 5px;
+        font-size: 6px;
+        font-weight: 700;
+        aspect-ratio: 2/4;
     }
     .avatar_parent > .MuiAvatar-root {
         width: 30px;
         height: 30px;
         font-size: 0.75rem;
+    }
+
+    .slick-next:before,
+    .slick-prev:before {
+        display: none;
     }
 }
 
