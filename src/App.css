@@ -16,9 +16,31 @@
     border-radius: 2px;
 }
 
+.headerUnderLine::after {
+    content: "";
+    display: flex;
+    width: calc(100% + 10px);
+    margin-left: -5px;
+    height: 1px;
+    margin-top: 4px;
+    background-color: white;
+    border-radius: 2px;
+}
+
 .navPanel {
     position: sticky;
     top: 0px;
+    display: flex;
+    background-color: white;
+    padding: 32px 0px;
+    z-index: 11;
+}
+
+.navPanel2 {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
     display: flex;
     background-color: white;
     padding: 32px 0px;
@@ -43,4 +65,15 @@
     .navPanel {
         padding: 20px 0px 20px;
     }
+}
+
+.select_remove_arrow {
+    /* for Firefox */
+    -moz-appearance: none;
+    /* for Chrome */
+    -webkit-appearance: none;
+}
+.select_remove_arrow::-ms-expand {
+    /* IE */
+    display: none;
 }

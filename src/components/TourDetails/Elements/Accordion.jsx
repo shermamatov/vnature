@@ -19,10 +19,25 @@ export default function AccordionElement({
         setExpanded(isExpanded ? panel : false);
     };
 
+    function checkAccordion() {
+        let accordion = document.querySelectorAll(".accordionDay");
+        accordion.forEach((item) => {
+            if (item.classList.contains("Mui-expanded")) {
+                item.classList.add("activeAccordion");
+            } else {
+                item.classList.remove("activeAccordion");
+            }
+        });
+    }
+
+    React.useEffect(() => {
+        checkAccordion();
+    }, [expanded]);
+
     return (
         <div>
             <Accordion
-                className="accordion"
+                className="accordionDay"
                 style={{
                     boxShadow: "none",
                     padding: `${isModal ? "0 10px" : "0px"}`,
@@ -37,10 +52,7 @@ export default function AccordionElement({
                     id="panel1bh-header"
                 >
                     <div className="flex items-center">
-                        {/* <div className="rounded-[8px] text-[8px] md:text-sm bg-[#177aee] md:py-2 py-1 md:px-8 px-3 text-white">
-                            День {item?.day}
-                        </div> */}
-                        <button className="rounded-[8px] text-[8px] md:text-[12px] h-6 md:h-8 md:w-20 w-16 bg-[#177aee] text-white">
+                        <button className="accordionBtn rounded-[8px] text-[8px] md:text-[12px] h-6 md:h-8 md:w-20 min-w-16 bg-[#00499F] text-white">
                             {lang === "rus" ? "День" : "Day"} {item?.day}
                         </button>
                         <div className="text-xs md:text-lg text-black ml-4 md:ml-8">

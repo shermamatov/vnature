@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { Avatar } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getOneTourReviews } from "../../../store/reducers/tourReducer";
 
-const TourReviews = ({ tour }) => {
+const TourReviews = ({ tour, setReviewsModal }) => {
     let lang = useSelector((item) => item.tours.lang);
+    let tourReviews = useSelector((item) => item.tours.oneTourReviews);
+    let dispatch = useDispatch();
+
     const [sliderRef, setSliderRef] = useState(null);
     const [activeSlide, setActiveSlide] = useState(1);
     let slideCount = 3;
     let adapSlideCount = 1;
+
     function stringToColor(string) {
         let hash = 0;
         let i;
@@ -29,20 +34,30 @@ const TourReviews = ({ tour }) => {
         return color;
     }
 
-    function stringAvatar(name) {
-        return {
-            sx: {
-                bgcolor: stringToColor(name),
-            },
-            children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
-        };
+    function stringAvatar(name = "timur shermamatov") {
+        let nameArr = name?.split(" ");
+        if (nameArr.length > 1) {
+            return {
+                sx: {
+                    bgcolor: stringToColor(name),
+                },
+                children: `${nameArr[0][0]}${nameArr[1][0]}`,
+            };
+        } else {
+            return {
+                sx: {
+                    bgcolor: stringToColor(name),
+                },
+                children: `${nameArr[0][0]}${nameArr[0][0]}`,
+            };
+        }
     }
 
     const sliderSettings = {
         arrows: false,
         slidesToShow: slideCount,
         slidesToScroll: slideCount,
-        infinite: true,
+        infinite: tourReviews.length <= slideCount ? false : true,
         beforeChange: (current, next) => {
             setActiveSlide(next < 0 ? 0 : next);
         },
@@ -52,12 +67,17 @@ const TourReviews = ({ tour }) => {
                 settings: {
                     slidesToShow: adapSlideCount,
                     slidesToScroll: adapSlideCount,
-                    infinite: true,
+                    infinite:
+                        tourReviews.length <= adapSlideCount ? false : true,
                     dots: true,
                 },
             },
         ],
     };
+
+    useEffect(() => {
+        dispatch(getOneTourReviews(tour?.id));
+    }, [tour]);
 
     return (
         <div id="reviewsAnchor">
@@ -68,20 +88,18 @@ const TourReviews = ({ tour }) => {
                     </p>
                     <div className="md:flex hidden items-center mt-0">
                         <svg
-                            className="cursor-pointer"
+                            width={40}
+                            height={25}
                             onClick={sliderRef?.slickPrev}
-                            width={70}
-                            height={22}
-                            viewBox="0 0 70 22"
+                            viewBox="0 0 24 15"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
-                            preserveAspectRatio="none"
+                            className="flex-grow-0 flex-shrink-0"
+                            preserveAspectRatio="xMidYMid meet"
                         >
                             <path
-                                fillRule="evenodd"
-                                clipRule="evenodd"
-                                d="M17.9479 21.6147C18.8016 21.4571 19.2836 20.9214 19.0633 20.3751C19.0009 20.2204 16.7244 18.7566 12.2484 15.9931L5.52725 11.8434L37.2133 11.8216L68.8992 11.7999L69.2855 11.6237C69.4979 11.5268 69.7612 11.2914 69.8707 11.1005C70.049 10.7893 70.0462 10.723 69.8418 10.4591C69.7165 10.2972 69.4451 10.0966 69.2385 10.0132C68.88 9.86853 67.4192 9.86061 37.1938 9.83988L5.52479 9.81805L12.1807 5.71056C15.8415 3.45141 18.902 1.49622 18.9817 1.36577C19.3166 0.818339 18.9752 0.306811 18.1287 0.0875356C17.1729 -0.160055 17.3591 -0.258991 8.43846 5.2426C2.83449 8.69867 0.0991944 10.4427 0.0376378 10.599C-0.012565 10.7264 -0.0125635 10.9351 0.0377761 11.0625C0.0993326 11.2185 2.8204 12.9567 8.36268 16.3802C15.3954 20.7245 17.1758 21.7582 17.5152 21.6945C17.5364 21.6906 17.731 21.6546 17.9479 21.6147Z"
-                                fill="#00499f"
+                                d="M23 8.5C23.5523 8.5 24 8.05228 24 7.5C24 6.94772 23.5523 6.5 23 6.5L23 8.5ZM0.292893 6.79289C-0.0976314 7.18342 -0.0976315 7.81658 0.292892 8.2071L6.65685 14.5711C7.04738 14.9616 7.68054 14.9616 8.07107 14.5711C8.46159 14.1805 8.46159 13.5474 8.07107 13.1569L2.41421 7.5L8.07107 1.84314C8.46159 1.45262 8.46159 0.819455 8.07107 0.428931C7.68054 0.0384065 7.04738 0.0384064 6.65686 0.428931L0.292893 6.79289ZM23 6.5L1 6.5L1 8.5L23 8.5L23 6.5Z"
+                                fill="#00499F"
                             />
                         </svg>
                         <p className="text-3xl text-[#00499f] font-semibold mx-8 noselect">
@@ -89,20 +107,18 @@ const TourReviews = ({ tour }) => {
                             {tour?.reviews?.length / slideCount}
                         </p>
                         <svg
-                            className="cursor-pointer"
+                            width={40}
+                            height={25}
                             onClick={sliderRef?.slickNext}
-                            width={70}
-                            height={22}
-                            viewBox="0 0 70 22"
+                            viewBox="0 0 24 15"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
-                            preserveAspectRatio="none"
+                            className="flex-grow-0 flex-shrink-0"
+                            preserveAspectRatio="xMidYMid meet"
                         >
                             <path
-                                fillRule="evenodd"
-                                clipRule="evenodd"
-                                d="M52.0521 0.0826113C51.1984 0.240115 50.7164 0.77583 50.9367 1.32216C50.9991 1.47689 53.2756 2.94069 57.7516 5.70421L64.4727 9.85383L32.7867 9.87566L1.10084 9.8974L0.714542 10.0736C0.502104 10.1704 0.238778 10.4059 0.129345 10.5968C-0.0490326 10.908 -0.0461599 10.9742 0.158208 11.2382C0.28351 11.4 0.554905 11.6007 0.761462 11.684C1.11999 11.8287 2.5808 11.8367 32.8062 11.8574L64.4752 11.8792L57.8193 15.9867C54.1585 18.2459 51.098 20.201 51.0183 20.3315C50.6834 20.8789 51.0248 21.3905 51.8713 21.6097C52.8271 21.8573 52.6409 21.9563 61.5615 16.4547C67.1655 12.9986 69.9008 11.2546 69.9624 11.0983C70.0126 10.9708 70.0126 10.7622 69.9622 10.6348C69.9007 10.4788 67.1796 8.7406 61.6373 5.31706C54.6046 0.972773 52.8242 -0.0609875 52.4848 0.00272193C52.4636 0.0066827 52.269 0.0426665 52.0521 0.0826113Z"
-                                fill="#00499f"
+                                d="M1 6.5C0.447715 6.5 4.82823e-08 6.94772 0 7.5C-4.82823e-08 8.05228 0.447715 8.5 1 8.5L1 6.5ZM23.7071 8.20711C24.0976 7.81658 24.0976 7.18342 23.7071 6.7929L17.3431 0.428934C16.9526 0.0384092 16.3195 0.0384091 15.9289 0.428933C15.5384 0.819458 15.5384 1.45262 15.9289 1.84315L21.5858 7.5L15.9289 13.1569C15.5384 13.5474 15.5384 14.1805 15.9289 14.5711C16.3195 14.9616 16.9526 14.9616 17.3431 14.5711L23.7071 8.20711ZM1 8.5L23 8.5L23 6.5L1 6.5L1 8.5Z"
+                                fill="#00499F"
                             />
                         </svg>
                     </div>
@@ -144,9 +160,9 @@ const TourReviews = ({ tour }) => {
                     </div>
                 </div>
                 <Slider ref={setSliderRef} {...sliderSettings}>
-                    {tour?.reviews?.map((item, index) => (
+                    {tourReviews?.map((item, index) => (
                         <div key={index} className="px-2 ">
-                            <div className="rounded-[10px] bg-gradient-to-b from-[#aed8ff] to-[#eaf5ff]/[0.88] p-4">
+                            <div className="rounded-[10px] bg-[#C0D6F4] p-4">
                                 <div className="flex items-center avatar_parent">
                                     <Avatar {...stringAvatar(item?.name)} />
                                     <h3 className="ml-2 md:ml-4 text-sm md:text-lg font-medium">
@@ -163,8 +179,15 @@ const TourReviews = ({ tour }) => {
                         </div>
                     ))}
                 </Slider>
+                <div className="flex justify-center">
+                    <button
+                        onClick={() => setReviewsModal(true)}
+                        className="max-w-[240px] w-[70%] mt-8 text-white h-10 rounded-[5px] bg-[#00499f]"
+                    >
+                        {lang === "rus" ? "Оставить отзыв" : "Leave a review"}
+                    </button>
+                </div>
             </div>
-            {/* <TourGalery /> */}
         </div>
     );
 };

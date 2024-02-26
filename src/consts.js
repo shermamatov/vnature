@@ -872,41 +872,7 @@ export let tours = [
 ];
 
 export let nowDate = dayjs();
-
-{
-    // let objEng = {
-    //     title: titleEng,
-    //     slogan: sloganEng,
-    //     daysCount: days,
-    //     level,
-    //     age,
-    //     season: { start: month1, end: month2 },
-    //     price: {
-    //         price1,
-    //         price2,
-    //         price3,
-    //         price4,
-    //         price5,
-    //         price6,
-    //         price7,
-    //         price8,
-    //         price9,
-    //         price10,
-    //     },
-    //     mainImg: cardImg,
-    //     galery: filtredGalery,
-    //     description: descriptionEng,
-    //     programmDescription: programmDescEng,
-    //     programmDays: programmDaysEng,
-    //     include: includeEng,
-    //     notInclude: notIncludeEng,
-    //     reviews: [],
-    //     important: importantEng,
-    //     memories: memoriesEng,
-    // };
-    // dispatch(addTour(objEng, "eng"));
-}
-
+export let admin = "admin@gmail.com";
 export let months = [
     "Январь",
     "Февраль",

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import shapka from "../../assets/shapka_banner.JPG";
+import shapka from "../../assets/shapka_banner.webp";
 import { useSelector } from "react-redux";
 
 const AboutUs = () => {
@@ -9,17 +9,17 @@ const AboutUs = () => {
     return (
         <div className="relative">
             <img
-                className="absolute brightness-[.60] top-0 left-0 right-0 h-[55vh] w-[100%] object-cover object-bottom"
+                className="absolute brightness-[.60] top-0 left-0 right-0 md:h-[55vh] h-[25vh] w-[100%] object-cover object-bottom"
                 src={shapka}
                 alt=""
             />
             <div className="content font-montserrat relative z-10">
-                <div className="h-[55vh] whiteTextImportant flex justify-center items-center flex-col">
+                <div className="md:h-[55vh] h-[25vh] whiteTextImportant flex justify-center items-center flex-col">
                     <h1 className="text-2xl md:text-4xl text-white mt-6">
                         {lang === "rus" ? (
                             <>
                                 <span className="font-medium text-center text-white">
-                                    О компании
+                                    О Компании
                                 </span>
                                 <span className="font-bold text-center capitalize text-white ml-2">
                                     VNATURE
@@ -38,17 +38,14 @@ const AboutUs = () => {
                     </h1>
                 </div>
                 <div className="max-w-screen-lg w-[100%] m-auto mt-8 md:mt-16">
-                    <p
-                        style={{ textShadow: "2px 8px 5px rgba(0,0,0,0.22)" }}
-                        className="text-base md:text-2xl font-medium italic text-left text-black"
-                    >
+                    <p className="text-base md:text-3xl font-medium  text-left text-black">
                         {lang === "rus" ? (
                             <>
                                 Наша жизненная философия звучит так: <br />
-                                <br /> “Как можно дарить любовь, если она
-                                отсутсвует в тебе?” Мы же дарим вам страсть к
-                                путешествиям, потому что в наших сердцах уже
-                                пребывает эта любовь к невероятным приключениям
+                                <br /> «Как можно дарить любовь, если она
+                                отсутствует в тебе?» Мы же дарим вам страсть к
+                                путешествиям, ведь в наших сердцах живет эта
+                                любовь к невероятным приключениям.
                             </>
                         ) : (
                             <>
@@ -66,7 +63,7 @@ const AboutUs = () => {
                         alt=""
                     />
                 </div>
-                <p className="text-base md:text-xl font-medium text-left text-black mt-8 md:mt-16 ">
+                <p className="text-base md:text-2xl font-medium text-left text-black mt-8 md:mt-16 ">
                     {lang === "rus" ? (
                         <>
                             Мы знаем, что каждый из наших гостей обязательно
@@ -119,6 +116,7 @@ const AboutUs = () => {
                         </>
                     )}
                 </p>
+                <div className="w-full h-[1px] bg-black opacity-70 mt-8"></div>
                 {/* <div className="max-w-screen-lg w-[100%] m-auto mt-16">
                     <p className="text-2xl italic text-left text-black">
                         Наша жизненная философия звучит так: <br />

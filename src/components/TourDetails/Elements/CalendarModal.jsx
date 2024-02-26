@@ -43,12 +43,15 @@ export default function CalendarModal({ setCalendar, setCalendarValue, tour }) {
                             <DemoContainer components={["DateCalendar"]}>
                                 <DemoItem label="Controlled calendar">
                                     <DateCalendar
-                                        defaultValue={dayjs(
-                                            `${nowDate?.year()}-${item}-1`
+                                        // defaultValue={dayjs(
+                                        //     `${nowDate?.year()}-${item}`
+                                        // )}
+                                        referenceDate={dayjs(
+                                            `${nowDate?.year()}-${item}`
                                         )}
-                                        onChange={(newValue) =>
-                                            setCalendarValue(newValue)
-                                        }
+                                        onChange={(newValue) => {
+                                            setCalendarValue(newValue);
+                                        }}
                                     />
                                 </DemoItem>
                             </DemoContainer>

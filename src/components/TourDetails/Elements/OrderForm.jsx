@@ -1,11 +1,81 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../TourDetails.scss";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
-const OrderForm = ({ setFormModal, setCalendar, calendarValue, tour }) => {
+import emailjs from "@emailjs/browser";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+const OrderForm = ({
+    setFormModal,
+    setCalendar,
+    calendarValue,
+    tour,
+    setOrderError,
+    setOrderSuccess,
+    setLoader,
+}) => {
     let lang = useSelector((item) => item.tours.lang);
     let [dayStart, setDayStart] = React.useState(null);
     let [dayEnd, setDayEnd] = React.useState(null);
+    let [checker, setChecker] = useState(false);
+    let [childCount, setChildCount] = useState(0);
+    let [adultCount, setAdultCount] = useState(1);
+    let [phone, setPhone] = useState("+");
+    let [name, setName] = useState("");
+    let [comments, setComments] = useState("");
+    let [email, setEmail] = useState("");
+    let [checkBox1, setCheckBox1] = useState(true);
+    let [checkBox2, setCheckBox2] = useState(true);
+
+    useEffect(() => {
+        if (
+            name &&
+            phone &&
+            email &&
+            calendarValue !== "Invalid Date" &&
+            checkBox1 &&
+            checkBox2
+        ) {
+            setChecker(true);
+        } else {
+            setChecker(false);
+        }
+    }, [name, phone, email, checkBox1, checkBox2]);
+
+    function dataHandler() {
+        let obj = {
+            name,
+            tourName: tour?.title,
+            phone,
+            comments,
+            adultCount,
+            childCount,
+            email,
+            dateStart: `${dayjs(calendarValue).format("DD/MM/YYYY")}`,
+        };
+        setLoader(true);
+        emailjs
+            .send(
+                "service_rzyf1b7",
+                "template_yk2f418",
+                obj,
+                "sIA0VHqfLKi1BKLiO"
+            )
+            .then(
+                (response) => {
+                    console.log("SUCCESS!", response.status, response.text);
+                    setOrderSuccess(true);
+                    setLoader(false);
+                    setFormModal(false);
+                },
+                (error) => {
+                    console.log("FAILED...", error);
+                    setOrderError(true);
+                    setLoader(false);
+                    setFormModal(false);
+                }
+            );
+    }
 
     useEffect(() => {
         const start = dayjs(calendarValue).format("DD/MM/YYYY");
@@ -98,6 +168,7 @@ const OrderForm = ({ setFormModal, setCalendar, calendarValue, tour }) => {
                                 {lang === "rus" ? "Взрослые" : "Adults"}
                             </label>
                             <input
+                                onChange={(e) => setAdultCount(e.target.value)}
                                 type="number"
                                 placeholder={`${
                                     lang === "rus"
@@ -116,6 +187,7 @@ const OrderForm = ({ setFormModal, setCalendar, calendarValue, tour }) => {
                                 {lang === "rus" ? "Дети" : "Kids"}
                             </label>
                             <input
+                                onChange={(e) => setChildCount(e.target.value)}
                                 type="number"
                                 placeholder={`${
                                     lang === "rus"
@@ -136,6 +208,7 @@ const OrderForm = ({ setFormModal, setCalendar, calendarValue, tour }) => {
                                 {lang === "rus" ? "Контакты" : "Contacts"}
                             </label>
                             <input
+                                onChange={(e) => setName(e.target.value)}
                                 type="text"
                                 placeholder={`${
                                     lang === "rus"
@@ -148,19 +221,30 @@ const OrderForm = ({ setFormModal, setCalendar, calendarValue, tour }) => {
                         </div>
                         <div className="grid md:grid-cols-2 gap-2 mt-2">
                             <input
+                                onChange={(e) => setEmail(e.target.value)}
                                 type="text"
                                 placeholder="E - mail *"
                                 className="border border-[#00499F] p-2 mt-2 h-12"
                                 id="datePicker"
                             />
-                            <input
-                                type="text"
+                            <PhoneInput
                                 placeholder={`${
                                     lang === "rus" ? "Телефон *" : "Number *"
                                 } `}
                                 className="border border-[#00499F] p-2 mt-2 h-12"
-                                id="datePicker"
+                                value={phone}
+                                onChange={setPhone}
                             />
+                            {/* <input
+                                // value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                                type="text"
+                                placeholder={`${
+                                    lang === "rus" ? "+xxx xxx xxx" : "Number *"
+                                } `}
+                                className="border border-[#00499F] p-2 mt-2 h-12"
+                                id="datePicker"
+                            /> */}
                         </div>
                     </div>
                     <div className="mt-4 md:mt-8 flex flex-col">
@@ -171,6 +255,7 @@ const OrderForm = ({ setFormModal, setCalendar, calendarValue, tour }) => {
                             {lang === "rus" ? "Дополнительно" : "Additionally"}
                         </label>
                         <input
+                            onChange={(e) => setComments(e.target.value)}
                             type="text"
                             placeholder={`${
                                 lang === "rus"
@@ -186,56 +271,81 @@ const OrderForm = ({ setFormModal, setCalendar, calendarValue, tour }) => {
                             ? "Задать вопрос в WhatsApp"
                             : "Ask a question in WhatsApp"}
                     </p>
-                    <button className="w-full h-12 text-white mt-4 bg-[#0fa03f]">
+                    <p className="text-[#323232] text-base md:text-lg text-center mt-4 cursor-pointer">
+                        {lang === "rus"
+                            ? "Задать вопрос в Telegram"
+                            : "Ask a question in Telegram"}
+                    </p>
+                    <button
+                        onClick={() => {
+                            checker && dataHandler();
+                        }}
+                        className={`w-full h-12 text-white mt-4 ${
+                            checker ? "bg-[#0fa03f]" : "bg-gray-500"
+                        } `}
+                    >
                         {lang === "rus" ? "Оставить заявку" : "Leave a request"}
                     </button>
                     <div>
                         <div className="flex items-center mt-4">
-                            <input type="checkbox" className="ui-checkbox" />
+                            <input
+                                checked={checkBox1}
+                                onChange={(e) => setCheckBox1(e.target.checked)}
+                                type="checkbox"
+                                className="ui-checkbox"
+                            />
                             <div className="ml-2 text-[8px] md:text-sm w-4/5 md:w-auto">
                                 {lang === "rus" ? (
-                                    <div className="flex">
-                                        <p>Нажимая кнопку в соглашаетесь с</p>
-                                        <span className="text-[#00499f]">
-                                            политикой обработки персональных
-                                            данных
-                                        </span>
+                                    <div>
+                                        <p>
+                                            Нажимая кнопку в соглашаетесь с{" "}
+                                            <span className="text-[#00499f]">
+                                                политикой обработки персональных
+                                                данных
+                                            </span>
+                                        </p>
                                     </div>
                                 ) : (
-                                    <div className="flex">
+                                    <div>
                                         <p>
                                             By clicking the button you agree to
-                                            the
+                                            the{" "}
+                                            <span className="text-[#00499f]">
+                                                policy of processing personal
+                                                data
+                                            </span>
                                         </p>
-                                        <span className="text-[#00499f]">
-                                            policy of processing personal data
-                                        </span>
                                     </div>
                                 )}
                             </div>
                         </div>
                         <div className="flex items-center mt-4">
-                            <input type="checkbox" className="ui-checkbox" />
+                            <input
+                                checked={checkBox2}
+                                onChange={(e) => setCheckBox2(e.target.checked)}
+                                type="checkbox"
+                                className="ui-checkbox"
+                            />
                             <div className="ml-2 text-[8px] md:text-sm w-4/5 md:w-auto">
                                 {lang === "rus" ? (
                                     <div className="flex">
                                         <p>
                                             Я согласен получать e - mail
-                                            рассылки о путешествиях с
+                                            рассылки о путешествиях с{" "}
+                                            <span className="font-bold ml-1">
+                                                Vnature
+                                            </span>
                                         </p>
-                                        <span className="font-bold ml-1">
-                                            Vnature
-                                        </span>
                                     </div>
                                 ) : (
                                     <div className="flex">
                                         <p>
                                             I agree to receive e-mail travel
-                                            mailings with
+                                            mailings with{" "}
+                                            <span className="font-bold ml-1">
+                                                Vnature
+                                            </span>
                                         </p>
-                                        <span className="font-bold ml-1">
-                                            Vnature
-                                        </span>
                                     </div>
                                 )}
                             </div>

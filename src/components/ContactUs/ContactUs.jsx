@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import shapka from "../../assets/shapka_banner.JPG";
+import shapka from "../../assets/shapka_banner.webp";
 import { useSelector } from "react-redux";
 
 const ContactUs = () => {
@@ -9,13 +9,13 @@ const ContactUs = () => {
     return (
         <div className="relative">
             <img
-                className="absolute brightness-[.60] top-0 left-0 right-0 h-[40vh] md:h-[55vh] w-[100%] object-cover object-bottom"
+                className="absolute brightness-[.60] top-0 left-0 right-0 h-[25vh] md:h-[55vh] w-[100%] object-cover object-bottom"
                 src={shapka}
                 alt=""
             />
             <div className="content font-montserrat relative z-10">
                 <div className="flex flex-col items-center">
-                    <div className="h-[40vh] md:h-[55vh] whiteTextImportant flex justify-center items-center flex-col">
+                    <div className="h-[25vh] md:h-[55vh] whiteTextImportant flex justify-center items-center flex-col">
                         <h1 className=" text-2xl md:text-4xl font-medium text-white mt-6">
                             {lang === "rus"
                                 ? "Контактная информация"

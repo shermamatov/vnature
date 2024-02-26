@@ -4,7 +4,10 @@ import { useSelector } from "react-redux";
 const NavigationPanel = ({ section, setSection }) => {
     let lang = useSelector((item) => item.tours.lang);
     return (
-        <ul className="flex overflow-auto md:justify-between list-none text-base md:text-xl font-medium font-montserrat sticky top-8 navPanel">
+        <ul
+            id="navigationAnchor"
+            className="w-full hiddenScrollBar flex overflow-auto md:justify-between list-none text-base md:text-xl font-medium font-montserrat top-8 "
+        >
             <li
                 onClick={() => {
                     setSection(1);

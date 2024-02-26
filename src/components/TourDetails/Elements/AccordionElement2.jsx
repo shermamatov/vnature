@@ -11,7 +11,7 @@ export default function AccordionElement2({
     deleteFunction = null,
     setModal = null,
     setOneItem = null,
-    setOneItemEng = console.log("hello"),
+    setOneItemEng = null,
 }) {
     const [expanded, setExpanded] = React.useState(false);
 

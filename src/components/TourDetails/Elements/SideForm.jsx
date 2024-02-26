@@ -1,15 +1,26 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { translateLevel } from "../../../store/reducers/tourReducer";
+import { months, monthsEng } from "../../../consts";
 // import { tour } from "../../../consts";
 
-const SideForm = ({ setPriceModal, tour }) => {
+const SideForm = ({ setPriceModal, tour, isMobile = false, setFormModal }) => {
     let lang = useSelector((item) => item.tours.lang);
+    function checkerLangMonth() {
+        if (lang === "rus") {
+            return months;
+        } else {
+            return monthsEng;
+        }
+    }
+
     return (
-        <div className="md:sticky top-8">
+        <div className={` ${!isMobile ? "md:sticky top-8" : "mt-24"} `}>
             <div
                 onClick={() => setPriceModal(true)}
-                className="flex justify-end cursor-pointer"
+                className={` ${
+                    isMobile ? "hidden" : "flex"
+                } justify-end cursor-pointer`}
             >
                 <div className="flex justify-center items-center relative gap-2.5 w-[70%] py-3 rounded-[10px] bg-[#00499f]">
                     <p className="flex-grow-0 flex-shrink-0 text-lg font-normal font-montserrat text-center text-white">
@@ -49,29 +60,38 @@ const SideForm = ({ setPriceModal, tour }) => {
                             {lang === "rus" ? "Возраст" : "Age"}
                         </p>
                         <p className="text-xl text-left text-black">
-                            {lang === "rus" ? "от" + tour?.age : tour?.age}
+                            {lang === "rus" ? "от " + tour?.age : tour?.age}
                         </p>
                     </div>
                     <div className=" aspect-[14/9] p-3 rounded-[10px] flex flex-col justify-between border-2 border-[#99c8ff]">
                         <p className="text-lg text-left text-[#00499f]">
                             {lang === "rus" ? "Сложность" : "Level"}
                         </p>
-                        <p className="text-xl font-medium text-left text-[#00499f]">
+                        <p className="text-lg md:text-xl font-medium text-left text-[#00499f] capitalize">
                             {lang === "rus"
                                 ? tour?.level
                                 : translateLevel(tour?.level)}
                         </p>
                     </div>
+                    <div className=" aspect-[14/9] p-3 rounded-[10px] flex flex-col justify-between border-2 border-[#99c8ff]">
+                        <p className="text-lg text-left text-[#00499f]">
+                            {lang === "rus" ? "Сезонность" : "Season"}
+                        </p>
+                        <p className="text-base md:text-lg font-medium text-left text-[#00499f] capitalize">
+                            <span>
+                                {checkerLangMonth()[tour?.season?.start - 1]}
+                            </span>{" "}
+                            -
+                            <span className="ml-1">
+                                {checkerLangMonth()[tour?.season?.end - 1]}
+                            </span>
+                        </p>
+                    </div>
                 </div>
-                <p className="text-lg text-start font-medium my-8 text-black">
-                    {lang === "rus" ? "Заезд" : "Arrival"}
-                </p>
-                <input
-                    className="border-2 rounded-sm w-full h-12 pl-2 border-[#99c8ff]"
-                    type="text"
-                    placeholder={`${lang === "rus" ? "заявка" : "request"}`}
-                />
-                <button className="bg-[#00499f] w-full h-12 text-white text-xl font-normal mt-4">
+                <button
+                    onClick={() => setFormModal(true)}
+                    className="bg-[#0fa03f] w-full h-12 text-white text-base md:text-xl font-normal mt-4"
+                >
                     {lang === "rus" ? "Оставить заявку" : "Leave a request"}
                 </button>
                 <p className="text-base my-4 text-center text-black">
@@ -80,11 +100,20 @@ const SideForm = ({ setPriceModal, tour }) => {
                         : "Does not require payment now"}
                 </p>
             </div>
-            <p className="text-lg text-center text-[#00499f] mt-6">
-                {lang === "rus"
-                    ? "Задать вопрос в WhatsApp"
-                    : "Ask a question in WhatsApp"}
-            </p>
+            <a href="#">
+                <p className="text-lg text-center text-[#00499f] mt-6">
+                    {lang === "rus"
+                        ? "Задать вопрос в WhatsApp"
+                        : "Ask a question in WhatsApp"}
+                </p>
+            </a>
+            <a href="#">
+                <p className="text-lg text-center text-[#00499f] mt-6">
+                    {lang === "rus"
+                        ? "Задать вопрос в Telegram"
+                        : "Ask a question in Telegram"}
+                </p>
+            </a>
         </div>
     );
 };
