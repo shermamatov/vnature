@@ -19,7 +19,10 @@ const Block3 = () => {
                 {lang === "rus" ? "Наши туры" : "Our tours"}
             </h2>
             <div className="mt-8 md:mt-16">
-                <div className="content grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div
+                    data-aos="fade-up"
+                    className="content grid grid-cols-1 md:grid-cols-2 gap-8"
+                >
                     {tours.map((item, index) => (
                         <TourCard key={index} item={item} />
                     ))}

@@ -1,7 +1,7 @@
 import React from "react";
-import Admin from "../components/Admin/Admin/Admin";
+import AdminReviews from "../components/Admin/AdminReviews/AdminReviews";
 
-const AdminPage = () => {
+const AdminReviewsPage = () => {
     return (
         <div>
             <img
@@ -10,10 +10,10 @@ const AdminPage = () => {
                 alt=""
             />
             <div className="relative z-10 mt-32 min-h-[80vh]">
-                <Admin />
+                <AdminReviews />
             </div>
         </div>
     );
 };
 
-export default AdminPage;
+export default AdminReviewsPage;

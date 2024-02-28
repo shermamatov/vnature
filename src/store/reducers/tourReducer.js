@@ -21,12 +21,15 @@ import {
 const stater = {
     tours: [],
     reviews: [],
+    allReviews: [],
+    allAcceptedReviews: [],
     tourists: [],
     oneTour: {},
     oneReview: {},
     oneTourReviews: [],
-    lang: localStorage.getItem("lang") || "lang",
+    lang: localStorage.getItem("lang") || "eng",
     user: "",
+    cookies: true,
 };
 
 const toursRef = collection(db, "tours");
@@ -39,7 +42,10 @@ export const reduxTypes = {
     GET_ONE_TOUR: "GET_ONE_TOUR",
     SET_LANG: "SET_LANG",
     SET_USER: "SET_USER",
+    SET_COOKIES: "SET_COOKIES",
     GET_REVIEWS: "GET_REVIEWS",
+    GET_ALL_REVIEWS: "GET_ALL_REVIEWS",
+    GET_ALL_ACCEPTED_REVIEWS: "GET_ALL_ACCEPTED_REVIEWS",
     GET_ONE_TOUR_REVIEWS: "GET_ONE_TOUR_REVIEWS",
     GET_ONE_REVIEW: "GET_ONE_REVIEW",
 };
@@ -56,11 +62,18 @@ export const tourReducer = (state = stater, action) => {
         case reduxTypes.SET_LANG:
             return { ...state, lang: action.payload };
 
+        case reduxTypes.SET_COOKIES:
+            return { ...state, cookies: action.payload };
+
         case reduxTypes.SET_USER:
             return { ...state, user: action.payload };
 
         case reduxTypes.GET_REVIEWS:
             return { ...state, reviews: action.payload };
+        case reduxTypes.GET_ALL_REVIEWS:
+            return { ...state, allReviews: action.payload };
+        case reduxTypes.GET_ALL_ACCEPTED_REVIEWS:
+            return { ...state, allAcceptedReviews: action.payload };
         case reduxTypes.ADD_REVIEW:
             return { ...state, reviews: [...state.reviews, action.payload] };
         case reduxTypes.GET_ONE_TOUR_REVIEWS:
@@ -136,11 +149,23 @@ export const deleteTour = (id) => {
         try {
             const tourDeleteRef = doc(db, "tours", id);
             const data = await getDoc(tourDeleteRef);
-            deleteFile(data.data().mainImg);
-            data.data().memories.forEach((item) => {
-                deleteFile(item.memoriesImage);
-            });
-            data.data().galery.forEach((item) => deleteFile(item));
+            if (data?.data()?.mainImg) {
+                deleteFile(data?.data()?.mainImg);
+                console.log("удалена mainImg");
+            }
+            if (
+                data?.data()?.memories?.length !== 0 &&
+                data?.data()?.memories
+            ) {
+                data?.data()?.memories?.forEach((item) => {
+                    deleteFile(item?.memoriesImage);
+                });
+                console.log("удалена memoriesImage");
+            }
+            if (data?.data()?.galery?.length !== 0 && data?.data()?.galery) {
+                data?.data()?.galery?.forEach((item) => deleteFile(item));
+                console.log("удалена galery");
+            }
             await deleteDoc(tourDeleteRef);
             dispatch(getTours());
         } catch (e) {
@@ -271,6 +296,79 @@ export const getOneTourReviews = (id) => {
             });
         } catch (e) {
             console.log(e);
+        }
+    };
+};
+
+export const getAllReviews = () => {
+    return async (dispatch) => {
+        try {
+            let q = query(toursReviewRef, where("isAccepted", "==", false));
+            let data = await getDocs(q);
+            dispatch({
+                type: reduxTypes.GET_ALL_REVIEWS,
+                payload: data.docs.map((doc) => ({
+                    ...doc.data(),
+                    id: doc.id,
+                })),
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    };
+};
+
+export const getAllAcceptedReviews = () => {
+    return async (dispatch) => {
+        try {
+            let q = query(toursReviewRef, where("isAccepted", "==", true));
+            let data = await getDocs(q);
+            dispatch({
+                type: reduxTypes.GET_ALL_ACCEPTED_REVIEWS,
+                payload: data.docs.map((doc) => ({
+                    ...doc.data(),
+                    id: doc.id,
+                })),
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    };
+};
+
+export const editReview = (id, data) => {
+    return async (dispatch) => {
+        try {
+            const oneReviewRef = doc(db, "reviews", id);
+            await updateDoc(oneReviewRef, data);
+            dispatch(getAllAcceptedReviews());
+            dispatch(getAllReviews());
+            console.log("все готово все изменил");
+        } catch (e) {
+            console.log("все говно");
+            console.log(e);
+        }
+    };
+};
+
+export function getInitials(name) {
+    let nameArr = name.split(" ");
+    if (nameArr.length > 1) {
+        return nameArr[0][0] + nameArr[1][0];
+    } else {
+        return nameArr[0][0] + nameArr[0][0];
+    }
+}
+
+export const deleteReview = (id) => {
+    return async (dispatch) => {
+        try {
+            const reviewDeleteRef = doc(db, "reviews", id);
+            await deleteDoc(reviewDeleteRef);
+            dispatch(getAllAcceptedReviews());
+            dispatch(getAllReviews());
+        } catch (e) {
+            console.log("ЖОПА" + e);
         }
     };
 };
