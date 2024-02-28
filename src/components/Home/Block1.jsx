@@ -1,18 +1,23 @@
 import React from "react";
 import banner from "../../assets/heroBanner.webp";
+import bannerAdap from "../../assets/heroBannerAdap.webp";
 import location from "../../assets/locationIcon.svg";
 import { useSelector } from "react-redux";
 const Block1 = () => {
     let lang = useSelector((item) => item.tours.lang);
+    let width = window.innerWidth;
     return (
         <div className="relative">
             <img
                 className="absolute brightness-[.60] top-0 left-0 right-0 md:h-[100vh] h-[33vh] w-[100%] object-cover"
-                src={banner}
+                src={width < 786 ? bannerAdap : banner}
                 alt=""
             />
             <div className="content flex flex-col justify-around text-white relative z-10 md:h-[100vh] h-[35vh]">
-                <div className="flex flex-col justify-center">
+                <div
+                    data-aos="fade-right"
+                    className="flex flex-col justify-center"
+                >
                     <div className="flex items-center">
                         <img className="w-4 mob:w-6" src={location} alt="" />
                         <h2 className="text-lg md:text-3xl font-medium ml-2">

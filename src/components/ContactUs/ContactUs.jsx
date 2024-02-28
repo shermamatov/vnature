@@ -16,14 +16,17 @@ const ContactUs = () => {
             <div className="content font-montserrat relative z-10">
                 <div className="flex flex-col items-center">
                     <div className="h-[25vh] md:h-[55vh] whiteTextImportant flex justify-center items-center flex-col">
-                        <h1 className=" text-2xl md:text-4xl font-medium text-white mt-6">
+                        <h1
+                            data-aos="fade-down"
+                            className=" text-2xl md:text-4xl font-medium text-white mt-6"
+                        >
                             {lang === "rus"
                                 ? "Контактная информация"
                                 : "Contact information"}
                         </h1>
                     </div>
                     <div className="flex w-full md:flex-row flex-col justify-around mt-16">
-                        <div>
+                        <div data-aos="fade-left">
                             <h4 className="mb-4 text-xl capitalize font-semibold">
                                 {lang === "rus" ? "адрес:" : "address:"}
                             </h4>
@@ -39,7 +42,7 @@ const ContactUs = () => {
                                 )}
                             </p>
                         </div>
-                        <div className="mt-8 md:mt-0">
+                        <div data-aos="fade-top" className="mt-8 md:mt-0">
                             <h4 className="mb-4 text-xl capitalize font-semibold">
                                 {lang === "rus" ? "Телефон:" : "Number:"}
                             </h4>
@@ -50,7 +53,7 @@ const ContactUs = () => {
                                 +996 507 034 477
                             </a>
                         </div>
-                        <div className="mt-8 md:mt-0">
+                        <div data-aos="fade-right" className="mt-8 md:mt-0">
                             <h4 className="mb-4 text-xl capitalize font-semibold">
                                 email
                             </h4>

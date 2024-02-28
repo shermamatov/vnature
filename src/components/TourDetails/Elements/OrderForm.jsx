@@ -170,6 +170,7 @@ const OrderForm = ({
                             <input
                                 onChange={(e) => setAdultCount(e.target.value)}
                                 type="number"
+                                min="0"
                                 placeholder={`${
                                     lang === "rus"
                                         ? "Количество..."
@@ -189,6 +190,7 @@ const OrderForm = ({
                             <input
                                 onChange={(e) => setChildCount(e.target.value)}
                                 type="number"
+                                min="0"
                                 placeholder={`${
                                     lang === "rus"
                                         ? "Количество..."

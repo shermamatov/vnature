@@ -54,6 +54,11 @@
     }
 }
 
+.slick-track {
+    display: flex;
+    align-items: center;
+}
+
 @media (max-width: 1200px) {
     .tableSection {
         font-size: 14px;
@@ -87,11 +92,20 @@
         height: 30px;
         font-size: 0.75rem;
     }
-
-    .slick-next:before,
-    .slick-prev:before {
-        display: none;
+    .slick-prev:before,
+    .slick-next:before {
+        font-size: 46px;
     }
+}
+
+.slick-next {
+    right: 10px;
+    z-index: 20;
+}
+
+.slick-prev {
+    left: -17px;
+    z-index: 20;
 }
 
 /* checkbox settings 👇 */

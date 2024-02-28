@@ -4,7 +4,8 @@ import shapka from "../../assets/shapka_banner.JPG";
 import { useDispatch, useSelector } from "react-redux";
 import ReviewSuccess from "./ReviewSuccess";
 import ReviewsModal from "./ReviewsModal";
-import { getReviews } from "../../store/reducers/tourReducer";
+import { getInitials, getReviews } from "../../store/reducers/tourReducer";
+import { useNavigate } from "react-router-dom";
 const Reviews = () => {
     let lang = useSelector((item) => item.tours.lang);
     let reviews = useSelector((item) => item.tours.reviews);
@@ -13,18 +14,11 @@ const Reviews = () => {
     let [reviewsModal, setReviewsModal] = useState(false);
     let [reviewSuccess, setReviewSuccess] = useState(false);
     let dispatch = useDispatch();
+    let navigate = useNavigate();
+
     useEffect(() => {
         dispatch(getReviews());
     }, []);
-
-    function getInitials(name) {
-        let nameArr = name.split(" ");
-        if (nameArr.length > 1) {
-            return nameArr[0][0] + nameArr[1][0];
-        } else {
-            return nameArr[0][0] + nameArr[0][0];
-        }
-    }
 
     return (
         <>
@@ -63,7 +57,10 @@ const Reviews = () => {
                 <div className="font-montserrat content relative z-10">
                     <div className="h-[25vh] md:h-[50vh] whiteTextImportant">
                         <div className="h-full flex justify-center items-center flex-col">
-                            <h1 className="text-center text-2xl md:text-4xl  text-white mt-6">
+                            <h1
+                                data-aos="fade-down"
+                                className="text-center text-2xl md:text-4xl  text-white mt-6"
+                            >
                                 <span className="font-medium text-center text-white">
                                     {lang === "rus"
                                         ? " Отзывы О Путешествиях с"
@@ -75,12 +72,18 @@ const Reviews = () => {
                             </h1>
                         </div>
                     </div>
-                    <p className="text-black text-xl md:text-2xl font-medium text-center mt-16">
+                    <p
+                        data-aos="fade-right"
+                        className="text-black text-xl md:text-2xl font-medium text-center mt-16"
+                    >
                         {lang === "rus"
                             ? "Спасибо всем, кто возвращаясь из путешествия, делится с нами впечатлениями! Ваши отзывы помогают нам улучшать сервис и делать следующие поездки еще интереснее. Мы уверены, что лучшие решения приходят благодаря сочетанию нашего видения и ваших ожиданий."
                             : "Thanks to everyone who comes back from the trip, share with us impressions! Your feedback helps us improve the service and make the next trips even more interesting. We are sure that the best solutions come from a combination of our vision and your expectations."}
                     </p>
-                    <p className=" text-base md:text-xl mt-16 font-normal text-center text-black">
+                    <p
+                        data-aos="fade-right"
+                        className=" text-base md:text-xl mt-16 font-normal text-center text-black"
+                    >
                         {lang === "rus"
                             ? "Все отзывы публикуются с сохранением авторской орфографии и пунктуации."
                             : "All reviews are published with original spelling and punctuation."}
@@ -88,6 +91,7 @@ const Reviews = () => {
                     <div className="mt-16 md:mt-24">
                         {reviews?.map((item, index) => (
                             <div
+                                data-aos="fade-right"
                                 key={index}
                                 className="flex flex-col mt-8 max-w-[768px] m-auto"
                             >
@@ -101,8 +105,21 @@ const Reviews = () => {
                                 </div>
                                 <p className="mt-4">
                                     {lang === "rus" ? "Тур:" : "Tour:"}
-                                    <span className="text-[#00499F] ml-2">
-                                        {}
+                                    <span
+                                        onClick={() =>
+                                            navigate(
+                                                `/tour/${
+                                                    lang === "rus"
+                                                        ? item?.tourName
+                                                        : item?.tourNameEng
+                                                }/${item?.tourId}`
+                                            )
+                                        }
+                                        className="text-[#00499F] ml-2 cursor-pointer"
+                                    >
+                                        {lang === "rus"
+                                            ? item?.tourName
+                                            : item?.tourNameEng}
                                     </span>
                                 </p>
                                 <p className="mt-4 text-lg">

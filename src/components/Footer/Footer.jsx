@@ -40,24 +40,40 @@ const Footer = () => {
                         <p className="font-bold text-xl">
                             {lang === "rus" ? "Больше" : "More"}
                         </p>
-                        <p
-                            onClick={() => navigate("/about")}
-                            className="font-semibold text-base text-[#5E6282] mt-3 cursor-pointer"
-                        >
-                            {lang === "rus" ? "О нас" : "About Us"}
-                        </p>
-                        <p
-                            onClick={() => navigate("/reviews")}
-                            className="font-semibold text-base text-[#5E6282] mt-2 cursor-pointer"
-                        >
-                            {lang === "rus" ? " Отзывы" : "Reviews"}
-                        </p>
-                        <p
-                            onClick={() => navigate("/tours")}
-                            className="font-semibold text-base text-[#5E6282] mt-2 cursor-pointer"
-                        >
-                            {lang === "rus" ? "Туры" : "Tours"}
-                        </p>
+                        <a href="/about">
+                            <p
+                                onClick={() => navigate("/about")}
+                                className="font-semibold text-base text-[#5E6282] mt-3 cursor-pointer"
+                            >
+                                {lang === "rus" ? "О нас" : "About Us"}
+                            </p>
+                        </a>
+                        <a href="/reviews">
+                            <p
+                                // onClick={() => navigate("/reviews")}
+                                className="font-semibold text-base text-[#5E6282] mt-2 cursor-pointer"
+                            >
+                                {lang === "rus" ? " Отзывы" : "Reviews"}
+                            </p>
+                        </a>
+                        <a href="/tours">
+                            <p
+                                // onClick={() => navigate("/tours")}
+                                className="font-semibold text-base text-[#5E6282] mt-2 cursor-pointer"
+                            >
+                                {lang === "rus" ? "Туры" : "Tours"}
+                            </p>
+                        </a>
+                        <a href="/privacy_policy">
+                            <p
+                                // onClick={() => navigate("/privacy_policy")}
+                                className="font-semibold text-base text-[#5E6282] mt-2 cursor-pointer"
+                            >
+                                {lang === "rus"
+                                    ? "Политика конфиденциальности"
+                                    : "Privacy policy"}
+                            </p>
+                        </a>
                     </div>
                 </div>
                 <p className="m-auto text-center font-bold text-xl my-8 sm:my-12">

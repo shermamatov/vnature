@@ -15,7 +15,10 @@ const AboutUs = () => {
             />
             <div className="content font-montserrat relative z-10">
                 <div className="md:h-[55vh] h-[25vh] whiteTextImportant flex justify-center items-center flex-col">
-                    <h1 className="text-2xl md:text-4xl text-white mt-6">
+                    <h1
+                        data-aos="fade-down"
+                        className="text-2xl md:text-4xl text-white mt-6"
+                    >
                         {lang === "rus" ? (
                             <>
                                 <span className="font-medium text-center text-white">
@@ -38,7 +41,10 @@ const AboutUs = () => {
                     </h1>
                 </div>
                 <div className="max-w-screen-lg w-[100%] m-auto mt-8 md:mt-16">
-                    <p className="text-base md:text-3xl font-medium  text-left text-black">
+                    <p
+                        data-aos="fade-left"
+                        className="text-base md:text-3xl font-medium  text-left text-black"
+                    >
                         {lang === "rus" ? (
                             <>
                                 Наша жизненная философия звучит так: <br />
@@ -58,12 +64,16 @@ const AboutUs = () => {
                         )}
                     </p>
                     <img
+                        data-aos="fade-right"
                         className="mt-8 rounded-md m-auto object-cover aspect-[16/9]"
                         src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fasiamountains.net%2Fupload%2Fslide%2Fslide-1960x857-07.jpg&f=1&nofb=1&ipt=9900085e2fa95687e726f8124a929d28e59c6c041962264312e9cee6277b8763&ipo=images"
                         alt=""
                     />
                 </div>
-                <p className="text-base md:text-2xl font-medium text-left text-black mt-8 md:mt-16 ">
+                <p
+                    data-aos="fade-top"
+                    className="text-base md:text-2xl font-medium text-left text-black mt-8 md:mt-16 "
+                >
                     {lang === "rus" ? (
                         <>
                             Мы знаем, что каждый из наших гостей обязательно

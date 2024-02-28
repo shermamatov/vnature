@@ -3,10 +3,11 @@ import "./Burger.scss";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getTours, reduxTypes } from "../../store/reducers/tourReducer";
+import { admin } from "../../consts";
 
 const BurgerMenu = ({ burgerState, setBurgerState }) => {
+    let user = useSelector((item) => item.tours.user);
     let lang = useSelector((item) => item.tours.lang);
-    let dispatch = useDispatch();
     let navigate = useNavigate();
     return (
         <div
@@ -23,41 +24,6 @@ const BurgerMenu = ({ burgerState, setBurgerState }) => {
             >
                 <div className="relative">
                     <div className="flex justify-end items-center">
-                        {/* <div className="flex">
-                            <p
-                                onClick={() => {
-                                    localStorage.setItem("lang", "rus");
-                                    dispatch({
-                                        type: reduxTypes.SET_LANG,
-                                        payload: "rus",
-                                    });
-                                    dispatch(getTours());
-                                }}
-                                className={`font-body cursor-pointer font-bold text-base ${
-                                    lang === "rus" && "underline"
-                                }`}
-                            >
-                                RU
-                            </p>
-                            <p className="font-body font-bold text-base ml-1">
-                                /
-                            </p>
-                            <p
-                                onClick={() => {
-                                    localStorage.setItem("lang", "eng");
-                                    dispatch({
-                                        type: reduxTypes.SET_LANG,
-                                        payload: "eng",
-                                    });
-                                    dispatch(getTours());
-                                }}
-                                className={`font-body cursor-pointer font-bold text-base ml-1 ${
-                                    lang === "eng" && "underline"
-                                }`}
-                            >
-                                EN
-                            </p>
-                        </div> */}
                         <svg
                             width={20}
                             height={20}
@@ -77,6 +43,16 @@ const BurgerMenu = ({ burgerState, setBurgerState }) => {
                         </svg>
                     </div>
                     <ul className="text-xl font-medium pt-6">
+                        {user === admin && (
+                            <li
+                                onClick={() => {
+                                    setBurgerState(false);
+                                    navigate("/admin");
+                                }}
+                            >
+                                {lang === "rus" ? "Админ" : "Admin"}
+                            </li>
+                        )}
                         <li
                             onClick={() => {
                                 setBurgerState(false);

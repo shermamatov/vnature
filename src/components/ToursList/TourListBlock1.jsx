@@ -20,7 +20,10 @@ const TourListBlock1 = () => {
             />
             <div className="content font-montserrat relative z-10">
                 <div className="h-[25vh] md:h-[55vh] whiteTextImportant flex justify-center items-center flex-col">
-                    <h1 className="text-4xl text-white mt-6">
+                    <h1
+                        data-aos="fade-down"
+                        className="text-4xl text-white mt-6"
+                    >
                         <span className="font-medium text-center text-white">
                             {lang === "rus" ? "Туры" : "Tours"}
                         </span>

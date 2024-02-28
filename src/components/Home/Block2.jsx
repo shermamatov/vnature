@@ -6,7 +6,10 @@ const Block2 = () => {
     return (
         <div className="relative">
             <div className="content flex justify-center py-16 mob:py-32">
-                <h2 className="text-lg sm:text-2xl mob:text-3xl md:text-5xl font-semibold md:font-medium text-center font-montserrat ">
+                <h2
+                    data-aos="fade-down"
+                    className="text-base md:text-wrap text-nowrap sm:text-2xl mob:text-3xl md:text-5xl font-semibold md:font-medium text-center font-montserrat "
+                >
                     {lang === "rus" ? (
                         <>
                             Мы сообщество путешественников
@@ -21,9 +24,15 @@ const Block2 = () => {
                         </>
                     ) : (
                         <>
-                            We are a community of travelers arranging
-                            atmospheric and memorable adventures surrounded by
-                            mountains and nature, created for true enthusiasts.
+                            We are a community of
+                            <br className="mob:block " /> travelers arranging
+                            atmospheric
+                            <br className="mob:block " />
+                            and memorable adventures
+                            <br className="mob:block " />
+                            surrounded by mountains and nature,
+                            <br className="mob:block " /> created for true
+                            enthusiasts.
                         </>
                     )}
                 </h2>

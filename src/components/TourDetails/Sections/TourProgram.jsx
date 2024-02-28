@@ -15,7 +15,7 @@ const TourProgram = ({ tour }) => {
             {programmState && (
                 <TourProgrammModal setProgrammState={setProgrammState} />
             )}
-            <div id="programmAnchor" className="mt-12">
+            <div data-aos="fade-right" id="programmAnchor" className="mt-12">
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 md:mb-8">
                     <h2 className="text-2xl font-semibold md:text-3xl md:font-bold">
                         {lang === "rus" ? "Программа" : "Program"}

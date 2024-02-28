@@ -50,7 +50,7 @@ const TourView = ({ tour }) => {
                           "Kyrgyzstan is a country with an amazing nature that can be talked about in many words. Here"}
                 </p>
             </div>
-            <div>
+            <div data-aos="fade-right">
                 <div className="flex flex-col md:flex-row justify-between my-8 md:my-16">
                     <p className="text-lg md:text-2xl font-semibold">
                         {lang === "rus"

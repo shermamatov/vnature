@@ -1,7 +1,7 @@
 import React from "react";
-import Admin from "../components/Admin/Admin/Admin";
+import AdminTours from "../components/Admin/AdminTours/AdminTours";
 
-const AdminPage = () => {
+const AdminToursPage = () => {
     return (
         <div>
             <img
@@ -10,10 +10,10 @@ const AdminPage = () => {
                 alt=""
             />
             <div className="relative z-10 mt-32 min-h-[80vh]">
-                <Admin />
+                <AdminTours />
             </div>
         </div>
     );
 };
 
-export default AdminPage;
+export default AdminToursPage;

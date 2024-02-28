@@ -13,6 +13,10 @@ import AuthPage from "../pages/AuthPage";
 import { useDispatch, useSelector } from "react-redux";
 import { authListener } from "../store/reducers/tourReducer";
 import { admin } from "../consts";
+import AdminToursPage from "../pages/AdminToursPage";
+import AdminReviewsPage from "../pages/AdminReviewsPage";
+import PrivacyPolicyPage from "../pages/PrivacyPolicyPage";
+import NotFound from "../components/NotFound/NotFound";
 
 const MainRout = () => {
     let user = useSelector((item) => item.tours.user);
@@ -28,11 +32,15 @@ const MainRout = () => {
         { link: "/reviews", element: <ReviewsPage />, id: 5 },
         { link: "/tours", element: <ToursListPage />, id: 6 },
         { link: "/auth", element: <AuthPage />, id: 10 },
+        { link: "/privacy_policy", element: <PrivacyPolicyPage />, id: 11 },
+        { link: "/*", element: <NotFound />, id: 12 },
     ];
     let privateRoutes = [
         { link: "/admin/add", element: <AddTourPage />, id: 7 },
         { link: "/admin", element: <AdminPage />, id: 8 },
         { link: "/admin/edit/:id", element: <EditTourPage />, id: 9 },
+        { link: "/admin/tours", element: <AdminToursPage />, id: 10 },
+        { link: "/admin/reviews", element: <AdminReviewsPage />, id: 11 },
     ];
     return (
         <div>

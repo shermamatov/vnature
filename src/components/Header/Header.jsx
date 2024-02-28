@@ -8,11 +8,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import BurgerMenu from "./BurgerMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { getTours, reduxTypes } from "../../store/reducers/tourReducer";
+import { admin } from "../../consts";
 const Header = () => {
     let [burgerState, setBurgerState] = useState(false);
     let lang = useSelector((item) => item.tours.lang);
     let { pathname } = useLocation();
-
+    let user = useSelector((item) => item.tours.user);
     let navigate = useNavigate();
     let dispatch = useDispatch();
 
@@ -47,13 +48,13 @@ const Header = () => {
                                     });
                                     dispatch(getTours());
                                 }}
-                                className={`font-body cursor-pointer font-bold text-sm md:text-base ml-1 ${
+                                className={`font-body cursor-pointer font-bold text-sm md:text-base ${
                                     lang === "eng" && "underline"
                                 }`}
                             >
                                 EN
                             </p>
-                            <p className="font-body font-bold text-base ml-1">
+                            <p className="font-body font-bold text-base mx-1">
                                 /
                             </p>
                             <p
@@ -89,6 +90,17 @@ const Header = () => {
                             alt=""
                         />
                         <ul className="flex ml-4 font-semibold text-sm lg:text-base">
+                            {user === admin && (
+                                <li
+                                    onClick={() => navigate("/admin")}
+                                    className={`ml-4 cursor-pointer ${
+                                        pathname === "/admin" &&
+                                        "headerUnderLine"
+                                    } `}
+                                >
+                                    {lang === "rus" ? "Админ" : "Admin"}
+                                </li>
+                            )}
                             <li
                                 onClick={() => navigate("/")}
                                 className={`ml-4 cursor-pointer ${
@@ -143,13 +155,13 @@ const Header = () => {
                                     });
                                     dispatch(getTours());
                                 }}
-                                className={`font-body cursor-pointer font-bold text-sm lg:text-base ml-1 ${
+                                className={`font-body cursor-pointer font-bold text-sm lg:text-base  ${
                                     lang === "eng" && "underline"
                                 }`}
                             >
                                 EN
                             </p>
-                            <p className="font-body font-bold text-sm lg:text-base ml-1">
+                            <p className="font-body font-bold text-sm lg:text-base mx-1">
                                 /
                             </p>
                             <p
