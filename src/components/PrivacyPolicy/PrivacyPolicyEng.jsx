@@ -13,242 +13,252 @@ const PrivacyPolicyEng = () => {
                 <div className="content font-montserrat relative z-10">
                     <div className="md:h-[55vh] h-[25vh] whiteTextImportant flex justify-center items-center flex-col">
                         <h1 className="text-2xl md:text-4xl text-white mt-6">
-                            <>
-                                <span className="font-medium text-center text-white">
-                                    Privacy policy
-                                </span>
-                            </>
+                            <span className="font-medium text-center text-white">
+                                Privacy policy
+                            </span>
                         </h1>
                     </div>
                     <div className="mt-16 font-montserrat">
                         <div>
-                            <h2 className="text-2xl font-medium">
-                                Introduction
-                            </h2>
-                            <ol className="list-decimal ml-8 mt-4">
-                                <li>
-                                    The privacy of visitors to our site is very
-                                    important to us and we strive for it
-                                    Protection. In the privacy policy contains a
-                                    description of how to handle personal
-                                    information.
-                                </li>
-                                <li className="mt-2">
-                                    Consent to our use of cookies in accordance
-                                    with the terms of this Policy when you first
-                                    visit our site allows us to use cookies
-                                    every time you visit our website.
-                                </li>
-                            </ol>
-                        </div>
-                        <div className="mt-8">
-                            <h2 className="text-2xl font-medium">
-                                Collect personal information
-                            </h2>
-                            <p className="mt-4">
-                                The following types of personal data can be
-                                collected, stored and used:
+                            <p className="text-lg font-medium">
+                                This Privacy Policy applies to the site under
+                                the domain name russiadiscovery.ru This page
+                                contains information about which information we
+                                (site administration) or third persons can
+                                receive when you use our by site.
                             </p>
-                            <ol className="list-decimal ml-8 mt-2">
-                                <li>
-                                    Information about your computer, including
-                                    your IP address, geographic location,
-                                    browser type and version, and operating
-                                    system;
-                                </li>
-                                <li className="mt-2">
-                                    Information about your visits and the use of
-                                    this site, including source of links,
-                                    duration visits, page views and paths
-                                    navigation on the site;
-                                </li>
-                                <li className="mt-2">
-                                    The information you enter when using the
-                                    services on our site.
-                                </li>
-                                <li className="mt-2">
-                                    The information you post on our site with
-                                    the intention of publishing it on the
-                                    Internet, which includes your name user,
-                                    profile photos and. content of your
-                                    messages;
-                                </li>
-                                <li className="mt-2">
-                                    Information contained in any messages, that
-                                    you send us via email or through our
-                                    website, including content and metadata;
-                                </li>
-                                <li className="mt-2">
-                                    Any other personal information that you send
-                                    to us.
-                                </li>
-                            </ol>
                         </div>
                         <div className="mt-8">
-                            <h2 className="text-2xl font-medium">
-                                Use of personal information
+                            <h2 className="text-2xl font-semibold">
+                                Data collected when visiting the site
                             </h2>
-                            <p className="mt-4">
-                                Personal information provided to us through our
-                                website will be used for the purposes specified
-                                in of this policy or on appropriate pages of the
-                                site. We may use your personal information for
-                                the following purposes:
+                            <p className="text-lg font-medium mt-4">
+                                Personal Data Personal Data with site visits are
+                                transmitted by the user voluntarily, they can
+                                be: name, surname, patronymic, phone numbers,
+                                addresses e-mail, shipping addresses or
+                                providing services, details of the company that
+                                represents the user, position in the company,
+                                which the user represents; form fields may
+                                request other data.
                             </p>
-                            <ol className="list-decimal ml-8 mt-2">
-                                <li>
-                                    Administration of our website and business
-                                </li>
-                                <li className="mt-2">
-                                    Personalization of our site for you
-                                </li>
-                                <li className="mt-2">
-                                    Providing you with the opportunity to use
-                                    services available on our website
-                                </li>
-                                <li className="mt-2">
-                                    Delivery of services purchased through our
-                                    site
-                                </li>
-                                <li className="mt-2">
-                                    Sending notifications via email that you
-                                    specifically requested
-                                </li>
-                                <li className="mt-2">
-                                    sending newsletter to e-mail if you have
-                                    given your consent (you can refuse to send
-                                    at any time)
-                                </li>
-                                <li className="mt-2">
-                                    Work with inquiries and complaints made by
-                                    you or about you relating to our site
-                                </li>
-                                <li className="mt-2">
-                                    Security of our website and fraud prevention
-                                </li>
-                                <li className="mt-2">Other purposes.</li>
-                            </ol>
-                        </div>
-                        <div className="mt-8">
-                            <h2 className="text-2xl font-medium">
-                                Security of your personal information
-                            </h2>
-                            <ol className="list-decimal ml-8 mt-4">
-                                <li>
-                                    We will take reasonable technical and
-                                    organizational precautions to prevent loss,
-                                    improper using or modifying your personal
-                                    information.
-                                </li>
-                                <li className="mt-2">
-                                    We will store all personal information that
-                                    you provide on our password-protected (
-                                    firewall) servers.
-                                </li>
-                                <li className="mt-2">
-                                    All electronic financial transactions
-                                    performed through our site will be protected
-                                    by encryption technology.
-                                </li>
-                                <li className="mt-2">
-                                    You acknowledge that the transmission of
-                                    information via the Internet is inherently
-                                    unsafe and we cannot guarantee the security
-                                    of data over the Internet.
-                                </li>
-                            </ol>
-                        </div>
-                        <div className="mt-8">
-                            <h2 className="text-2xl font-medium">Cookies</h2>
-                            <p className="mt-4">
-                                Our website uses cookies Cookie - is a file
-                                containing an identifier (a string of letters
-                                and numbers) that is sent by the web server to
-                                The web browser is saved by the browser. The
-                                identifier is then sent back to server every
-                                time the browser requests page from the server
-                                Cookies can be either "permanent" or "session":
-                                permanent cookies are stored by the web browser
-                                and remain valid until the deadline their
-                                actions if the user has not deleted them before
-                                expiration session files cookies, on the other
-                                hand, expire at the end user session when the
-                                web browser is closed. Cookies usually do not
-                                contain any information that identifies the user
-                                but the personal information we keep about you
-                                may be related to the information stored in
-                                cookies and obtained from them we use session
-                                cookies only / permanent cookies only / both
-                                session and permanent cookies on our website.
+                            <br />
+                            <p className="text-lg font-medium">
+                                These data are collected for service delivery or
+                                sale of goods, communication with a user or
+                                other user activity on the site, and to send
+                                users the information that they agreed to
+                                receive.
                             </p>
-                            <ol className="list-decimal ml-8 mt-2">
-                                <li>
-                                    Below are the names of the cookies, that we
-                                    use on our website, and the purposes for
-                                    which they are used:
-                                    <ol className="list-decimal ml-8 mt-2">
-                                        <li>
-                                            we use Google Analytics and Adwords
-                                            on our site for computer recognition
-                                            when user INCLUDES ALL KINDS USES
-                                            FOR WHICH COOKIES ARE USED ON YOUR
-                                            SITE VISITS / TRACKS USERS WHEN THEY
-                                            VISIT navigate through the site /
-                                            allow use shopping cart on site /
-                                            improve the convenience site use /
-                                            analyze site use / administration
-                                            site / prevent fraud and enhance
-                                            site security / personalize the site
-                                            for everyone user / target
-                                            advertisements which can be of
-                                            special interest to specific users /
-                                            describe goals.
-                                        </li>
-                                    </ol>
-                                </li>
-                                <li className="mt-2">
-                                    Most browsers allow you refuse to accept
-                                    cookies, for example:
-                                    <ol className="list-decimal ml-8 mt-2">
-                                        <li className="mt-2">
-                                            in Internet Explorer (version 10)
-                                            you can block cookies with using the
-                                            override settings processing cookies
-                                            by clicking "Service", "Browser
-                                            Properties", "Privacy", and then
-                                            "Advanced Settings";
-                                        </li>
-                                        <li className="mt-2">
-                                            in Firefox (version 24) you can lock
-                                            all cookies, by clicking "Tools",
-                                            "Options", "Privacy" by selecting
-                                            "Use custom settings for history"
-                                            from drop-down menu and unchecked
-                                            "Accept cookies from sites";
-                                        </li>
-                                        <li className="mt-2">
-                                            In Chrome (version 29) you can lock
-                                            all cookies, by clicking on
-                                            "Settings and controls" and clicking
-                                            on "Settings" "Show Advanced
-                                            Settings" and "Content Settings" and
-                                            then by selecting "Block Sites from
-                                            setting any data" under the
-                                            "Cookies" header.
-                                        </li>
-                                    </ol>
-                                    <p className="mt-2">
-                                        Blocking all cookies is detrimental will
-                                        affect the usability of many sites If
-                                        you block cookies, you will not be able
-                                        to use all features of our site.
-                                    </p>
-                                </li>
-                                <li className="mt-2">
-                                    Blocking cookies will negatively affect the
-                                    usability of many websites.
-                                </li>
-                            </ol>
+                            <br />
+                            <p className="text-lg font-medium">
+                                The data can be used to send text and graphic to
+                                user information, including promotional
+                                information, via SMS notifications, e-mails
+                                mail, any messengers (WhatsApp, Telegram and
+                                others), social networks (VKontakte and others).
+                                If the user disagrees with the by this
+                                paragraph, it may waive from receiving the
+                                mailing list by going to reference in each
+                                letter, and report a refusal to receive
+                                information through messengers, social media.
+                            </p>
+                            <br />
+                            <p className="text-lg font-medium">
+                                We do not verify the validity of the data,
+                                however, do not guarantee quality order
+                                execution or feedback from us incorrect data.
+                            </p>
+                            <br />
+                            <p className="text-lg font-medium">
+                                Data collected by forms available on the site to
+                                fill in (e.g., registration, ordering,
+                                subscription, withdrawal, feedback and other).
+                            </p>
+                            <br />
+                            <p className="text-lg font-medium">
+                                The forms established on the site may be
+                                transmitted data both directly to the site and
+                                to the sites third-party organizations (service
+                                scripts external organizations).
+                            </p>
+                            <br />
+                            <p className="text-lg font-medium">
+                                Data can also be collected through technology
+                                cookies (cookies) both directly by the site and
+                                scripts of third-party services. These data
+                                collected automatically, sending these You can
+                                disable data by disabling cookies (cookies) in
+                                the browser where the site opens.
+                            </p>
+                            <br />
+                            <br />
+                            <strong className="text-lg">
+                                Not personal data
+                            </strong>
+                            <p className="text-lg font-medium">
+                                Except personal data when visiting the site
+                                collected not personal data, their collection is
+                                performed automatically by a web server on which
+                                is located site, by means of CMS (system site),
+                                third-party scripts management organizations
+                                installed on the site. To data automatically
+                                collected, are: IP address and the country of
+                                its registration, the name of the domain from
+                                which you came to us, the transitions of
+                                visitors with one page of the site on other
+                                information which your browser provides
+                                voluntarily when site visit, cookies (cookies),
+                                are recorded Visits, other data collected by
+                                enumerators analysts of third-party
+                                organizations on the site.
+                            </p>
+                            <br />
+                            <p className="text-lg font-medium">
+                                These data are not documented and aimed at
+                                improving customer service, Improving the
+                                usability of the site, analysis attendance.
+                            </p>
+                            <br />
+                            <br />
+                            <strong className="text-lg">
+                                Providing data to third parties
+                            </strong>
+                            <p className="text-lg font-medium">
+                                We do not disclose personal information
+                                companies, organizations and individuals, not
+                                including related to us. Exceptions are cases,
+                                the following.
+                            </p>
+                            <br />
+                            <strong className="text-lg">
+                                User data in the public domain
+                            </strong>
+                            <p className="text-lg font-medium">
+                                User’s personal data may be published in common
+                                access under the functionality of the site, for
+                                example, when leaving reviews may be published
+                                specified user name, such activity on the site
+                                is voluntary and the user is consent to such
+                                publication.
+                            </p>
+                            <br />
+                            <strong className="text-lg">
+                                When required by law
+                            </strong>
+                            <p className="text-lg font-medium">
+                                Information may be disclosed for to prevent
+                                fraud or other wrongful acts; on request
+                                legislation and in other cases, provided for by
+                                law.
+                            </p>
+                            <br />
+                            <strong className="text-lg">
+                                To provide services, meet obligations
+                            </strong>
+                            <p className="text-lg font-medium">
+                                User agrees that the personal information may be
+                                transmitted to third parties in for the purpose
+                                of rendering services ordered on the site, other
+                                obligations to by the user. To such persons, for
+                                example, includes courier service, postal
+                                services, freight services and others.
+                            </p>
+                            <br />
+                            <strong className="text-lg">
+                                Services of third-party organizations installed
+                                at website
+                            </strong>
+                            <p className="text-lg font-medium">
+                                On the site can be installed forms, who collect
+                                personal information from others in this case,
+                                the collection, storage and personal information
+                                protection carried out by external organizations
+                                in in accordance with their privacy policy.
+                            </p>
+                            <br />
+                            <p className="text-lg font-medium">
+                                Collection, storage and protection of received
+                                from third-party information organization is
+                                carried out in in accordance with this policy
+                                confidentiality.
+                            </p>
+                            <br />
+                            <strong className="text-lg">
+                                How we protect your information
+                            </strong>
+                            <p className="text-lg font-medium">
+                                We take appropriate security measures
+                                Collection, storage and processing of collected
+                                data to protect them from unauthorized access,
+                                modification, disclosure or destruction, limit
+                                our employees, contractors and agents access to
+                                personal data, permanently improve ways of
+                                collecting, storing and data processing,
+                                including physical measures security, to counter
+                                unauthorized access to our systems.
+                            </p>
+                            <br />
+                            <strong className="text-lg">
+                                Your agreement to these terms
+                            </strong>
+                            <p className="text-lg font-medium">
+                                By using this site, you express your consent
+                                with this privacy policy. If you do not agree
+                                with this policy, please do not use our website.
+                                Your further use of the site after making
+                                changes to true policy will be seen as your
+                                acceptance of these changes.
+                            </p>
+                            <br />
+                            <strong className="text-lg">Disclaimer</strong>
+                            <p className="text-lg font-medium">
+                                Privacy policy is not applicable to any other
+                                sites and not applicable to third party websites
+                                that may contain references to our website and
+                                from which they can links to the site, as well
+                                as links with this website to other Internet
+                                sites. We do not carry Responsibility for other
+                                websites.
+                            </p>
+                            <br />
+                            <strong className="text-lg">
+                                Changes in the privacy policy{" "}
+                            </strong>
+                            <p className="text-lg font-medium">
+                                We have discretion to update this privacy policy
+                                in any time. In this case we will publish the
+                                notice on the home page of our site. We
+                                recommend check this page regularly to keep
+                                abreast of any changes to the how we protect
+                                user information, which we collect. Using the
+                                site, you accept responsibility for periodic
+                                review of the policy privacy and changes to it.
+                            </p>
+                            <br />
+                            <strong className="text-lg">
+                                How to contact us
+                            </strong>
+                            <p className="text-lg font-medium">
+                                If you have any policy questions privacy, use of
+                                the site or other If you have any questions
+                                about the site, please contact us.
+                            </p>
+                            <p className="mt-2 text-lg font-medium">
+                                Tel:{" "}
+                                <a className="text-[#00499f]" href="/">
+                                    +996 777 777 777
+                                </a>
+                            </p>
+                            <p className="text-lg font-medium">
+                                Email:{" "}
+                                <a
+                                    className="text-[#00499f]"
+                                    href="mailto:vnature@gmail.com"
+                                >
+                                    vnature@gmail.com
+                                </a>
+                            </p>
                         </div>
                     </div>
                 </div>

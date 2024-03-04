@@ -62,6 +62,19 @@ const ReviewsModal = ({
         !isTour && dispatch(getOneTour(tourId));
     }, [tourId]);
 
+    useEffect(() => {
+        const tx = document.getElementById("autoTextarea");
+        tx?.setAttribute(
+            "style",
+            "height:" + tx.scrollHeight + "px;overflow-y:hidden;"
+        );
+        tx?.addEventListener("input", OnInput, false);
+        function OnInput() {
+            this.style.height = "auto";
+            this.style.height = this.scrollHeight + "px";
+        }
+    }, [reviewDesc]);
+
     return (
         <div
             onClick={(e) => e.stopPropagation()}
@@ -92,15 +105,14 @@ const ReviewsModal = ({
                     type="text"
                 />
                 <input
-                    onChange={(e) => setReviewDesc(e.target.value)}
+                    onChange={(e) => setCountry(e.target.value)}
                     className="border border-[#00499F] w-full h-10 pl-2 mt-3"
                     placeholder={
-                        lang === "rus"
-                            ? "Ваше впечатление о туре"
-                            : "Your impression of the tour"
+                        lang === "rus" ? "Ваша страна" : "Your country"
                     }
                     type="text"
                 />
+
                 <select
                     defaultValue={" "}
                     onChange={(e) => setFrom(e.target.value)}
@@ -133,15 +145,28 @@ const ReviewsModal = ({
                         {lang === "rus" ? "Другое" : "Other"}
                     </option>
                 </select>
-                <input
-                    onChange={(e) => setCountry(e.target.value)}
+                {/* <input
+                    onChange={(e) => setReviewDesc(e.target.value)}
                     className="border border-[#00499F] w-full h-10 pl-2 mt-3"
                     placeholder={
-                        lang === "rus" ? "Ваша страна" : "Your country"
+                        lang === "rus"
+                            ? "Ваше впечатление о туре"
+                            : "Your impression of the tour"
                     }
                     type="text"
-                />
-                <p className="text-[10px] text-center underline mt-4">
+                /> */}
+                <textarea
+                    onChange={(e) => setReviewDesc(e.target.value)}
+                    className="border border-[#00499F] w-full min-h-24 pl-2 mt-3"
+                    placeholder={
+                        lang === "rus"
+                            ? "Ваше впечатление о туре"
+                            : "Your impression of the tour"
+                    }
+                    type="text"
+                    id="autoTextarea"
+                ></textarea>
+                <p className="text-xs font-semibold text-center underline mt-4">
                     {lang === "rus"
                         ? "Все отзывы публикуются с сохранением авторской орфографии и пунктуации."
                         : "All reviews are published with original spelling and. punctuation."}

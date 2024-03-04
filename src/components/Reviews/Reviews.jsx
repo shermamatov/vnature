@@ -66,7 +66,7 @@ const Reviews = () => {
                                         ? " Отзывы О Путешествиях с"
                                         : "Travel Reviews with"}
                                 </span>
-                                <span className="font-bold text-center capitalize text-white ml-2">
+                                <span className="font-cunia font-bold text-center capitalize text-white ml-2">
                                     VNATURE
                                 </span>
                             </h1>
@@ -74,7 +74,7 @@ const Reviews = () => {
                     </div>
                     <p
                         data-aos="fade-right"
-                        className="text-black text-xl md:text-2xl font-medium text-center mt-16"
+                        className="text-black text-xl md:text-2xl font-medium text-start mt-16 max-w-screen-lg w-[100%] m-auto"
                     >
                         {lang === "rus"
                             ? "Спасибо всем, кто возвращаясь из путешествия, делится с нами впечатлениями! Ваши отзывы помогают нам улучшать сервис и делать следующие поездки еще интереснее. Мы уверены, что лучшие решения приходят благодаря сочетанию нашего видения и ваших ожиданий."
@@ -99,9 +99,14 @@ const Reviews = () => {
                                     <div className="w-14 h-14 md:w-20 md:h-20 font-semibold bg-[#00499F] rounded-full flex justify-center items-center text-white border-8 border-[#A0CCFF]">
                                         {getInitials(item?.name)}
                                     </div>
-                                    <p className="text-xl font-semibold ml-4">
-                                        {item?.name}
-                                    </p>
+                                    <div>
+                                        <p className="text-xl font-semibold ml-4">
+                                            {item?.name}
+                                        </p>
+                                        <p className="text-base font-medium ml-4 text-[#00499F]">
+                                            {item?.country}
+                                        </p>
+                                    </div>
                                 </div>
                                 <p className="mt-4">
                                     {lang === "rus" ? "Тур:" : "Tour:"}

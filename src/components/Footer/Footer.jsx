@@ -14,11 +14,11 @@ const Footer = () => {
     return (
         <div className="mt-8 relative z-20 bg-white py-8">
             <div className="content font-montserrat">
-                <div>
-                    <img className="w-36 md:w-52" src={logo} alt="" />
+                <div className="">
+                    <img className="m-auto w-36 md:w-52" src={logo} alt="" />
                 </div>
-                <div className="flex sm:flex-row flex-col mt-8">
-                    <div className="flex flex-col">
+                <div className="flex sm:justify-around sm:flex-row flex-col mt-8">
+                    <div className="flex flex-col items-center">
                         <p className="font-bold text-xl">
                             {lang === "rus" ? "Контакты" : "Contacts"}
                         </p>
@@ -36,7 +36,7 @@ const Footer = () => {
                                 : "Kyrgyzstan, Osh city"}
                         </p>
                     </div>
-                    <div className="flex flex-col mt-8 sm:mt-0 sm:ml-16">
+                    <div className="flex flex-col items-center mt-8 sm:mt-0 sm:ml-8">
                         <p className="font-bold text-xl">
                             {lang === "rus" ? "Больше" : "More"}
                         </p>
@@ -75,30 +75,69 @@ const Footer = () => {
                             </p>
                         </a>
                     </div>
+                    <div className="flex flex-col items-center sm:mt-0 mt-8 ">
+                        <p className="text-center font-bold text-xl ">
+                            {lang === "rus" ? "Мы здесь" : "We're here"}
+                        </p>
+                        <div
+                            className="flex w-full max-w-[420px] justify-between mt-8
+                        "
+                        >
+                            <a
+                                target="_blank"
+                                href="https://www.instagram.com/vnature.kg?igsh=MWdzM29lNmp6YnZ6YQ=="
+                            >
+                                <img
+                                    className="mob:w-10 w-8"
+                                    src={instagram}
+                                    alt=""
+                                />
+                            </a>
+                            <a
+                                href="https://www.facebook.com/profile.php?id=61553218016713&mibextid=dGKdO6"
+                                target="_blank"
+                            >
+                                <img
+                                    className="mob:w-10 w-8 sm:ml-2"
+                                    src={faceBook}
+                                    alt=""
+                                />
+                            </a>
+                            <a target="_blank" href="https://vk.com/vnaturekg">
+                                <img
+                                    className="mob:w-10 w-8 sm:ml-2"
+                                    src={vkIcon}
+                                    alt=""
+                                />
+                            </a>
+                            <a
+                                href="https://www.tiktok.com/@vnature.kg"
+                                target="_blank"
+                            >
+                                <img
+                                    className="mob:w-10 w-8 sm:ml-2"
+                                    src={tiktok}
+                                    alt=""
+                                />
+                            </a>
+                            <a target="_blank" href="https://wa.me/554034477">
+                                <img
+                                    className="mob:w-10 w-8 sm:ml-2"
+                                    src={whatsapp}
+                                    alt=""
+                                />
+                            </a>
+                            <a target="_blank" href="/">
+                                <img
+                                    className="mob:w-10 w-8 sm:ml-2"
+                                    src={telegram}
+                                    alt=""
+                                />
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <p className="m-auto text-center font-bold text-xl my-8 sm:my-12">
-                    {lang === "rus" ? "Мы здесь" : "We're here"}
-                </p>
-                <div className="flex w-full max-w-[420px] justify-between m-auto">
-                    <a href="#">
-                        <img className="mob:w-10 w-8" src={instagram} alt="" />
-                    </a>
-                    <a href="https://www.facebook.com/profile.php?id=61553218016713&mibextid=dGKdO6">
-                        <img className="mob:w-10 w-8" src={faceBook} alt="" />
-                    </a>
-                    <a href="https://vk.com/vnaturekg">
-                        <img className="mob:w-10 w-8" src={vkIcon} alt="" />
-                    </a>
-                    <a href="https://www.tiktok.com/@vnature.kg">
-                        <img className="mob:w-10 w-8" src={tiktok} alt="" />
-                    </a>
-                    <a href="https://wa.me/554034477">
-                        <img className="mob:w-10 w-8" src={whatsapp} alt="" />
-                    </a>
-                    <a href="#">
-                        <img className="mob:w-10 w-8" src={telegram} alt="" />
-                    </a>
-                </div>
+
                 <div>
                     <p className="text-sm sm:text-xl text-center font-normal text-[#5E6282] my-8">
                         All rights reserved@vnature.com

@@ -70,9 +70,19 @@ export default function AccordionElement2({
                 <AccordionDetails>
                     <div className="-mt-4">
                         {item?.importantDesc.split(";").map((item, index) => (
-                            <p className="md:text-sm text-xs mt-2 " key={index}>
-                                {item}
-                            </p>
+                            <div
+                                className="md:text-sm text-xs mt-2 "
+                                key={index}
+                            >
+                                {item?.split("!!").length === 1 ? (
+                                    <p>{item?.split("!!")[0]}</p>
+                                ) : (
+                                    <p>
+                                        <strong>{item?.split("!!")[0]}</strong>
+                                        {item?.split("!!")[1]}
+                                    </p>
+                                )}
+                            </div>
                         ))}
                     </div>
                 </AccordionDetails>

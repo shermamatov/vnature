@@ -13,34 +13,53 @@ const OrderForm = ({
     setOrderError,
     setOrderSuccess,
     setLoader,
+    setHotelModal,
 }) => {
     let lang = useSelector((item) => item.tours.lang);
     let [dayStart, setDayStart] = React.useState(null);
     let [dayEnd, setDayEnd] = React.useState(null);
-    let [checker, setChecker] = useState(false);
     let [childCount, setChildCount] = useState(0);
     let [adultCount, setAdultCount] = useState(1);
-    let [phone, setPhone] = useState("+");
+    let [phone, setPhone] = useState("");
     let [name, setName] = useState("");
     let [comments, setComments] = useState("");
     let [email, setEmail] = useState("");
-    let [checkBox1, setCheckBox1] = useState(true);
+    let [checkBox1, setCheckBox1] = useState(false);
     let [checkBox2, setCheckBox2] = useState(true);
+    let [hotel, setHotel] = useState(false);
 
-    useEffect(() => {
+    let [nameChecker, setNameChecker] = useState(false);
+    let [phoneChecker, setPhoneChecker] = useState(false);
+    let [emailChecker, setEmailChecker] = useState(false);
+    let [calendarChecker, setCalendarChecker] = useState(false);
+    let [checkboxChecker, setCheckBoxChecker] = useState(false);
+
+    function submitHandler() {
+        if (!name) {
+            setNameChecker(true);
+        }
+        if (!phone) {
+            setPhoneChecker(true);
+        }
+        if (!email) {
+            setEmailChecker(true);
+        }
+        if (dayStart === "Invalid Date") {
+            setCalendarChecker(true);
+        }
+        if (!checkBox1) {
+            setCheckBoxChecker(true);
+        }
         if (
             name &&
             phone &&
             email &&
-            calendarValue !== "Invalid Date" &&
-            checkBox1 &&
-            checkBox2
+            dayStart !== "Invalid Date" &&
+            checkBox1
         ) {
-            setChecker(true);
-        } else {
-            setChecker(false);
+            dataHandler();
         }
-    }, [name, phone, email, checkBox1, checkBox2]);
+    }
 
     function dataHandler() {
         let obj = {
@@ -52,6 +71,7 @@ const OrderForm = ({
             childCount,
             email,
             dateStart: `${dayjs(calendarValue).format("DD/MM/YYYY")}`,
+            hotel: hotel ? "Да" : "Нет",
         };
         setLoader(true);
         emailjs
@@ -85,6 +105,19 @@ const OrderForm = ({
         setDayStart(start);
         setDayEnd(end);
     }, [calendarValue]);
+
+    useEffect(() => {
+        const tx = document.getElementById("autoTextarea2");
+        tx?.setAttribute(
+            "style",
+            "height:" + tx.scrollHeight + "px;overflow-y:hidden;"
+        );
+        tx?.addEventListener("input", OnInput, false);
+        function OnInput() {
+            this.style.height = "auto";
+            this.style.height = this.scrollHeight + "px";
+        }
+    }, [comments]);
 
     return (
         <div className="py-8 overflow-y-scroll hiddenScrollBar w-[90%] max-w-screen-lg">
@@ -143,7 +176,7 @@ const OrderForm = ({
                     </p>
                     <div className="bg-[#00499F] h-[1px] blur-[0.7px] mt-4"></div>
                     <div className="mt-4 md:mt-8 grid grid-cols-4 gap-x-1 md:grid-rows-1">
-                        <div className="col-span-4 md:col-span-2 row-span-1 md:mb-0 mb-3">
+                        <div className="col-span-4 md:col-span-2 row-span-1 md:mb-0 mb-3 flex flex-col">
                             <label
                                 className="font-semibold text-base text-left text-[#00499f]"
                                 htmlFor="datePicker"
@@ -152,12 +185,32 @@ const OrderForm = ({
                                     ? "Дата заезда"
                                     : "Arrival date"}
                             </label>
+                            {calendarChecker && (
+                                <label
+                                    className="text-red-500 -mb-2"
+                                    htmlFor="datePicker"
+                                >
+                                    {lang === "rus"
+                                        ? "пожалуйста выберите дату*"
+                                        : "Please select date*"}
+                                </label>
+                            )}
                             <div
                                 onClick={() => setCalendar(true)}
                                 className="text-xs md:text-base flex items-center border border-[#00499F] p-2 mt-2 h-12 cursor-pointer"
                                 id="datePicker"
                             >
-                                {dayStart} - {dayEnd}
+                                {dayStart === "Invalid Date" ? (
+                                    <p className="opacity-55">
+                                        {lang === "rus"
+                                            ? "пожалуйста выберите дату*"
+                                            : "Please select date*"}
+                                    </p>
+                                ) : (
+                                    <>
+                                        {dayStart} - {dayEnd}
+                                    </>
+                                )}
                             </div>
                         </div>
                         <div className="flex items-center justify-between md:flex-col col-span-4 md:col-span-1">
@@ -209,8 +262,21 @@ const OrderForm = ({
                             >
                                 {lang === "rus" ? "Контакты" : "Contacts"}
                             </label>
+                            {nameChecker && (
+                                <label
+                                    className="text-red-500 -mb-2"
+                                    htmlFor="datePicker"
+                                >
+                                    {lang === "rus"
+                                        ? "пожалуйста введите свое имя*"
+                                        : "Please enter your name*"}
+                                </label>
+                            )}
                             <input
-                                onChange={(e) => setName(e.target.value)}
+                                onChange={(e) => {
+                                    setName(e.target.value);
+                                    setNameChecker(false);
+                                }}
                                 type="text"
                                 placeholder={`${
                                     lang === "rus"
@@ -222,31 +288,51 @@ const OrderForm = ({
                             />
                         </div>
                         <div className="grid md:grid-cols-2 gap-2 mt-2">
-                            <input
-                                onChange={(e) => setEmail(e.target.value)}
-                                type="text"
-                                placeholder="E - mail *"
-                                className="border border-[#00499F] p-2 mt-2 h-12"
-                                id="datePicker"
-                            />
-                            <PhoneInput
-                                placeholder={`${
-                                    lang === "rus" ? "Телефон *" : "Number *"
-                                } `}
-                                className="border border-[#00499F] p-2 mt-2 h-12"
-                                value={phone}
-                                onChange={setPhone}
-                            />
-                            {/* <input
-                                // value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                                type="text"
-                                placeholder={`${
-                                    lang === "rus" ? "+xxx xxx xxx" : "Number *"
-                                } `}
-                                className="border border-[#00499F] p-2 mt-2 h-12"
-                                id="datePicker"
-                            /> */}
+                            <div>
+                                {emailChecker && (
+                                    <label
+                                        className="text-red-500 -mb-4"
+                                        htmlFor="datePicker"
+                                    >
+                                        {lang === "rus"
+                                            ? "пожалуйста введите свой E - mail*"
+                                            : "Please enter your E - mail*"}
+                                    </label>
+                                )}
+                                <input
+                                    onChange={(e) => {
+                                        setEmail(e.target.value);
+                                        setEmailChecker(false);
+                                        setPhoneChecker(false);
+                                    }}
+                                    type="text"
+                                    placeholder="E - mail *"
+                                    className="border border-[#00499F] p-2 mt-2 h-12 w-full"
+                                    id="datePicker"
+                                />
+                            </div>
+                            <div>
+                                {phoneChecker && (
+                                    <label
+                                        className="text-red-500 -mb-2"
+                                        htmlFor="datePicker"
+                                    >
+                                        {lang === "rus"
+                                            ? "пожалуйста введите свой номер*"
+                                            : "Please enter your number*"}
+                                    </label>
+                                )}
+                                <PhoneInput
+                                    placeholder={`${
+                                        lang === "rus"
+                                            ? "Телефон *"
+                                            : "Number *"
+                                    } `}
+                                    className="border border-[#00499F] p-2 mt-2 h-12"
+                                    value={phone}
+                                    onChange={setPhone}
+                                />
+                            </div>
                         </div>
                     </div>
                     <div className="mt-4 md:mt-8 flex flex-col">
@@ -256,7 +342,7 @@ const OrderForm = ({
                         >
                             {lang === "rus" ? "Дополнительно" : "Additionally"}
                         </label>
-                        <input
+                        <textarea
                             onChange={(e) => setComments(e.target.value)}
                             type="text"
                             placeholder={`${
@@ -264,9 +350,29 @@ const OrderForm = ({
                                     ? "Комментарии (необезательно)"
                                     : "Comments (no pressure)"
                             }`}
-                            className="border border-[#00499F] p-2 mt-2 h-12"
-                            id="datePicker"
+                            className="border border-[#00499F] p-2 mt-2 min-h-24"
+                            id="autoTextarea2"
+                        ></textarea>
+                    </div>
+                    <div className="flex mt-4 items-center">
+                        <p
+                            onClick={() => setHotelModal(true)}
+                            className="font-semibold text-sm md:text-base text-left text-[#00499f] underline cursor-pointer"
+                        >
+                            {lang === "rus"
+                                ? "Забронировать отель"
+                                : "Book a hotel"}
+                        </p>
+                        <input
+                            checked={hotel}
+                            onChange={(e) => setHotel(e.target.checked)}
+                            type="checkbox"
+                            className="ui-checkbox ml-2 md:ml-4"
+                            id="checkbox-hotel"
                         />
+                        <p className="ml-1 text-sm md:text-base">
+                            {lang === "rus" ? "(по желанию)" : "(optional)"}
+                        </p>
                     </div>
                     <p className="text-[#323232] text-base md:text-lg text-center mt-8 cursor-pointer">
                         {lang === "rus"
@@ -279,32 +385,39 @@ const OrderForm = ({
                             : "Ask a question in Telegram"}
                     </p>
                     <button
-                        onClick={() => {
-                            checker && dataHandler();
-                        }}
-                        className={`w-full h-12 text-white mt-4 ${
-                            checker ? "bg-[#0fa03f]" : "bg-gray-500"
-                        } `}
+                        onClick={submitHandler}
+                        className={`w-full h-12 text-white mt-4 bg-[#0fa03f]`}
                     >
                         {lang === "rus" ? "Оставить заявку" : "Leave a request"}
                     </button>
-                    <div>
-                        <div className="flex items-center mt-4">
+                    <div className="mt-4">
+                        {checkboxChecker && (
+                            <label className="text-red-500" htmlFor="checkbox1">
+                                {lang === "rus"
+                                    ? "*чтобы отправить заявку поставте галочку"
+                                    : "*To send the application check"}
+                            </label>
+                        )}
+                        <div className="flex items-center">
                             <input
                                 checked={checkBox1}
                                 onChange={(e) => setCheckBox1(e.target.checked)}
                                 type="checkbox"
                                 className="ui-checkbox"
+                                id="checkbox1"
                             />
                             <div className="ml-2 text-[8px] md:text-sm w-4/5 md:w-auto">
                                 {lang === "rus" ? (
                                     <div>
                                         <p>
                                             Нажимая кнопку в соглашаетесь с{" "}
-                                            <span className="text-[#00499f]">
+                                            <a
+                                                href="/privacy_policy"
+                                                className="text-[#00499f]"
+                                            >
                                                 политикой обработки персональных
                                                 данных
-                                            </span>
+                                            </a>
                                         </p>
                                     </div>
                                 ) : (
@@ -312,10 +425,13 @@ const OrderForm = ({
                                         <p>
                                             By clicking the button you agree to
                                             the{" "}
-                                            <span className="text-[#00499f]">
+                                            <a
+                                                href="/privacy_policy"
+                                                className="text-[#00499f]"
+                                            >
                                                 policy of processing personal
                                                 data
-                                            </span>
+                                            </a>
                                         </p>
                                     </div>
                                 )}

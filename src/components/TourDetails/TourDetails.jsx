@@ -14,6 +14,7 @@ import OrderError from "./Elements/OrderError";
 import Galery from "./Elements/Galery";
 import ReviewsModal from "../Reviews/ReviewsModal";
 import ReviewSuccess from "../Reviews/ReviewSuccess";
+import HotelModal from "./Elements/HotelModal";
 
 const TourDetails = () => {
     let tour = useSelector((item) => item.tours.oneTour);
@@ -28,6 +29,7 @@ const TourDetails = () => {
     let [loader, setLoader] = useState(false);
     let [reviewsModal, setReviewsModal] = useState(false);
     let [reviewSuccess, setReviewSuccess] = useState(false);
+    let [hotelModal, setHotelModal] = useState(false);
     let [galeryStart, setGaleryStart] = useState(0);
 
     const [calendarValue, setCalendarValue] = React.useState(
@@ -68,8 +70,8 @@ const TourDetails = () => {
                                 preserveAspectRatio="xMidYMid meet"
                             >
                                 <path
-                                    fill-rule="evenodd"
-                                    clip-rule="evenodd"
+                                    fillRule="evenodd"
+                                    clipRule="evenodd"
                                     d="M13.9997 12.5L12.4999 14L7.99972 9.5L3.49978 14L1.99975 12.5L6.49987 7.99998L1.99975 3.49999L3.49978 1.99999L7.99972 6.49998L12.4999 1.99999L13.9997 3.49999L9.49977 7.99998L13.9997 12.5Z"
                                     fill="white"
                                 />
@@ -106,6 +108,7 @@ const TourDetails = () => {
                         setFormModal={setFormModal}
                         setOrderError={setOrderError}
                         setOrderSuccess={setOrderSuccess}
+                        setHotelModal={setHotelModal}
                     />
                 </div>
             )}
@@ -152,6 +155,14 @@ const TourDetails = () => {
                     <ReviewSuccess setReviewSuccess={setReviewSuccess} />
                 </div>
             )}
+            {hotelModal && (
+                <div
+                    onClick={() => setHotelModal(false)}
+                    className="fixed z-20 top-0 bottom-0 left-0 right-0 backdrop-brightness-50 backdrop-blur-sm flex justify-center items-center"
+                >
+                    <HotelModal setHotelModal={setHotelModal} />
+                </div>
+            )}
             <>
                 <TourBlock1
                     setGalery={setGalery}
@@ -168,6 +179,7 @@ const TourDetails = () => {
                     setGalery={setGalery}
                     setGaleryStart={setGaleryStart}
                     setReviewsModal={setReviewsModal}
+                    setHotelModal={setHotelModal}
                 />
             </>
         </div>

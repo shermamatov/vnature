@@ -20,11 +20,7 @@ export default function CalendarModal({ setCalendar, setCalendarValue, tour }) {
         setMonths(arr);
         // const b = a.add(7, "day");
     }, []);
-    document.querySelectorAll(".MuiPickersDay-root").forEach((item) => {
-        item.addEventListener("click", function (e) {
-            setCalendar(false);
-        });
-    });
+
     return (
         <div
             onClick={() => setCalendar(false)}
@@ -51,6 +47,7 @@ export default function CalendarModal({ setCalendar, setCalendarValue, tour }) {
                                         )}
                                         onChange={(newValue) => {
                                             setCalendarValue(newValue);
+                                            setCalendar(false);
                                         }}
                                     />
                                 </DemoItem>

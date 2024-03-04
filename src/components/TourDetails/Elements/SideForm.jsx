@@ -60,7 +60,7 @@ const SideForm = ({ setPriceModal, tour, isMobile = false, setFormModal }) => {
                             {lang === "rus" ? "Возраст" : "Age"}
                         </p>
                         <p className="text-xl text-left text-black">
-                            {lang === "rus" ? "от " + tour?.age : tour?.age}
+                            {lang === "rus" ? tour?.age : tour?.age}
                         </p>
                     </div>
                     <div className=" aspect-[14/9] p-3 rounded-[10px] flex flex-col justify-between border-2 border-[#99c8ff]">

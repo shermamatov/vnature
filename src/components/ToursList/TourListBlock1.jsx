@@ -27,7 +27,7 @@ const TourListBlock1 = () => {
                         <span className="font-medium text-center text-white">
                             {lang === "rus" ? "Туры" : "Tours"}
                         </span>
-                        <span className="font-bold text-center capitalize text-white ml-2">
+                        <span className="font-cunia font-bold text-center capitalize text-white ml-2">
                             VNATURE
                         </span>
                     </h1>

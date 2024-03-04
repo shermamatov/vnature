@@ -328,7 +328,6 @@ const AddTour = () => {
         psevdoImportant.splice(index, 1, item);
         setImportantEng(psevdoImportant);
     }
-
     function deleteImportant(index) {
         let psevdoImportant = important.filter(
             (item, itemIndex) => itemIndex !== index

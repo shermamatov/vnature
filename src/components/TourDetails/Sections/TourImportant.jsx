@@ -1,6 +1,7 @@
 import React from "react";
 import AccordionElement2 from "../Elements/AccordionElement2";
 import { useSelector } from "react-redux";
+import AccordionForm from "../Elements/AccordionForm";
 
 const TourImportant = ({ tour }) => {
     let lang = useSelector((item) => item.tours.lang);
@@ -24,6 +25,32 @@ const TourImportant = ({ tour }) => {
                         )}
                     </div>
                 ))}
+                <div className="w-full h-[2px] opacity-80 bg-[#00499f]"></div>
+                <AccordionForm
+                    item={{
+                        title:
+                            lang === "rus"
+                                ? "Включено в стоимость"
+                                : "Included in price",
+                        desc: lang === "rus" ? tour?.include : tour?.includeEng,
+                    }}
+                />
+                <div className="w-full border border-[#00499F] opacity-80"></div>
+                {/* <div className="w-full mt-2 mb-2 h-[2px] opacity-50 bg-[#00499f]"></div> */}
+                <div className="">
+                    <AccordionForm
+                        item={{
+                            title:
+                                lang === "rus"
+                                    ? "Оплатить дополнительно"
+                                    : "Price does not include",
+                            desc:
+                                lang === "rus"
+                                    ? tour?.notInclude
+                                    : tour?.notIncludeEng,
+                        }}
+                    />
+                </div>
             </div>
         </div>
     );
