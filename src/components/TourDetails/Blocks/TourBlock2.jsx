@@ -21,6 +21,7 @@ const TourBlock2 = ({
     setGalery,
     setGaleryStart,
     setReviewsModal,
+    setHotelModal,
 }) => {
     let width = window.innerWidth;
     let minusWidth = width < 768 ? 300 : 500;
@@ -192,7 +193,10 @@ const TourBlock2 = ({
                         <div className="block md:hidden -mt-8">
                             <TourIncludeSection tour={tour} />
                         </div>
-                        <TourProgram tour={tour} />
+                        <TourProgram
+                            setHotelModal={setHotelModal}
+                            tour={tour}
+                        />
                         <TourImportant tour={tour} />
                     </div>
                     <div className="md:block hidden w-[29%] mt-6">

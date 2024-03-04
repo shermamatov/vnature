@@ -180,21 +180,24 @@ const Header = () => {
                                 RU
                             </p>
                         </div>
-                        <a href="#">
+                        <a
+                            target="_blank"
+                            href="https://www.instagram.com/vnature.kg/"
+                        >
                             <img
                                 className="w-6 lg:w-8 ml-4"
                                 src={instagram}
                                 alt=""
                             />
                         </a>
-                        <a href="https://wa.me/554034477">
+                        <a target="_blank" href="https://wa.me/554034477">
                             <img
                                 className="w-6 lg:w-8 ml-4"
                                 src={whatsapp}
                                 alt=""
                             />
                         </a>
-                        <a href="#">
+                        <a target="_blank" href="#">
                             <img
                                 className="w-6 lg:w-8 ml-4"
                                 src={telegram}

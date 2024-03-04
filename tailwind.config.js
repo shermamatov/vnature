@@ -10,6 +10,7 @@ module.exports = {
             body: ['"Open Sans"'],
             montserrat: ["Montserrat"],
             nexa: ["Nexa"],
+            cunia: ["Cunia"],
         },
         screens: {
             mob: "460px",

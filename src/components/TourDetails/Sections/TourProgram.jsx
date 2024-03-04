@@ -4,7 +4,7 @@ import AccordionElement from "../Elements/Accordion";
 import TourProgrammModal from "../Elements/TourProgrammModal";
 import { useSelector } from "react-redux";
 
-const TourProgram = ({ tour }) => {
+const TourProgram = ({ tour, setHotelModal }) => {
     let [programmState, setProgrammState] = useState(false);
     let lang = useSelector((item) => item.tours.lang);
     function checkerLangProgramm() {
@@ -40,25 +40,41 @@ const TourProgram = ({ tour }) => {
                 <div>
                     <p className="text-base md:text-xl font-semibold mt-4">
                         {lang === "rus"
-                            ? "Мы рекомендуем вам наших проверенных партнёров с лучшим сервисом"
-                            : "We recommend our trusted partners with the best service"}
+                            ? "Мы рекомендуем вам наших замечательных партнёров с лучшим сервисом "
+                            : "We recommend our trusted partners with the best service "}
                     </p>
-                    <a
-                        className="text-[#00499f] font-medium underline mt-2"
-                        href="https://tes.kg/"
-                    >
-                        “TES HOTEL”
-                    </a>
+                    <div className="flex mt-4">
+                        <a
+                            className="text-[#00499f] font-medium underline"
+                            href="https://tes.kg/"
+                        >
+                            “TES HOTEL”
+                        </a>
+                        <p className="ml-2"> ⭐️⭐️⭐️ </p>
+                    </div>
                 </div>
                 <p className="text-base md:text-xl font-normal mt-6">
                     {lang === "rus"
-                        ? "- Где вам организуют встречу из аэропорта и проводы в аэропорт"
-                        : "- Where you will be arranged to meet from airport and send-off to the airport"}
+                        ? "- С уютной террасой и спокойной атмосферой "
+                        : "- With a cosy terrace and calm atmosphere "}
                 </p>
                 <p className="text-base md:text-xl font-normal mt-6">
                     {lang === "rus"
-                        ? "- Также приготовят щедрый завтрак и свежесваренный кофе -как и нужно для отличного старта дня"
-                        : "- Also prepare a generous breakfast and freshly brewed coffee -as necessary for a great start to the day"}
+                        ? "- Где вам приготовят щедрый завтрак и свежесваренный кофе - как и нужно для отличного старта дня"
+                        : "- Where you will be served a generous breakfast and freshly brewed coffee - just like you need for a great start to the day"}
+                </p>
+                <p className="text-base md:text-xl font-normal mt-6">
+                    {lang === "rus"
+                        ? "- Также  организуют встречу из аэропорта и проводы в аэропорт"
+                        : "- Also arrange airport meeting and airport transfer"}
+                </p>
+                <p
+                    onClick={() => setHotelModal(true)}
+                    className="text-base md:text-xl font-normal mt-6 text-[#00499f]  underline cursor-pointer"
+                >
+                    {lang === "rus"
+                        ? "«Можем забронировать номер за вас»"
+                        : "We can book a room for you"}
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-8 md:mt-16">
                     {tour?.galery?.slice(0, 4)?.map((item, index) => (

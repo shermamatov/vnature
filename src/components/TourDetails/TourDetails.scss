@@ -85,7 +85,7 @@
     .tableSection2 {
         font-size: 6px;
         font-weight: 700;
-        aspect-ratio: 2/4;
+        // aspect-ratio: 2/4;
     }
     .avatar_parent > .MuiAvatar-root {
         width: 30px;
@@ -215,4 +215,8 @@
     box-shadow: none;
     transition: none;
     opacity: 1;
+}
+
+.css-1u23akw-MuiButtonBase-root-MuiPickersDay-root:hover {
+    background-color: rgba(25, 118, 210, 0.4) !important;
 }

@@ -30,9 +30,7 @@ export default function AccordionForm({ item }) {
                     id="panel1bh-header"
                 >
                     <div className="flex items-center">
-                        <div className="text-lg text-black font-medium ">
-                            {item?.title}
-                        </div>
+                        <div className="text-lg text-black">{item?.title}</div>
                     </div>
                 </AccordionSummary>
                 <AccordionDetails>

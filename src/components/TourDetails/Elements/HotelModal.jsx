@@ -1,11 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-const TourProgrammModal = ({ setProgrammState }) => {
+const HotelModal = ({ setHotelModal }) => {
     let lang = useSelector((item) => item.tours.lang);
     return (
         <div
-            onClick={() => setProgrammState(false)}
+            onClick={() => setHotelModal(false)}
             className="fixed top-0 bottom-0 left-0 right-0 backdrop-blur-sm backdrop-brightness-75 z-20 flex justify-center items-center"
         >
             <div
@@ -15,11 +15,11 @@ const TourProgrammModal = ({ setProgrammState }) => {
                 <div className="flex justify-between items-center">
                     <h3 className="text-base md:text-xl font-semibold text-left text-black">
                         {lang === "rus"
-                            ? "Программа может быть изменена из-за..."
-                            : "The program may be modified"}
+                            ? "Можем забронировать номер за вас"
+                            : "We can book a room for you"}
                     </h3>
                     <svg
-                        onClick={() => setProgrammState(false)}
+                        onClick={() => setHotelModal(false)}
                         width={20}
                         height={20}
                         viewBox="0 0 20 20"
@@ -59,12 +59,17 @@ const TourProgrammModal = ({ setProgrammState }) => {
                 <hr className="my-4 text-xs md:text-sm" />
                 <p>
                     {lang === "rus"
-                        ? "Программа может измениться из - за погоды и других непридвиденных внешних обстоятельтсв"
-                        : "The program may change due to - weather and other unproven external circumstances"}
+                        ? "Мы забронируем вам стандартный номер в “TES HOTEL” до начала и после окончания тура (ночь + завтрак)"
+                        : 'We will book you a standard room in "TES HOTEL" before and after the tour (night + breakfast)'}
+                </p>
+                <p className="mt-4">
+                    {lang === "rus"
+                        ? "Стандартное время заезда — 14:00, выезда — 11:00."
+                        : "Standard check-in time is 14:00, check-out time is 11:00."}
                 </p>
             </div>
         </div>
     );
 };
 
-export default TourProgrammModal;
+export default HotelModal;
