@@ -285,7 +285,12 @@ export const getReviews = () => {
 export const getOneTourReviews = (id) => {
     return async (dispatch) => {
         try {
-            let q = query(toursReviewRef, where("tourId", "==", id));
+            let q = query(
+                toursReviewRef,
+                where("tourId", "==", id),
+                where("isAccepted", "==", true)
+            );
+            // let q2 = query(q, where("isAccepted", "==", true));
             let data = await getDocs(q);
             dispatch({
                 type: reduxTypes.GET_ONE_TOUR_REVIEWS,

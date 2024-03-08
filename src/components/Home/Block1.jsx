@@ -20,7 +20,7 @@ const Block1 = () => {
                 >
                     <div className="flex items-center">
                         <img className="w-4 mob:w-6" src={location} alt="" />
-                        <h2 className="text-lg md:text-3xl font-medium ml-2">
+                        <h2 className="text-sm md:text-3xl font-medium ml-2">
                             {lang === "rus"
                                 ? "Кыргызстан, город Ош"
                                 : "Kyrgyzstan, Osh city"}

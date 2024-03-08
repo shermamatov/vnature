@@ -4,6 +4,7 @@ import TourCard from "../Cards/TourCard";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getTours } from "../../store/reducers/tourReducer";
+import SceletonCard from "../Cards/SceletonCard";
 
 const Block3 = () => {
     let navigate = useNavigate();
@@ -23,9 +24,18 @@ const Block3 = () => {
                     data-aos="fade-up"
                     className="content grid grid-cols-1 md:grid-cols-2 gap-8"
                 >
-                    {tours.map((item, index) => (
-                        <TourCard key={index} item={item} />
-                    ))}
+                    {tours.length > 0 && tours ? (
+                        tours.map((item, index) => (
+                            <TourCard key={index} item={item} />
+                        ))
+                    ) : (
+                        <>
+                            <SceletonCard />
+                            <SceletonCard />
+                            <SceletonCard />
+                            <SceletonCard />
+                        </>
+                    )}
                 </div>
                 <div className="flex justify-center">
                     <button

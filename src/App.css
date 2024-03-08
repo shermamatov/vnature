@@ -77,3 +77,8 @@
     /* IE */
     display: none;
 }
+
+.css-13cymwt-control {
+    border: 1px solid #00499f !important;
+    border-radius: 0px !important;
+}

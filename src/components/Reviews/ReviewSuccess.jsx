@@ -14,8 +14,8 @@ const ReviewSuccess = ({ setReviewSuccess }) => {
                 <div className="flex flex-col items-center">
                     <p>
                         {lang === "rus"
-                            ? "Ваш отзыв находится в обработке"
-                            : "Your review is in progress"}
+                            ? "Спасибо за отзыв!"
+                            : "Thank you for your feedback!"}
                     </p>
                     <button
                         onClick={() => setReviewSuccess(false)}

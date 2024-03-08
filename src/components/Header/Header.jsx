@@ -197,7 +197,7 @@ const Header = () => {
                                 alt=""
                             />
                         </a>
-                        <a target="_blank" href="#">
+                        <a target="_blank" href="https://t.me/vnaturekg">
                             <img
                                 className="w-6 lg:w-8 ml-4"
                                 src={telegram}

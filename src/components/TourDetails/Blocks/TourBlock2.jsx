@@ -120,7 +120,7 @@ const TourBlock2 = ({
     }, [section]);
 
     return (
-        <div>
+        <div id="viewAnchor">
             {width > 768 && (
                 <div id="navigation2" className="hidden">
                     <div className="content">

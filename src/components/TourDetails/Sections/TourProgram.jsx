@@ -70,14 +70,27 @@ const TourProgram = ({ tour, setHotelModal }) => {
                 </p>
                 <p
                     onClick={() => setHotelModal(true)}
-                    className="text-base md:text-xl font-normal mt-6 text-[#00499f]  underline cursor-pointer"
+                    className="text-base md:text-xl font-normal mt-6  cursor-pointer"
                 >
-                    {lang === "rus"
-                        ? "«Можем забронировать номер за вас»"
-                        : "We can book a room for you"}
+                    <span className="text-[#00499f]  underline">
+                        {lang === "rus"
+                            ? "«Можем забронировать номер за вас»  "
+                            : "«We can book a room for you» "}
+                    </span>
+                    {lang === "rus" ? " - 10% скидка" : " - 10% discount"}
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-8 md:mt-16">
-                    {tour?.galery?.slice(0, 4)?.map((item, index) => (
+                    <iframe
+                        width="100%"
+                        // height=""
+                        src="https://www.youtube-nocookie.com/embed/rR9N7cU5XTw?si=hUUST4OmQlkP7IWK"
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen={true}
+                        className="aspect-[16/9] rounded-md"
+                    ></iframe>
+                    {tour?.galery?.slice(0, 3)?.map((item, index) => (
                         <img
                             className="object-cover aspect-[16/9] rounded-md"
                             key={index}

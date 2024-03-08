@@ -21,7 +21,7 @@
     width: 10%;
     aspect-ratio: 1/1;
     height: auto;
-    border: 1px solid #00499f;
+    // border: 1px solid #00499f;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,12 +80,16 @@
 
 @media (max-width: 768px) {
     .tableSection {
-        aspect-ratio: 3/4;
+        aspect-ratio: auto;
+        height: 70px;
     }
     .tableSection2 {
-        font-size: 6px;
+        font-size: 8px;
         font-weight: 700;
-        // aspect-ratio: 2/4;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: calc(10% + 8px);
+        // aspect-ratio: 3/4;
     }
     .avatar_parent > .MuiAvatar-root {
         width: 30px;

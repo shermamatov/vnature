@@ -15,9 +15,9 @@ const PriceModal = ({ setPriceModal, tour }) => {
     }, [tour]);
     return (
         <div>
-            <div className="w-[90vw] m-auto bg-white rounded-lg p-6 ">
+            <div className="w-[90vw] m-auto bg-white rounded-lg p-4 md:p-6 ">
                 <div className="flex justify-between">
-                    <p className="mb-8 text-3xl font-semibold">
+                    <p className="mb-4 md:mb-8 text-2xl md:text-3xl font-semibold">
                         {lang === "rus"
                             ? "Цены в долларах США"
                             : "Prices in US dollars"}
@@ -60,27 +60,38 @@ const PriceModal = ({ setPriceModal, tour }) => {
                         </defs>
                     </svg>
                 </div>
-                <div className="rounded-sm border-none md:border md:border-[#00499f]">
+                <div className="border border-[#00499f] w-full ">
                     <div className="flex justify-between items-end">
-                        <div className="tableSection tableSection2 md:rounded-none rounded-tl-md">
+                        <div className="tableSection tableSection2 border border-[#00499f]">
                             {lang === "rus" ? (
                                 <p>
-                                    Количес <br className="md:hidden block" />
-                                    {width < 768 && "-"}
-                                    тво <br className="md:hidden block" /> людей
+                                    {/* <br className="md:hidden block" /> */}
+                                    {width < 768 ? (
+                                        <>
+                                            Количес{" "}
+                                            <br className="md:hidden block" />{" "}
+                                            -тво
+                                        </>
+                                    ) : (
+                                        "Количество"
+                                    )}{" "}
+                                    <br className="md:hidden block" /> людей
                                 </p>
                             ) : (
                                 <>Number of people</>
                             )}
                         </div>
                         {arr.map((item, index) => (
-                            <div className="tableSection" key={index}>
+                            <div
+                                className="tableSection border border-[#00499f]"
+                                key={index}
+                            >
                                 {index + 1}
                             </div>
                         ))}
                     </div>
                     <div className="flex justify-between items-start ">
-                        <div className=" tableSection tableSection2 md:rounded-none rounded-bl-md">
+                        <div className="border border-[#00499f] tableSection tableSection2">
                             {lang === "rus" ? (
                                 <>
                                     Цена <br className="md:hidden block" /> за{" "}
@@ -92,7 +103,10 @@ const PriceModal = ({ setPriceModal, tour }) => {
                             )}
                         </div>
                         {arr.map((item, index) => (
-                            <div className="tableSection" key={index}>
+                            <div
+                                className="tableSection border border-[#00499f]"
+                                key={index}
+                            >
                                 {item}
                             </div>
                         ))}

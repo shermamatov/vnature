@@ -20,27 +20,37 @@ const PriceTable = ({ tour }) => {
                         ? "Цены в долларах США"
                         : "Prices in US dollars"}
                 </p>
-                <div className="rounded-sm border-none md:border md:border-[#00499f]">
-                    <div className="flex justify-between items-end">
-                        <div className="tableSection tableSection2 md:rounded-none rounded-tl-md">
+                <div className="rounded-sm border border-[#00499f] rounded-l-md">
+                    <div className="flex justify-between items-end ">
+                        <div className="tableSection tableSection2  rounded-tl-md border border-[#00499f]">
                             {lang === "rus" ? (
                                 <p>
-                                    Количес <br className="md:hidden block" />
-                                    {width < 768 && "-"}
-                                    тво <br className="md:hidden block" /> людей
+                                    {width < 768 ? (
+                                        <>
+                                            Количес{" "}
+                                            <br className="md:hidden block" />{" "}
+                                            -тво
+                                        </>
+                                    ) : (
+                                        "Количество"
+                                    )}{" "}
+                                    людей
                                 </p>
                             ) : (
                                 <>Number of people</>
                             )}
                         </div>
                         {arr.map((item, index) => (
-                            <div className="tableSection" key={index}>
+                            <div
+                                className="tableSection border border-[#00499f]"
+                                key={index}
+                            >
                                 {index + 1}
                             </div>
                         ))}
                     </div>
                     <div className="flex justify-between items-start ">
-                        <div className=" tableSection tableSection2 md:rounded-none rounded-bl-md">
+                        <div className=" tableSection tableSection2 rounded-bl-md border border-[#00499f]">
                             {lang === "rus" ? (
                                 <>
                                     Цена <br className="md:hidden block" /> за{" "}
@@ -52,7 +62,10 @@ const PriceTable = ({ tour }) => {
                             )}
                         </div>
                         {arr.map((item, index) => (
-                            <div className="tableSection" key={index}>
+                            <div
+                                className="tableSection border border-[#00499f]"
+                                key={index}
+                            >
                                 {item}
                             </div>
                         ))}

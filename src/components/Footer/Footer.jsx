@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../assets/blackLogo.svg";
+import logo from "../../assets/blackLogo.png";
 import faceBook from "../../assets/facebookIcon.svg";
 import vkIcon from "../../assets/vkIcon.svg";
 import tiktok from "../../assets/tiktokIcon.svg";
@@ -22,13 +22,17 @@ const Footer = () => {
                         <p className="font-bold text-xl">
                             {lang === "rus" ? "Контакты" : "Contacts"}
                         </p>
-                        <p className="font-semibold text-base text-[#5E6282] mt-3">
-                            Email: vnature@gmail.com
-                        </p>
-                        <p className="font-semibold text-base text-[#5E6282] mt-2">
-                            {lang === "rus" ? "Телефон: " : "Number: "} +996 777
-                            777 777
-                        </p>
+                        <a href="mailto:vnature@gmail.com">
+                            <p className="font-semibold text-base text-[#5E6282] mt-3">
+                                Email: vnature@gmail.com
+                            </p>
+                        </a>
+                        <a href="tel:+996554034477">
+                            <p className="font-semibold text-base text-[#5E6282] mt-2">
+                                {lang === "rus" ? "Телефон: " : "Number: "} +996
+                                554 034 477
+                            </p>
+                        </a>
                         <p className="font-semibold text-base text-[#5E6282] mt-2">
                             {lang === "rus" ? "адрес: " : "address: "}{" "}
                             {lang === "rus"
@@ -87,25 +91,21 @@ const Footer = () => {
                                 target="_blank"
                                 href="https://www.instagram.com/vnature.kg?igsh=MWdzM29lNmp6YnZ6YQ=="
                             >
-                                <img
-                                    className="mob:w-10 w-8"
-                                    src={instagram}
-                                    alt=""
-                                />
+                                <img className="w-8" src={instagram} alt="" />
                             </a>
                             <a
                                 href="https://www.facebook.com/profile.php?id=61553218016713&mibextid=dGKdO6"
                                 target="_blank"
                             >
                                 <img
-                                    className="mob:w-10 w-8 sm:ml-2"
+                                    className="w-8 sm:ml-5"
                                     src={faceBook}
                                     alt=""
                                 />
                             </a>
                             <a target="_blank" href="https://vk.com/vnaturekg">
                                 <img
-                                    className="mob:w-10 w-8 sm:ml-2"
+                                    className="w-8 sm:ml-5"
                                     src={vkIcon}
                                     alt=""
                                 />
@@ -115,21 +115,21 @@ const Footer = () => {
                                 target="_blank"
                             >
                                 <img
-                                    className="mob:w-10 w-8 sm:ml-2"
+                                    className="w-8 sm:ml-5"
                                     src={tiktok}
                                     alt=""
                                 />
                             </a>
                             <a target="_blank" href="https://wa.me/554034477">
                                 <img
-                                    className="mob:w-10 w-8 sm:ml-2"
+                                    className="w-8 sm:ml-5"
                                     src={whatsapp}
                                     alt=""
                                 />
                             </a>
-                            <a target="_blank" href="/">
+                            <a target="_blank" href="https://t.me/vnaturekg">
                                 <img
-                                    className="mob:w-10 w-8 sm:ml-2"
+                                    className="w-8 sm:ml-5"
                                     src={telegram}
                                     alt=""
                                 />

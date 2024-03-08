@@ -36,26 +36,36 @@ const Admin = () => {
                     </p>
                 </div>
             </div>
-            <div
-                onClick={() => navigate("/admin")}
-                className="flex justify-center bg-white p-4 rounded-md mt-4 cursor-pointer"
+            <a
+                href="https://analytics.google.com/analytics/web/?authuser=0&hl=en#/a305253846p430743197/admin"
+                target="_blank"
             >
-                <div className="flex flex-col items-center justify-center">
-                    <p className="text-xl flex items-center font-medium">
-                        Аналитика
-                    </p>
+                <div
+                    // onClick={() => navigate("/admin")}
+                    className="flex justify-center bg-white p-4 rounded-md mt-4 cursor-pointer"
+                >
+                    <div className="flex flex-col items-center justify-center">
+                        <p className="text-xl flex items-center font-medium">
+                            Аналитика
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <div
-                onClick={() => navigate("/admin")}
-                className="flex justify-center bg-white p-4 rounded-md mt-4 cursor-pointer"
+            </a>
+            <a
+                target="_blank"
+                href="https://console.firebase.google.com/project/vnature-web/firestore/data/~2Freviews~2FcBj0ZpIj3MjH2vgODsxd"
             >
-                <div className="flex flex-col items-center justify-center">
-                    <p className="text-xl flex items-center font-medium">
-                        База Данных
-                    </p>
+                <div
+                    onClick={() => navigate("/admin")}
+                    className="flex justify-center bg-white p-4 rounded-md mt-4 cursor-pointer"
+                >
+                    <div className="flex flex-col items-center justify-center">
+                        <p className="text-xl flex items-center font-medium">
+                            База Данных
+                        </p>
+                    </div>
                 </div>
-            </div>
+            </a>
             <div
                 onClick={() => navigate("/admin")}
                 className="flex justify-center bg-white p-4 rounded-md mt-4 cursor-pointer"

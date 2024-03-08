@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "../../App.css";
-import shapka from "../../assets/shapka_banner.JPG";
+import shapka from "../../assets/reviewsMainBanner.JPG";
 import { useDispatch, useSelector } from "react-redux";
 import ReviewSuccess from "./ReviewSuccess";
 import ReviewsModal from "./ReviewsModal";
-import { getInitials, getReviews } from "../../store/reducers/tourReducer";
+import {
+    getAllAcceptedReviews,
+    getInitials,
+    getReviews,
+} from "../../store/reducers/tourReducer";
 import { useNavigate } from "react-router-dom";
 const Reviews = () => {
     let lang = useSelector((item) => item.tours.lang);
-    let reviews = useSelector((item) => item.tours.reviews);
+    let reviews = useSelector((item) => item.tours.allAcceptedReviews);
     // let oneTour = useSelector((item) => item.tours.oneTour);
     let [loader, setLoader] = useState(false);
     let [reviewsModal, setReviewsModal] = useState(false);
@@ -17,7 +21,7 @@ const Reviews = () => {
     let navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(getReviews());
+        dispatch(getAllAcceptedReviews());
     }, []);
 
     return (
@@ -30,7 +34,7 @@ const Reviews = () => {
             {reviewsModal && (
                 <div
                     onClick={() => setReviewsModal(false)}
-                    className="fixed z-30 top-0 bottom-0 left-0 right-0 backdrop-brightness-50 backdrop-blur-sm flex justify-center items-center"
+                    className="fixed z-40 top-0 bottom-0 left-0 right-0 backdrop-brightness-50 backdrop-blur-sm flex justify-center items-center"
                 >
                     <ReviewsModal
                         setReviewsModal={setReviewsModal}
@@ -50,7 +54,7 @@ const Reviews = () => {
             )}
             <div className="relative">
                 <img
-                    className="absolute brightness-[.60] top-0 left-0 right-0 h-[25vh] md:h-[50vh] w-[100%] object-cover object-bottom"
+                    className="absolute brightness-[.60] top-0 left-0 right-0 h-[25vh] md:h-[50vh] w-[100%] object-cover object-center"
                     src={shapka}
                     alt=""
                 />
@@ -97,7 +101,9 @@ const Reviews = () => {
                             >
                                 <div className="flex items-center">
                                     <div className="w-14 h-14 md:w-20 md:h-20 font-semibold bg-[#00499F] rounded-full flex justify-center items-center text-white border-8 border-[#A0CCFF]">
-                                        {getInitials(item?.name)}
+                                        {getInitials(
+                                            item?.name || "Anonimus Anonimus"
+                                        )}
                                     </div>
                                     <div>
                                         <p className="text-xl font-semibold ml-4">
@@ -110,22 +116,30 @@ const Reviews = () => {
                                 </div>
                                 <p className="mt-4">
                                     {lang === "rus" ? "Тур:" : "Tour:"}
-                                    <span
-                                        onClick={() =>
-                                            navigate(
-                                                `/tour/${
-                                                    lang === "rus"
-                                                        ? item?.tourName
-                                                        : item?.tourNameEng
-                                                }/${item?.tourId}`
-                                            )
-                                        }
-                                        className="text-[#00499F] ml-2 cursor-pointer"
+                                    <a
+                                        href={`/tour/${
+                                            lang === "rus"
+                                                ? item?.tourName
+                                                : item?.tourNameEng
+                                        }/${item?.tourId}`}
                                     >
-                                        {lang === "rus"
-                                            ? item?.tourName
-                                            : item?.tourNameEng}
-                                    </span>
+                                        <span
+                                            // onClick={() =>
+                                            //     navigate(
+                                            //         `/tour/${
+                                            //             lang === "rus"
+                                            //                 ? item?.tourName
+                                            //                 : item?.tourNameEng
+                                            //         }/${item?.tourId}`
+                                            //     )
+                                            // }
+                                            className="text-[#00499F] ml-2 cursor-pointer"
+                                        >
+                                            {lang === "rus"
+                                                ? item?.tourName
+                                                : item?.tourNameEng}
+                                        </span>
+                                    </a>
                                 </p>
                                 <p className="mt-4 text-lg">
                                     {item?.reviewDesc}

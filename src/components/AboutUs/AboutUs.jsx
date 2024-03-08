@@ -2,6 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import shapka from "../../assets/shapka_banner.webp";
 import { useSelector } from "react-redux";
+import aboutBanner from "../../assets/aboutBanner1.webp";
+import aboutBanner2 from "../../assets/aboutBanner.JPEG";
 
 const AboutUs = () => {
     let navigate = useNavigate();
@@ -65,8 +67,8 @@ const AboutUs = () => {
                     </p>
                     <img
                         data-aos="fade-right"
-                        className="mt-8 rounded-md m-auto object-cover aspect-[16/9]"
-                        src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fasiamountains.net%2Fupload%2Fslide%2Fslide-1960x857-07.jpg&f=1&nofb=1&ipt=9900085e2fa95687e726f8124a929d28e59c6c041962264312e9cee6277b8763&ipo=images"
+                        className="mt-8 rounded-md m-auto object-cover "
+                        src={aboutBanner}
                         alt=""
                     />
                     <p
@@ -86,8 +88,8 @@ const AboutUs = () => {
                                 посчастливилось родиться в Кыргызстане, и те,
                                 кто увидел его впервые! <br />
                                 <img
-                                    className="mt-8 rounded-md m-auto object-cover aspect-[16/9]"
-                                    src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F95%2F49%2F54%2F954954c3136542875f4c343f2fec0831.jpg&f=1&nofb=1&ipt=b0601b9d0290ffbc5dc04e9e976b012e3d76440af5795e8247bafba9d8aef20c&ipo=images"
+                                    className="mt-8 rounded-md m-auto object-cover md:object-center md:aspect-video aspect-square"
+                                    src={aboutBanner2}
                                     alt=""
                                 />{" "}
                                 <br /> Мы покажем вам землю своих предков с
@@ -108,33 +110,34 @@ const AboutUs = () => {
                             <>
                                 We know that each of our guests will definitely
                                 return to Kyrgyzstan, because those who come
-                                here once, leave their heart here forever.{" "}
+                                here once leave their heart here forever.
                                 <br />
                                 <br />
-                                These unforgettable journeys have not only
-                                opened up this amazing country in a new way, but
-                                also, in some unknown way, helped to realize
-                                what we are worth. We are all inspired by more -
-                                those who were lucky enough to be born in
-                                Kyrgyzstan and those who saw him for the first
+                                These unforgettable journeys not only revealed
+                                this amazing country in a new light but also, in
+                                some mysterious way, helped to realize what we
+                                are worth. We are all inspired for more – those
+                                who were fortunate enough to be born in
+                                Kyrgyzstan, and those who saw it for the first
                                 time! <br />
                                 <img
-                                    className="mt-8 rounded-md m-auto object-cover aspect-[16/9]"
-                                    src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F95%2F49%2F54%2F954954c3136542875f4c343f2fec0831.jpg&f=1&nofb=1&ipt=b0601b9d0290ffbc5dc04e9e976b012e3d76440af5795e8247bafba9d8aef20c&ipo=images"
+                                    className="mt-8 rounded-md m-auto object-cover md:aspect-video aspect-square md:object-center"
+                                    src={aboutBanner2}
                                     alt=""
                                 />
                                 <br />
-                                We’ll show you land of their ancestors with the
-                                oldest history and the richest cultural heritage
-                                - the land with the most pure and pure spirit,
-                                the land where he lives multinational,
-                                hospitable and most generous people. Land with
-                                unique nature and special beauty. <br />
+                                We will show you the land of our ancestors with
+                                the ancient history and the richest cultural
+                                heritage – the land with the purest and most
+                                immaculate spirit, the land where a
+                                multinational, hospitable, and the most generous
+                                people live. The land with unique nature and
+                                special beauty. <br />
                                 <br />
                                 Our land, our home, our Kyrgyzstan! Young,
-                                confident and open to the whole world! We
-                                welcome everyone every friend! Welcome to
-                                Kyrgyzstan - to the amazing land of the
+                                confident, and open to the whole world! We
+                                welcome every guest, every friend! Welcome to
+                                Kyrgyzstan – to the amazing country of celestial
                                 mountains! <br />
                                 <br />
                             </>
@@ -151,7 +154,7 @@ const AboutUs = () => {
                         невероятным приключениям
                     </p>
                     <img
-                        className="mt-8 rounded-md m-auto object-cover aspect-[16/9]"
+                        className="mt-8 rounded-md m-auto object-cover "
                         src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F95%2F49%2F54%2F954954c3136542875f4c343f2fec0831.jpg&f=1&nofb=1&ipt=b0601b9d0290ffbc5dc04e9e976b012e3d76440af5795e8247bafba9d8aef20c&ipo=images"
                         alt=""
                     />
