@@ -136,7 +136,7 @@ const TourDetails = () => {
             {reviewsModal && (
                 <div
                     onClick={() => setReviewsModal(false)}
-                    className="fixed z-20 top-0 bottom-0 left-0 right-0 backdrop-brightness-50 backdrop-blur-sm flex justify-center items-center"
+                    className="fixed z-30 top-0 bottom-0 left-0 right-0 backdrop-brightness-50 backdrop-blur-sm flex justify-center items-center"
                 >
                     <ReviewsModal
                         setReviewsModal={setReviewsModal}
@@ -150,7 +150,7 @@ const TourDetails = () => {
             {reviewSuccess && (
                 <div
                     onClick={() => setReviewSuccess(false)}
-                    className="fixed z-20 top-0 bottom-0 left-0 right-0 backdrop-brightness-50 backdrop-blur-sm flex justify-center items-center"
+                    className="fixed z-30 top-0 bottom-0 left-0 right-0 backdrop-brightness-50 backdrop-blur-sm flex justify-center items-center"
                 >
                     <ReviewSuccess setReviewSuccess={setReviewSuccess} />
                 </div>

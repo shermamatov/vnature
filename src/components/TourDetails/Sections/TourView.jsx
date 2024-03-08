@@ -40,7 +40,7 @@ const TourView = ({ tour }) => {
         return lang === "rus" ? tour?.memories : tour?.memoriesEng;
     }
     return (
-        <div id="viewAnchor">
+        <div>
             <div className="mt-0 md:mt-10 rounded-[10px] font-montserrat bg-[#c0d6f4] border p-4">
                 <p className="text-sm md:text-lg text-left text-black">
                     {lang === "rus"

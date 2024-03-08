@@ -76,10 +76,10 @@ const OrderForm = ({
         setLoader(true);
         emailjs
             .send(
-                "service_rzyf1b7",
-                "template_yk2f418",
+                "service_2ekp1ar",
+                "template_y8sbaaq",
                 obj,
-                "sIA0VHqfLKi1BKLiO"
+                "s9crJMw-RktYMgrSy"
             )
             .then(
                 (response) => {
@@ -100,7 +100,7 @@ const OrderForm = ({
     useEffect(() => {
         const start = dayjs(calendarValue).format("DD/MM/YYYY");
         const end = dayjs(calendarValue)
-            .add(parseInt(tour.daysCount), "day")
+            .add(parseInt(tour.daysCount) - 1, "day")
             .format("DD/MM/YYYY");
         setDayStart(start);
         setDayEnd(end);

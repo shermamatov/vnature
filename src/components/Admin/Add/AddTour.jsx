@@ -254,7 +254,7 @@ const AddTour = () => {
         };
         try {
             dispatch(addTour(obj));
-            navigate("/admin");
+            // navigate("/admin");
         } catch (e) {
             console.log(e);
         }

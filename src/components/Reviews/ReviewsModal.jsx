@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "../../App.css";
 import {
@@ -7,6 +7,8 @@ import {
     getTours,
 } from "../../store/reducers/tourReducer";
 import { nowDate } from "../../consts";
+import countryList from "react-select-country-list";
+import Select from "react-select";
 
 const ReviewsModal = ({
     setReviewSuccess,
@@ -15,6 +17,7 @@ const ReviewsModal = ({
     isTour = false,
     tour = null,
 }) => {
+    const options = useMemo(() => countryList().getLabels(), []);
     let tours = useSelector((item) => item.tours.tours);
     let oneTour = useSelector((item) => item.tours.oneTour);
     let lang = useSelector((item) => item.tours.lang);
@@ -26,13 +29,48 @@ const ReviewsModal = ({
     let [country, setCountry] = useState("");
     let [from, setFrom] = useState("");
 
-    let [checker, setChecker] = useState(false);
+    let [countriesRus, setCountriesRus] = useState([]);
+    let [countriesEng, setCountriesEng] = useState([]);
+
+    let [nameChecker, setNameChecker] = useState(false);
+    let [reviewDescChecker, setReviewDescChecker] = useState(false);
+    let [countryChecker, setCountryChecker] = useState(false);
+    let [fromChecker, setFromChecker] = useState(false);
+    let [tourIdChecker, setTourIdChecker] = useState(false);
+
+    // let [checker, setChecker] = useState(false);
+
+    const changeHandler = (value) => {
+        setCountry(value);
+        setCountryChecker(false);
+    };
+
+    function submitHandler() {
+        if (!name) {
+            setNameChecker(true);
+        }
+        if (!reviewDesc) {
+            setReviewDescChecker(true);
+        }
+        if (!country) {
+            setCountryChecker(true);
+        }
+        if (!from) {
+            setFromChecker(true);
+        }
+        if (!tourId) {
+            setTourIdChecker(true);
+        }
+        if (name && tourId && reviewDesc && country && from) {
+            dataConstructor();
+        }
+    }
 
     function dataConstructor() {
         let obj = {
             name,
             reviewDesc,
-            country,
+            country: country.label,
             from,
             tourId,
             date: nowDate.format("DD/MM/YYYY"),
@@ -45,18 +83,51 @@ const ReviewsModal = ({
         setLoader(true);
     }
 
-    useEffect(() => {
-        if (name && tourId && reviewDesc && country && from) {
-            setChecker(true);
-        } else {
-            setChecker(false);
-        }
-    }, [name, tourId, reviewDesc, country, from]);
+    // useEffect(() => {
+    //     if (name && tourId && reviewDesc && country && from) {
+    //         setChecker(true);
+    //     } else {
+    //         setChecker(false);
+    //     }
+    // }, [name, tourId, reviewDesc, country, from]);
 
     useEffect(() => {
         dispatch(getTours());
         isTour && setTourId(tour?.id);
+
+        fetch("https://namaztimes.kz/ru/api/country?type=json")
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                // console.log(data.map((item) => console.log(item)));
+                let arr = [];
+                for (let i in data) {
+                    arr.push({ label: data[i], value: data[i] });
+                }
+                setCountriesRus(arr);
+                // Здесь вы можете обрабатывать полученные данные
+            })
+            .catch((error) => {
+                console.error(
+                    "There has been a problem with your fetch operation:",
+                    error
+                );
+            });
     }, []);
+
+    useEffect(() => {
+        if (countriesEng.length === 0) {
+            let arr = [];
+            for (let i in options) {
+                arr.push({ label: options[i], value: options[i] });
+            }
+            setCountriesEng(arr);
+        }
+    }, [options]);
 
     useEffect(() => {
         !isTour && dispatch(getOneTour(tourId));
@@ -83,12 +154,27 @@ const ReviewsModal = ({
             <h2 className="text-2xl font-medium">
                 {lang === "rus" ? "Оставить отзыв" : "Leave a review"}{" "}
             </h2>
+            {tourIdChecker && (
+                <label className="text-red-500 text-xs" htmlFor="nameInput">
+                    {lang === "rus"
+                        ? "пожалуйста выберите тур*"
+                        : "please select tour*"}
+                </label>
+            )}
             <select
                 value={tourId}
-                onChange={(e) => setTourId(e.target.value)}
-                className="select_remove_arrow text-[#00499F] font-normal w-full"
+                onChange={(e) => {
+                    setTourId(e.target.value);
+                    setTourIdChecker(false);
+                }}
+                className={`select_remove_arrow ${
+                    tourIdChecker ? "text-red-500" : "text-[#00499F] "
+                } font-normal w-full`}
             >
-                <option value="">Выбрать тур</option>
+                <option value="">
+                    {" "}
+                    {lang === "rus" ? "Выбрать тур" : "Select Tour"}
+                </option>
                 {tours?.map((item) => (
                     <option key={item?.id} value={item?.id}>
                         {lang === "rus" ? item?.title : item?.titleEng}
@@ -96,27 +182,64 @@ const ReviewsModal = ({
                 ))}
             </select>
             <div className="mt-4">
+                {nameChecker && (
+                    <label className="text-red-500 text-xs" htmlFor="nameInput">
+                        {lang === "rus"
+                            ? "пожалуйста введите свое имя*"
+                            : "Please enter your name*"}
+                    </label>
+                )}
                 <input
-                    onChange={(e) => setName(e.target.value)}
-                    className="border border-[#00499F] w-full h-10 pl-2"
+                    onChange={(e) => {
+                        setName(e.target.value);
+                        setNameChecker(false);
+                    }}
+                    className={`border ${
+                        nameChecker ? "border-red-500" : "border-[#00499F]"
+                    } w-full h-10 pl-2 mb-3`}
                     placeholder={
                         lang === "rus" ? "Фамилия Имя Отчество" : "Name"
                     }
                     type="text"
+                    id="nameInput"
                 />
-                <input
-                    onChange={(e) => setCountry(e.target.value)}
-                    className="border border-[#00499F] w-full h-10 pl-2 mt-3"
+
+                {countryChecker && (
+                    <label
+                        className="text-red-500 text-xs"
+                        htmlFor="datePicker"
+                    >
+                        {lang === "rus"
+                            ? "пожалуйста выберите свою страну*"
+                            : "Please select your country*"}
+                    </label>
+                )}
+                <Select
+                    className="mb-3"
+                    options={lang === "rus" ? countriesRus : countriesEng}
+                    value={country}
+                    onChange={changeHandler}
                     placeholder={
                         lang === "rus" ? "Ваша страна" : "Your country"
                     }
-                    type="text"
                 />
-
+                {fromChecker && (
+                    <label className="text-red-500 text-xs" htmlFor="nameInput">
+                        {lang === "rus"
+                            ? "пожалуйста выберите как вы узнали про нас?*"
+                            : "Please select how did you know about us?*"}
+                    </label>
+                )}
                 <select
-                    defaultValue={" "}
-                    onChange={(e) => setFrom(e.target.value)}
-                    className="border border-[#00499F] w-full h-10 pl-2 mt-3 select_remove_arrow"
+                    // defaultValue={" "}
+                    onChange={(e) => {
+                        setFrom(e.target.value);
+                        setFromChecker(false);
+                    }}
+                    className={`border ${
+                        fromChecker ? "border-red-500" : "border-[#00499F] "
+                    } w-full h-10 pl-2 mb-3 select_remove_arrow`}
+                    id="nameInput"
                 >
                     <option value={"Другое"}>
                         {lang === "rus"
@@ -155,9 +278,23 @@ const ReviewsModal = ({
                     }
                     type="text"
                 /> */}
+                {reviewDescChecker && (
+                    <label className="text-red-500" htmlFor="datePicker">
+                        {lang === "rus"
+                            ? "пожалуйста выберите свою страну*"
+                            : "Please select your country*"}
+                    </label>
+                )}
                 <textarea
-                    onChange={(e) => setReviewDesc(e.target.value)}
-                    className="border border-[#00499F] w-full min-h-24 pl-2 mt-3"
+                    onChange={(e) => {
+                        setReviewDesc(e.target.value);
+                        setReviewDescChecker(false);
+                    }}
+                    className={`border ${
+                        reviewDescChecker
+                            ? "border-red-500"
+                            : "border-[#00499F]"
+                    }  w-full min-h-24 pl-2 mb-3`}
                     placeholder={
                         lang === "rus"
                             ? "Ваше впечатление о туре"
@@ -173,10 +310,8 @@ const ReviewsModal = ({
                 </p>
                 <div className="flex justify-center">
                     <button
-                        onClick={() => checker && dataConstructor()}
-                        className={`w-[80%] ${
-                            checker ? "bg-[#0FA03F]" : "bg-gray-500"
-                        }  text-white h-10 mt-4`}
+                        onClick={() => submitHandler()}
+                        className={`w-[80%] bg-[#0FA03F] text-white h-10 mt-4`}
                     >
                         {lang === "rus" ? "Отправить отзыв" : "Submit a review"}
                     </button>
