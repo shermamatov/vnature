@@ -8,7 +8,11 @@ function Galery({ galery, setGalery, galeryStart }) {
         customPaging: function (i) {
             return (
                 <a>
-                    <img className="w-16" src={galery[i]} alt="1" />
+                    <img
+                        className="w-16"
+                        src={galeryStart > 4 ? galery[i + 5] : galery[i]}
+                        alt="1"
+                    />
                 </a>
             );
         },
@@ -18,7 +22,7 @@ function Galery({ galery, setGalery, galeryStart }) {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        initialSlide: galeryStart,
+        initialSlide: galeryStart > 4 ? galeryStart - 1 : galeryStart,
         arrows: false,
     };
     return (
@@ -64,17 +68,40 @@ function Galery({ galery, setGalery, galeryStart }) {
             </div>
 
             <Slider ref={setSliderRef} {...settings}>
-                {galery?.map((item, index) => (
+                {galeryStart > 4
+                    ? galery?.slice(5).map((item, index) => (
+                          <div className="w-full h-full" key={index}>
+                              <div>
+                                  <img
+                                      className="max-w-[90%] max-h-[80vh] md:min-h-[60vh] w-auto h-auto m-auto"
+                                      src={item}
+                                      alt="1"
+                                  />
+                              </div>
+                          </div>
+                      ))
+                    : galery?.slice(0, 5).map((item, index) => (
+                          <div className="w-full h-full" key={index}>
+                              <div>
+                                  <img
+                                      className="max-w-[90%] max-h-[80vh] md:min-h-[60vh] w-auto h-auto m-auto"
+                                      src={item}
+                                      alt="1"
+                                  />
+                              </div>
+                          </div>
+                      ))}
+                {/* {galery?.map((item, index) => (
                     <div className="w-full h-full" key={index}>
                         <div>
                             <img
-                                className="max-w-[90%] max-h-[80vh] w-auto h-auto m-auto"
+                                className="max-w-[90%] max-h-[80vh] md:min-h-[60vh] w-auto h-auto m-auto"
                                 src={item}
                                 alt="1"
                             />
                         </div>
                     </div>
-                ))}
+                ))} */}
             </Slider>
         </div>
     );

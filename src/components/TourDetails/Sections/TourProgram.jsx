@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import AccordionElement from "../Elements/Accordion";
 import TourProgrammModal from "../Elements/TourProgrammModal";
 import { useSelector } from "react-redux";
-
+import hotel1 from "../../../assets/hotelBanner1.jpg";
+import hotel2 from "../../../assets/hotelBanner2.jpg";
+import hotel3 from "../../../assets/hotelBanner3.jpg";
 const TourProgram = ({ tour, setHotelModal }) => {
     let [programmState, setProgrammState] = useState(false);
     let lang = useSelector((item) => item.tours.lang);
@@ -45,6 +47,7 @@ const TourProgram = ({ tour, setHotelModal }) => {
                     </p>
                     <div className="flex mt-4">
                         <a
+                            target="_blank"
                             className="text-[#00499f] font-medium underline"
                             href="https://tes.kg/"
                         >
@@ -90,14 +93,29 @@ const TourProgram = ({ tour, setHotelModal }) => {
                         allowFullScreen={true}
                         className="aspect-[16/9] rounded-md"
                     ></iframe>
-                    {tour?.galery?.slice(0, 3)?.map((item, index) => (
+                    <img
+                        src={hotel1}
+                        className="w-full object-cover aspect-[16/9] rounded-md"
+                        alt=""
+                    />
+                    <img
+                        src={hotel2}
+                        className="w-full object-cover aspect-[16/9] rounded-md"
+                        alt=""
+                    />
+                    <img
+                        src={hotel3}
+                        className="w-full object-cover aspect-[16/9] rounded-md"
+                        alt=""
+                    />
+                    {/* {tour?.galery?.slice(0, 3)?.map((item, index) => (
                         <img
                             className="object-cover aspect-[16/9] rounded-md"
                             key={index}
                             src={item}
                             alt=""
                         />
-                    ))}
+                    ))} */}
                 </div>
                 <div className="mt-8">
                     <p className="text-[10px] md:text-base text-left text-[#7d7d7d]">

@@ -55,10 +55,7 @@ const Admin = () => {
                 target="_blank"
                 href="https://console.firebase.google.com/project/vnature-web/firestore/data/~2Freviews~2FcBj0ZpIj3MjH2vgODsxd"
             >
-                <div
-                    onClick={() => navigate("/admin")}
-                    className="flex justify-center bg-white p-4 rounded-md mt-4 cursor-pointer"
-                >
+                <div className="flex justify-center bg-white p-4 rounded-md mt-4 cursor-pointer">
                     <div className="flex flex-col items-center justify-center">
                         <p className="text-xl flex items-center font-medium">
                             База Данных
@@ -66,16 +63,18 @@ const Admin = () => {
                     </div>
                 </div>
             </a>
-            <div
-                onClick={() => navigate("/admin")}
-                className="flex justify-center bg-white p-4 rounded-md mt-4 cursor-pointer"
+            <a
+                target="_blank"
+                href="https://search.google.com/search-console?utm_source=about-page&resource_id=https://vnature.kg/"
             >
-                <div className="flex flex-col items-center justify-center">
-                    <p className="text-xl flex items-center font-medium">
-                        Индексация
-                    </p>
+                <div className="flex justify-center bg-white p-4 rounded-md mt-4 cursor-pointer">
+                    <div className="flex flex-col items-center justify-center">
+                        <p className="text-xl flex items-center font-medium">
+                            Индексация
+                        </p>
+                    </div>
                 </div>
-            </div>
+            </a>
             <div
                 onClick={() => navigate("/auth")}
                 className="flex justify-center bg-red-500 text-white p-4 rounded-md mt-4 cursor-pointer"

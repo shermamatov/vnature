@@ -100,14 +100,14 @@ const SideForm = ({ setPriceModal, tour, isMobile = false, setFormModal }) => {
                         : "Does not require payment now"}
                 </p>
             </div>
-            <a href="#">
+            <a href="https://wa.me/554034477" target="_blank">
                 <p className="text-lg text-center text-[#00499f] mt-6">
                     {lang === "rus"
                         ? "Задать вопрос в WhatsApp"
                         : "Ask a question in WhatsApp"}
                 </p>
             </a>
-            <a href="#">
+            <a href="https://t.me/vnaturekg" target="_blank">
                 <p className="text-lg text-center text-[#00499f] mt-6">
                     {lang === "rus"
                         ? "Задать вопрос в Telegram"

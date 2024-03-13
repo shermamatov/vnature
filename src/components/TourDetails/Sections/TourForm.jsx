@@ -107,9 +107,11 @@ const TourForm = ({
                 </div>
                 <div className="flex justify-between flex-wrap mt-4">
                     <button className="h-[42px] w-full md:w-[49%] rounded-md border border-[#00499f] text-[#00499f]">
-                        {lang === "rus"
-                            ? "Задать вопрос в WhatsApp"
-                            : "Ask a question in WhatsApp"}
+                        <a href="https://wa.me/554034477" target="_blank">
+                            {lang === "rus"
+                                ? "Задать вопрос в WhatsApp"
+                                : "Ask a question in WhatsApp"}
+                        </a>
                     </button>
                     <button
                         onClick={() => setFormModal(true)}
@@ -118,9 +120,11 @@ const TourForm = ({
                         {lang === "rus" ? "Оставить заявку" : "Leave a request"}
                     </button>
                     <button className="h-[42px] w-full md:w-[49%] mt-2 md:mt-4 rounded-md border border-[#00499f] text-[#00499f]">
-                        {lang === "rus"
-                            ? "Задать вопрос в Telegram"
-                            : "Ask a question at Telegram"}
+                        <a href="https://t.me/vnaturekg">
+                            {lang === "rus"
+                                ? "Задать вопрос в Telegram"
+                                : "Ask a question at Telegram"}
+                        </a>
                     </button>
                     <button
                         onClick={() => setFormModal(true)}

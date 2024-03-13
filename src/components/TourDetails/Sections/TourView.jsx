@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../TourDetails.scss";
 // import { tour } from "../../../consts";
 import Slider from "react-slick";
@@ -16,7 +16,7 @@ const TourView = ({ tour }) => {
         slidesToShow: slideCount,
         slidesToScroll: slideCount,
         infinite: checkerLangMemories()?.length <= slideCount ? false : true,
-        initialSlide: 1,
+        initialSlide: 2,
         beforeChange: (current, next) => {
             setActiveSlide(next < 0 ? 0 : next);
         },
@@ -39,6 +39,9 @@ const TourView = ({ tour }) => {
     function checkerLangMemories() {
         return lang === "rus" ? tour?.memories : tour?.memoriesEng;
     }
+    useEffect(() => {
+        sliderRef?.slickNext();
+    }, [tour]);
     return (
         <div>
             <div className="mt-0 md:mt-10 rounded-[10px] font-montserrat bg-[#c0d6f4] border p-4">
@@ -74,7 +77,7 @@ const TourView = ({ tour }) => {
                             />
                         </svg>
                         <p className="text-3xl text-[#00499f] font-semibold mx-8 noselect">
-                            {Math.ceil(activeSlide / slideCount + 1)}/
+                            {parseInt(activeSlide / slideCount + 1)}/
                             {Math.ceil(
                                 checkerLangMemories()?.length / slideCount
                             ) || 1}
@@ -137,9 +140,9 @@ const TourView = ({ tour }) => {
                 <Slider ref={setSliderRef} {...sliderSettings}>
                     {checkerLangMemories()?.map((item, index) => (
                         <div key={index} className="px-2">
-                            <div className="w-[100%]  rounded-[10px] bg-[#e2effe]">
-                                <div className="p-2 md:p-4">
-                                    <p className="text-sm md:text-lg md:text-left text-left text-black">
+                            <div className="w-[100%] aspect-[10/16] md:aspect-[11/16] flex flex-col justify-between rounded-[10px] bg-[#e2effe]">
+                                <div className="p-4">
+                                    <p className="text-[13px] md:text-lg md:text-left text-left text-black">
                                         {item?.memoriesTitle}
                                     </p>
                                 </div>

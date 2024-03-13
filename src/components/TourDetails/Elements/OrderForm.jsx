@@ -14,6 +14,7 @@ const OrderForm = ({
     setOrderSuccess,
     setLoader,
     setHotelModal,
+    setCalendarValue,
 }) => {
     let lang = useSelector((item) => item.tours.lang);
     let [dayStart, setDayStart] = React.useState(null);
@@ -118,6 +119,12 @@ const OrderForm = ({
             this.style.height = this.scrollHeight + "px";
         }
     }, [comments]);
+
+    useEffect(() => {
+        return () => {
+            setCalendarValue(null);
+        };
+    }, []);
 
     return (
         <div className="py-8 overflow-y-scroll hiddenScrollBar w-[90%] max-w-screen-lg">
@@ -374,16 +381,20 @@ const OrderForm = ({
                             {lang === "rus" ? "(по желанию)" : "(optional)"}
                         </p>
                     </div>
-                    <p className="text-[#323232] text-base md:text-lg text-center mt-8 cursor-pointer">
-                        {lang === "rus"
-                            ? "Задать вопрос в WhatsApp"
-                            : "Ask a question in WhatsApp"}
-                    </p>
-                    <p className="text-[#323232] text-base md:text-lg text-center mt-4 cursor-pointer">
-                        {lang === "rus"
-                            ? "Задать вопрос в Telegram"
-                            : "Ask a question in Telegram"}
-                    </p>
+                    <a href="https://wa.me/554034477" target="_blank">
+                        <p className="text-[#323232] text-base md:text-lg text-center mt-8 cursor-pointer">
+                            {lang === "rus"
+                                ? "Задать вопрос в WhatsApp"
+                                : "Ask a question in WhatsApp"}
+                        </p>
+                    </a>
+                    <a target="_blank" href="https://t.me/vnaturekg">
+                        <p className="text-[#323232] text-base md:text-lg text-center mt-4 cursor-pointer">
+                            {lang === "rus"
+                                ? "Задать вопрос в Telegram"
+                                : "Ask a question in Telegram"}
+                        </p>
+                    </a>
                     <button
                         onClick={submitHandler}
                         className={`w-full h-12 text-white mt-4 bg-[#0fa03f]`}
