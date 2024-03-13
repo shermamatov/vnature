@@ -57,7 +57,9 @@ const TourGalery = ({ tour, setGalery, setGaleryStart }) => {
                     </svg>
                     <p className="text-3xl text-[#00499f] font-semibold mx-8 noselect">
                         {Math.ceil(activeSlide / slideCount + 1)}/
-                        {Math.ceil(tour?.galery?.length / slideCount) || 1}
+                        {Math.ceil(
+                            tour?.galery?.slice(5)?.length / slideCount
+                        ) || 1}
                     </p>
                     <svg
                         width={40}
@@ -93,7 +95,9 @@ const TourGalery = ({ tour, setGalery, setGaleryStart }) => {
                     </svg>
                     <p className="text-2xl text-[#00499f] font-semibold mx-8 noselect">
                         {Math.ceil(activeSlide / adapSlideCount + 1)}/
-                        {Math.ceil(tour?.galery?.length / adapSlideCount) || 1}
+                        {Math.ceil(
+                            tour?.galery?.slice(5).length / adapSlideCount
+                        ) || 1}
                     </p>
                     <svg
                         width={24}
@@ -112,22 +116,34 @@ const TourGalery = ({ tour, setGalery, setGaleryStart }) => {
                     </svg>
                 </div>
             </div>
-            <Slider ref={setSliderRef} {...sliderSettings}>
-                {tour?.galery?.map((item, index) => (
-                    <div key={index} className="px-2">
-                        <img
-                            onClick={() => {
-                                setGalery(true);
-                                setGaleryStart(index);
-                            }}
-                            className="aspect-[16/9] object-cover rounded-md cursor-pointer"
-                            key={index}
-                            src={item}
-                            alt=""
-                        />
-                    </div>
-                ))}
-            </Slider>
+            {tour?.galery?.slice(5)?.length < 2 ? (
+                <img
+                    onClick={() => {
+                        setGalery(true);
+                        setGaleryStart();
+                    }}
+                    className="max-w-screen-sm aspect-[16/9] object-cover rounded-md cursor-pointer"
+                    src={tour?.galery[5]}
+                    alt=""
+                />
+            ) : (
+                <Slider ref={setSliderRef} {...sliderSettings}>
+                    {tour?.galery?.slice(5)?.map((item, index) => (
+                        <div key={index} className="px-2">
+                            <img
+                                onClick={() => {
+                                    setGalery(true);
+                                    setGaleryStart(index + 5);
+                                }}
+                                className="aspect-[16/9] object-cover rounded-md cursor-pointer"
+                                key={index}
+                                src={item}
+                                alt=""
+                            />
+                        </div>
+                    ))}
+                </Slider>
+            )}
         </div>
     );
 };

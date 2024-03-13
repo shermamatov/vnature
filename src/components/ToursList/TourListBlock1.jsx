@@ -4,6 +4,7 @@ import shapka from "../../assets/shapka_banner.webp";
 import TourCard from "../Cards/TourCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getTours } from "../../store/reducers/tourReducer";
+import SceletonCard from "../Cards/SceletonCard";
 const TourListBlock1 = () => {
     let tours = useSelector((item) => item.tours.tours);
     let lang = useSelector((item) => item.tours.lang);
@@ -34,9 +35,18 @@ const TourListBlock1 = () => {
                 </div>
                 <div className="mt-16">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {tours.map((item, index) => (
-                            <TourCard key={index} item={item} />
-                        ))}
+                        {tours?.length > 0 ? (
+                            tours.map((item, index) => (
+                                <TourCard key={index} item={item} />
+                            ))
+                        ) : (
+                            <>
+                                <SceletonCard />
+                                <SceletonCard />
+                                <SceletonCard />
+                                <SceletonCard />
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

@@ -26,7 +26,7 @@ const EditTour = () => {
     let { id } = useParams();
     let navigate = useNavigate();
     let dispatch = useDispatch();
-    let [inputCount, setInputCount] = useState([1, 1, 1, 1, 1, 1]);
+    let [inputCount, setInputCount] = useState([1, 1, 1, 1, 1, 1, 1, 1]);
     let [memoriesModal, setMemoriesModal] = useState(false);
     let [memoriesModalEdit, setMemoriesModalEdit] = useState(false);
     let [importantModal, setImportantModal] = useState(false);
@@ -88,7 +88,16 @@ const EditTour = () => {
     let [level, setLevel] = useState("средняя");
     let [days, setDays] = useState(1);
     let [cardImg, setCardImg] = useState("");
-    let [galery, setGalery] = useState([null, null, null, null, null, null]);
+    let [galery, setGalery] = useState([
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+    ]);
     let [programmDesc, setProgrammDesc] = useState("");
     let [programmDescEng, setProgrammDescEng] = useState("");
     let [age, setAge] = useState(7);
@@ -818,14 +827,12 @@ const EditTour = () => {
                             htmlFor="inputname"
                             className="text-sm text-white font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         >
-                            галерея тура
+                            Главные фото тура
                         </label>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 mt-2 mb-2">
-                            {galery?.map((item, index) => (
-                                <div
-                                    key={index}
-                                    className="w-full max-w-96 aspect-video"
-                                >
+
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 mt-2 mb-2 items-center">
+                            {galery?.slice(0, 5).map((item, index) => (
+                                <div key={index} className={`w-full max-w-96`}>
                                     <div className="flex items-center justify-center w-full mt-2">
                                         <div
                                             style={{
@@ -833,7 +840,80 @@ const EditTour = () => {
                                                 backgroundSize: "cover",
                                                 backgroundPosition: "center",
                                             }}
-                                            className="relative flex flex-col items-center justify-center w-full aspect-video border-0 border-gray-300 border-dashed rounded-lg cursor-pointer dark:hover:bg-bray-800 bg-white hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500"
+                                            className={`relative flex flex-col items-center justify-center w-full ${
+                                                index === 1 ||
+                                                index === 2 ||
+                                                index === 4
+                                                    ? "aspect-square"
+                                                    : "aspect-video"
+                                            } border-0 border-gray-300 border-dashed rounded-lg cursor-pointer dark:hover:bg-bray-800 bg-white hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500`}
+                                        >
+                                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                                <svg
+                                                    className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                                                    aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 20 16"
+                                                >
+                                                    <path
+                                                        stroke="currentColor"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth="2"
+                                                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                                                    />
+                                                </svg>
+                                                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                                    кликните чтобы загрузить
+                                                    фото{" "}
+                                                    {index === 1 ||
+                                                    index === 2 ||
+                                                    index === 4
+                                                        ? "1 / 1"
+                                                        : "16 / 9"}
+                                                </p>
+                                            </div>
+                                            <input
+                                                onChange={(e) =>
+                                                    uploadFile(
+                                                        e.target.files[0],
+                                                        setGalery,
+                                                        true,
+                                                        index
+                                                    )
+                                                }
+                                                id="dropzone-file2"
+                                                type="file"
+                                                className="absolute top-0 left-0 bottom-0 right-0 opacity-0"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <br />
+                        <label
+                            htmlFor="inputname"
+                            className="text-sm text-white font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                            Галерея тура
+                        </label>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                            {galery?.slice(5).map((item, index) => (
+                                <div key={index} className={`w-full max-w-96`}>
+                                    <div className="flex items-center justify-center w-full mt-2">
+                                        <div
+                                            style={{
+                                                backgroundImage: `url(${
+                                                    item + 5
+                                                })`,
+                                                backgroundSize: "cover",
+                                                backgroundPosition: "center",
+                                            }}
+                                            className={`relative flex flex-col items-center justify-center w-full  aspect-video
+                                            } border-0 border-gray-300 border-dashed rounded-lg cursor-pointer dark:hover:bg-bray-800 bg-white hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500`}
                                         >
                                             <div className="flex flex-col items-center justify-center pt-5 pb-6">
                                                 <svg
@@ -862,7 +942,7 @@ const EditTour = () => {
                                                         e.target.files[0],
                                                         setGalery,
                                                         true,
-                                                        index
+                                                        index + 5
                                                     )
                                                 }
                                                 id="dropzone-file2"

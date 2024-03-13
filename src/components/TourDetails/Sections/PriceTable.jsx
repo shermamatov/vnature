@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "../TourDetails.scss";
 import { useSelector } from "react-redux";
+import { priceArr } from "../../../consts";
 const PriceTable = ({ tour }) => {
     let width = window.innerWidth;
     let lang = useSelector((item) => item.tours.lang);
     let [arr, setArr] = useState([]);
+
     useEffect(() => {
         let arr2 = [];
         for (let i in tour?.price) {
@@ -61,14 +63,15 @@ const PriceTable = ({ tour }) => {
                                 <>Price per person</>
                             )}
                         </div>
-                        {arr.map((item, index) => (
+                        {priceArr?.map((item, index) => (
                             <div
-                                className="tableSection border border-[#00499f]"
                                 key={index}
+                                className="tableSection border border-[#00499f]"
                             >
-                                {item}
+                                {tour?.price && tour?.price["" + item]}
                             </div>
                         ))}
+                        {}
                     </div>
                 </div>
             </div>

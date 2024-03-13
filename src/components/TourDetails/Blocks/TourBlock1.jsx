@@ -6,69 +6,181 @@ const TourBlock1 = memo(function TourBlock1({
     setGaleryStart,
     setGalery,
 }) {
+    let width = window.innerWidth;
     return (
         <div className="content">
-            {tour.galery ? (
-                <div className="grid gap-2 md:gap-4 grid-cols-6 md:grid-cols-4 grid-rows-2 mt-8 max-h-[260px] md:max-h-[420px]">
-                    <div className="col-span-4 row-span-1 md:col-span-2 md:row-span-2">
-                        <img
-                            onClick={() => {
-                                setGalery(true);
-                                setGaleryStart(0);
+            {tour?.galery?.length > 0 && tour ? (
+                width > 768 ? (
+                    <div className="flex justify-between mt-8">
+                        <div className="w-[64%] mr-2 aspect-video h-auto">
+                            <img
+                                onClick={() => {
+                                    setGalery(true);
+                                    setGaleryStart(0);
+                                }}
+                                className="w-[100%] object-cover h-[100%] rounded-md cursor-pointer "
+                                src={tour?.galery[0]}
+                                alt=""
+                            />
+                        </div>
+                        <div className="w-[36%] grid grid-cols-2 gap-2 relative">
+                            <div className="col-span-1 aspect-square">
+                                <img
+                                    onClick={() => {
+                                        setGalery(true);
+                                        setGaleryStart(1);
+                                    }}
+                                    className="w-[100%] object-cover h-[100%] rounded-md cursor-pointer  "
+                                    src={tour?.galery[1]}
+                                    alt=""
+                                />
+                            </div>
+                            <div className="col-span-1 aspect-square">
+                                <img
+                                    onClick={() => {
+                                        setGalery(true);
+                                        setGaleryStart(2);
+                                    }}
+                                    className="w-[100%] object-cover h-[100%] rounded-md cursor-pointer "
+                                    src={tour?.galery[2]}
+                                    alt=""
+                                />
+                            </div>
+                            <div className="col-span-1 aspect-square">
+                                <img
+                                    onClick={() => {
+                                        setGalery(true);
+                                        setGaleryStart(3);
+                                    }}
+                                    className="w-[100%] object-cover  h-[100%] rounded-md"
+                                    src={tour?.galery[3]}
+                                    alt=""
+                                />
+                            </div>
+                            <div className="col-span-1 aspect-square">
+                                <img
+                                    onClick={() => {
+                                        setGalery(true);
+                                        setGaleryStart(4);
+                                    }}
+                                    className="w-[100%] object-cover  h-[100%] rounded-md"
+                                    src={tour?.galery[4]}
+                                    alt=""
+                                />
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="flex justify-between flex-wrap mt-8">
+                        <div className="w-[65%] pr-2 aspect-video">
+                            <img
+                                onClick={() => {
+                                    setGalery(true);
+                                    setGaleryStart(0);
+                                }}
+                                className="w-[100%] object-cover h-[100%] rounded-md cursor-pointer  "
+                                src={tour?.galery[0]}
+                                alt=""
+                            />
+                        </div>
+                        <div className="w-[35%] aspect-square">
+                            <img
+                                onClick={() => {
+                                    setGalery(true);
+                                    setGaleryStart(1);
+                                }}
+                                className="w-[100%] object-cover h-[100%] rounded-md cursor-pointer "
+                                src={tour?.galery[1]}
+                                alt=""
+                            />
+                        </div>
+                        <div className="w-[35%] pt-2 aspect-square">
+                            <img
+                                onClick={() => {
+                                    setGalery(true);
+                                    setGaleryStart(2);
+                                }}
+                                className="w-[100%] object-cover  h-[100%] rounded-md"
+                                src={tour?.galery[2]}
+                                alt=""
+                            />
+                        </div>
+                        <div className="w-[65%] pt-2 pl-2 aspect-video">
+                            <img
+                                onClick={() => {
+                                    setGalery(true);
+                                    setGaleryStart(3);
+                                }}
+                                className="w-[100%] object-cover  h-[100%] rounded-md"
+                                src={tour?.galery[3]}
+                                alt=""
+                            />
+                        </div>
+                    </div>
+                )
+            ) : width > 768 ? (
+                <div className="flex justify-between mt-8">
+                    <div className="w-[64%] mr-2 aspect-video h-auto">
+                        <Skeleton
+                            sx={{
+                                height: "100%",
+                                width: "100%",
+                                borderRadius: "6px",
                             }}
-                            className="w-[100%] object-cover h-[100%] rounded-md cursor-pointer"
-                            src={tour?.galery[0]}
-                            alt=""
+                            animation="wave"
+                            variant="rectangular"
                         />
                     </div>
-                    <div className="col-span-2 row-span-1 md:col-span-1 md:row-span-1 cursor-pointer">
-                        <img
-                            onClick={() => {
-                                setGalery(true);
-                                setGaleryStart(1);
-                            }}
-                            className="w-[100%] object-cover  h-[100%] rounded-md cursor-pointer"
-                            src={tour?.galery[1]}
-                            alt=""
-                        />
-                    </div>
-                    <div className="col-span-2 row-span-2 md:col-span-1 md:row-span-1 cursor-pointer">
-                        <img
-                            onClick={() => {
-                                setGalery(true);
-                                setGaleryStart(2);
-                            }}
-                            className="w-[100%] object-cover  h-[100%] rounded-md cursor-pointer"
-                            src={tour?.galery[2]}
-                            alt=""
-                        />
-                    </div>
-                    <div className="col-span-4 row-span-2 md:col-span-1 md:row-span-1 cursor-pointer">
-                        <img
-                            onClick={() => {
-                                setGalery(true);
-                                setGaleryStart(3);
-                            }}
-                            className="w-[100%] object-cover  h-[100%] rounded-md"
-                            src={tour?.galery[3]}
-                            alt=""
-                        />
-                    </div>
-                    <div className="hidden md:block col-span-2 row-span-2 md:col-span-1 md:row-span-1 cursor-pointer">
-                        <img
-                            onClick={() => {
-                                setGalery(true);
-                                setGaleryStart(4);
-                            }}
-                            className="w-[100%] object-cover  h-[100%] rounded-md"
-                            src={tour?.galery[4]}
-                            alt=""
-                        />
+                    <div className="w-[36%] grid grid-cols-2 gap-2 relative">
+                        <div className="col-span-1 aspect-square">
+                            <Skeleton
+                                sx={{
+                                    height: "100%",
+                                    width: "100%",
+                                    borderRadius: "6px",
+                                }}
+                                animation="wave"
+                                variant="rectangular"
+                            />
+                        </div>
+                        <div className="col-span-1 aspect-square">
+                            <Skeleton
+                                sx={{
+                                    height: "100%",
+                                    width: "100%",
+                                    borderRadius: "6px",
+                                }}
+                                animation="wave"
+                                variant="rectangular"
+                            />
+                        </div>
+                        <div className="col-span-1 aspect-square">
+                            <Skeleton
+                                sx={{
+                                    height: "100%",
+                                    width: "100%",
+                                    borderRadius: "6px",
+                                }}
+                                animation="wave"
+                                variant="rectangular"
+                            />
+                        </div>
+                        <div className="col-span-1 aspect-square">
+                            <Skeleton
+                                sx={{
+                                    height: "100%",
+                                    width: "100%",
+                                    borderRadius: "6px",
+                                }}
+                                animation="wave"
+                                variant="rectangular"
+                            />
+                        </div>
                     </div>
                 </div>
             ) : (
-                <div className="grid gap-2 md:gap-4 grid-cols-6 md:grid-cols-4 grid-rows-2 mt-8 max-h-[260px] md:max-h-[420px]">
-                    <div className="col-span-4 row-span-1 md:col-span-2 md:row-span-2">
+                <div className="flex justify-between flex-wrap mt-8">
+                    <div className="w-[65%] pr-2 aspect-video">
                         <Skeleton
                             sx={{
                                 height: "100%",
@@ -79,7 +191,7 @@ const TourBlock1 = memo(function TourBlock1({
                             variant="rectangular"
                         />
                     </div>
-                    <div className="col-span-2 row-span-1 md:col-span-1 md:row-span-1 ">
+                    <div className="w-[35%] aspect-square">
                         <Skeleton
                             sx={{
                                 height: "100%",
@@ -90,7 +202,7 @@ const TourBlock1 = memo(function TourBlock1({
                             variant="rectangular"
                         />
                     </div>
-                    <div className="col-span-2 row-span-2 md:col-span-1 md:row-span-1 ">
+                    <div className="w-[35%] pt-2 aspect-square">
                         <Skeleton
                             sx={{
                                 height: "100%",
@@ -101,18 +213,7 @@ const TourBlock1 = memo(function TourBlock1({
                             variant="rectangular"
                         />
                     </div>
-                    <div className="col-span-2 row-span-2 md:col-span-1 md:row-span-1 ">
-                        <Skeleton
-                            sx={{
-                                height: "100%",
-                                width: "100%",
-                                borderRadius: "6px",
-                            }}
-                            animation="wave"
-                            variant="rectangular"
-                        />
-                    </div>
-                    <div className="col-span-2 row-span-2 md:col-span-1 md:row-span-1 ">
+                    <div className="w-[65%] pt-2 pl-2 aspect-video">
                         <Skeleton
                             sx={{
                                 height: "100%",

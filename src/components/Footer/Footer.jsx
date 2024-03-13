@@ -35,9 +35,11 @@ const Footer = () => {
                         </a>
                         <p className="font-semibold text-base text-[#5E6282] mt-2">
                             {lang === "rus" ? "адрес: " : "address: "}{" "}
-                            {lang === "rus"
-                                ? "Кыргызстан, город Ош"
-                                : "Kyrgyzstan, Osh city"}
+                            {lang === "rus" ? (
+                                <>г Ош, улица Монуева 49</>
+                            ) : (
+                                <>Osh city, Monueva Street 49</>
+                            )}
                         </p>
                     </div>
                     <div className="flex flex-col items-center mt-8 sm:mt-0 sm:ml-8">
@@ -140,7 +142,7 @@ const Footer = () => {
 
                 <div>
                     <p className="text-sm sm:text-xl text-center font-normal text-[#5E6282] my-8">
-                        All rights reserved@vnature.com
+                        All rights reserved vnature@gmail.com
                     </p>
                 </div>
             </div>

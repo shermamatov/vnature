@@ -109,6 +109,7 @@ const TourDetails = () => {
                         setOrderError={setOrderError}
                         setOrderSuccess={setOrderSuccess}
                         setHotelModal={setHotelModal}
+                        setCalendarValue={setCalendarValue}
                     />
                 </div>
             )}
