@@ -17,18 +17,6 @@
     background: #fff;
 }
 
-.tableSection {
-    width: 10%;
-    aspect-ratio: 1/1;
-    height: auto;
-    // border: 1px solid #00499f;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-weight: 500;
-}
-
 .calendar {
     .MuiTypography-body2 {
         display: none;
@@ -67,6 +55,25 @@
         font-size: 12px;
     }
 }
+.tableSection {
+    width: 10%;
+    aspect-ratio: 1/1;
+    -webkit-aspect-ratio: 1/1;
+    height: auto;
+    // border: 1px solid #00499f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: 500;
+}
+
+.tableRoundB {
+    border-bottom-left-radius: 0.375rem !important;
+}
+.tableRoundT {
+    border-top-left-radius: 0.375rem !important;
+}
 
 @media (max-width: 920px) {
     .tableSection {
@@ -81,6 +88,7 @@
 @media (max-width: 768px) {
     .tableSection {
         aspect-ratio: auto;
+        -webkit-aspect-ratio: auto;
         height: 70px;
     }
     .tableSection2 {

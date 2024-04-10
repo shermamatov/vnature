@@ -4,9 +4,11 @@ import shapka from "../../assets/shapka_banner.webp";
 import { useSelector } from "react-redux";
 import aboutBanner from "../../assets/aboutBanner1.webp";
 import aboutBanner2 from "../../assets/aboutBanner.JPEG";
+import aboutBanner2Adap from "../../assets/aboutBannerAdap.JPEG";
 
 const AboutUs = () => {
-    let navigate = useNavigate();
+    // let navigate = useNavigate();
+    let width = window.innerWidth;
     let lang = useSelector((item) => item.tours.lang);
     return (
         <div className="relative">
@@ -88,8 +90,12 @@ const AboutUs = () => {
                                 посчастливилось родиться в Кыргызстане, и те,
                                 кто увидел его впервые! <br />
                                 <img
-                                    className="mt-8 rounded-md m-auto object-cover md:object-center md:aspect-video aspect-square"
-                                    src={aboutBanner2}
+                                    className="mt-8 rounded-md m-auto object-cover md:object-center md:aspect-video "
+                                    src={
+                                        width > 768
+                                            ? aboutBanner2
+                                            : aboutBanner2Adap
+                                    }
                                     alt=""
                                 />{" "}
                                 <br /> Мы покажем вам землю своих предков с
@@ -121,8 +127,12 @@ const AboutUs = () => {
                                 Kyrgyzstan, and those who saw it for the first
                                 time! <br />
                                 <img
-                                    className="mt-8 rounded-md m-auto object-cover md:aspect-video aspect-square md:object-center"
-                                    src={aboutBanner2}
+                                    className="mt-8 rounded-md m-auto object-cover md:aspect-video  md:object-center"
+                                    src={
+                                        width > 768
+                                            ? aboutBanner2
+                                            : aboutBanner2Adap
+                                    }
                                     alt=""
                                 />
                                 <br />

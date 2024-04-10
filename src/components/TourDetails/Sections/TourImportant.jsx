@@ -8,8 +8,8 @@ const TourImportant = ({ tour }) => {
     function checkerLangImportant() {
         return lang === "rus" ? tour?.important : tour?.importantEng;
     }
-    function checkAccordion() {
-        // let acc =
+    function checkerLangOptional() {
+        return lang === "rus" ? tour?.optional : tour?.optionalEng;
     }
     return (
         <div id="importantAnchor">
@@ -25,8 +25,15 @@ const TourImportant = ({ tour }) => {
                         )}
                     </div>
                 ))}
-                <div className="w-full h-[2px] opacity-80 bg-[#00499f]"></div>
-                <AccordionForm
+                {checkerLangOptional()?.map((item, index) => (
+                    <div key={index}>
+                        <div className="w-full border border-[#00499F] opacity-80"></div>
+                        <AccordionElement2 item={item} />
+                        {/* {checkerLangImportant()?.length - 1 !== index && (
+                        )} */}
+                    </div>
+                ))}
+                {/* <AccordionForm
                     item={{
                         title:
                             lang === "rus"
@@ -37,7 +44,7 @@ const TourImportant = ({ tour }) => {
                 />
                 <div className="w-full border border-[#00499F] opacity-80"></div>
                 {/* <div className="w-full mt-2 mb-2 h-[2px] opacity-50 bg-[#00499f]"></div> */}
-                <div className="">
+                {/* <div className="">
                     <AccordionForm
                         item={{
                             title:
@@ -50,7 +57,7 @@ const TourImportant = ({ tour }) => {
                                     : tour?.notIncludeEng,
                         }}
                     />
-                </div>
+                </div>{" "} */}
             </div>
         </div>
     );

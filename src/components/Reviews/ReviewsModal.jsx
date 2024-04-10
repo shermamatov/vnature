@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "../../App.css";
 import {
@@ -38,6 +38,31 @@ const ReviewsModal = ({
     let [fromChecker, setFromChecker] = useState(false);
     let [tourIdChecker, setTourIdChecker] = useState(false);
 
+    const selectRef = useRef(null);
+    const inputRefs = useRef([]);
+
+    const handleKeyDown = (e, index) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            const nextIndex = index + 1;
+            if (index === 2) {
+                inputRefs.current[3].focus();
+            } else if (nextIndex < inputRefs.current.length) {
+                inputRefs.current[nextIndex].focus();
+            } else {
+                inputRefs.current[0].focus(); // Focus on the first input field
+            }
+        }
+    };
+
+    const addInputRef = (ref, index) => {
+        if (ref && !inputRefs.current.includes(ref)) {
+            inputRefs.current.push(ref);
+            if (index === inputRefs.current.length - 1) {
+                ref.onkeydown = (e) => handleKeyDown(e, index);
+            }
+        }
+    };
     // let [checker, setChecker] = useState(false);
 
     const changeHandler = (value) => {
@@ -83,14 +108,6 @@ const ReviewsModal = ({
         setLoader(true);
     }
 
-    // useEffect(() => {
-    //     if (name && tourId && reviewDesc && country && from) {
-    //         setChecker(true);
-    //     } else {
-    //         setChecker(false);
-    //     }
-    // }, [name, tourId, reviewDesc, country, from]);
-
     useEffect(() => {
         dispatch(getTours());
         isTour && setTourId(tour?.id);
@@ -117,6 +134,9 @@ const ReviewsModal = ({
                     error
                 );
             });
+
+        let select = document.getElementById("react-select-2-input");
+        select?.addEventListener("keydown", (key) => handleKeyDown(key, 2));
     }, []);
 
     useEffect(() => {
@@ -146,6 +166,10 @@ const ReviewsModal = ({
         }
     }, [reviewDesc]);
 
+    useEffect(() => {
+        country && inputRefs.current[2].focus();
+    }, [country]);
+
     return (
         <div
             onClick={(e) => e.stopPropagation()}
@@ -162,6 +186,7 @@ const ReviewsModal = ({
                 </label>
             )}
             <select
+                ref={(ref) => addInputRef(ref, 0)}
                 value={tourId}
                 onChange={(e) => {
                     setTourId(e.target.value);
@@ -190,6 +215,7 @@ const ReviewsModal = ({
                     </label>
                 )}
                 <input
+                    ref={(ref) => addInputRef(ref, 1)}
                     onChange={(e) => {
                         setName(e.target.value);
                         setNameChecker(false);
@@ -215,6 +241,8 @@ const ReviewsModal = ({
                     </label>
                 )}
                 <Select
+                    ref={(ref) => addInputRef(ref, 2)}
+                    // ref={selectRef}
                     className="mb-3"
                     options={lang === "rus" ? countriesRus : countriesEng}
                     value={country}
@@ -231,6 +259,7 @@ const ReviewsModal = ({
                     </label>
                 )}
                 <select
+                    ref={(ref) => addInputRef(ref, 3)}
                     // defaultValue={" "}
                     onChange={(e) => {
                         setFrom(e.target.value);
@@ -279,13 +308,17 @@ const ReviewsModal = ({
                     type="text"
                 /> */}
                 {reviewDescChecker && (
-                    <label className="text-red-500" htmlFor="datePicker">
+                    <label
+                        className="text-red-500 text-xs"
+                        htmlFor="datePicker"
+                    >
                         {lang === "rus"
-                            ? "пожалуйста выберите свою страну*"
-                            : "Please select your country*"}
+                            ? "Пожалуйста опишите свое впечатление*"
+                            : "Please describe your experience*"}
                     </label>
                 )}
                 <textarea
+                    ref={(ref) => addInputRef(ref, 4)}
                     onChange={(e) => {
                         setReviewDesc(e.target.value);
                         setReviewDescChecker(false);
@@ -310,6 +343,7 @@ const ReviewsModal = ({
                 </p>
                 <div className="flex justify-center">
                     <button
+                        ref={(ref) => addInputRef(ref, 5)}
                         onClick={() => submitHandler()}
                         className={`w-[80%] bg-[#0FA03F] text-white h-10 mt-4`}
                     >

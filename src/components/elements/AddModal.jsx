@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const AddModal = ({ setModal, add, addEng }) => {
+const AddModal = ({ setModal, add, addEng, placeholder }) => {
     let [title, setTitle] = useState("");
     let [desc, setDesc] = useState("");
     let [titleEng, setTitleEng] = useState("");
@@ -11,7 +11,7 @@ const AddModal = ({ setModal, add, addEng }) => {
             className="max-w-screen-sm w-[90%] bg-white rounded-lg p-6 "
         >
             <div className="flex justify-between items-center mb-4">
-                <p className="text-2xl font-bold">важно знать</p>
+                <p className="text-2xl font-bold ">{placeholder}</p>
                 <svg
                     onClick={() => setModal(false)}
                     width={20}
@@ -52,13 +52,13 @@ const AddModal = ({ setModal, add, addEng }) => {
             </div>
             <input
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="заголовок для важно знать на русском"
+                placeholder={`заголовок для ${placeholder} на русском`}
                 className="input"
                 type="text"
             />
             <input
                 onChange={(e) => setTitleEng(e.target.value)}
-                placeholder="заголовок для важно знать на английском"
+                placeholder={`заголовок для ${placeholder} на английском`}
                 className="input"
                 type="text"
             />
@@ -72,14 +72,14 @@ const AddModal = ({ setModal, add, addEng }) => {
             <textarea
                 onChange={(e) => setDesc(e.target.value)}
                 // id="importantKnow"
-                placeholder={"описание для важно знать на русском"}
+                placeholder={`описание для ${placeholder} на русском`}
                 className="inputArea text-xs sm:text-base"
                 type="text"
             ></textarea>
             <textarea
                 onChange={(e) => setDescEng(e.target.value)}
                 // id="importantKnow"
-                placeholder={"описание для важно знать на английском"}
+                placeholder={`описание для ${placeholder} на английском`}
                 className="inputArea text-xs sm:text-base"
                 type="text"
             ></textarea>

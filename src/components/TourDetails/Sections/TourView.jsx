@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 
 const TourView = ({ tour }) => {
     let lang = useSelector((item) => item?.tours?.lang);
+    let width = window.innerWidth;
     const [sliderRef, setSliderRef] = useState(null);
     const [activeSlide, setActiveSlide] = useState(1);
     let slideCount = 3;
@@ -16,7 +17,7 @@ const TourView = ({ tour }) => {
         slidesToShow: slideCount,
         slidesToScroll: slideCount,
         infinite: checkerLangMemories()?.length <= slideCount ? false : true,
-        initialSlide: 2,
+        initialSlide: 0,
         beforeChange: (current, next) => {
             setActiveSlide(next < 0 ? 0 : next);
         },
@@ -40,7 +41,7 @@ const TourView = ({ tour }) => {
         return lang === "rus" ? tour?.memories : tour?.memoriesEng;
     }
     useEffect(() => {
-        sliderRef?.slickNext();
+        width < 1024 && sliderRef?.slickNext();
     }, [tour]);
     return (
         <div>
@@ -115,7 +116,7 @@ const TourView = ({ tour }) => {
                             />
                         </svg>
                         <p className="text-2xl text-[#00499f] font-semibold mx-8 noselect">
-                            {Math.ceil(activeSlide / adapSlideCount + 1)}/
+                            {parseInt(activeSlide / adapSlideCount + 1)}/
                             {Math.ceil(
                                 checkerLangMemories()?.length / adapSlideCount
                             ) || 1}
@@ -142,7 +143,7 @@ const TourView = ({ tour }) => {
                         <div key={index} className="px-2">
                             <div className="w-[100%] aspect-[10/16] md:aspect-[11/16] flex flex-col justify-between rounded-[10px] bg-[#e2effe]">
                                 <div className="p-4">
-                                    <p className="text-[13px] md:text-lg md:text-left text-left text-black">
+                                    <p className="text-[10px] font-medium md:text-lg md:text-left text-left text-black">
                                         {item?.memoriesTitle}
                                     </p>
                                 </div>

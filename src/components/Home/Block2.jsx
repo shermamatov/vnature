@@ -1,5 +1,4 @@
 import React from "react";
-import plusiki from "../../assets/plusiki.svg";
 import { useSelector } from "react-redux";
 const Block2 = () => {
     let lang = useSelector((item) => item.tours.lang);
@@ -37,11 +36,6 @@ const Block2 = () => {
                     )}
                 </h2>
             </div>
-            {/* <img
-                className=" md:block absolute right-8 top-8 w-28 mob:w-36 md:w-64"
-                src={plusiki}
-                alt=""
-            /> */}
         </div>
     );
 };

@@ -22,10 +22,10 @@ const PrivacyPolicyEng = () => {
                         <div>
                             <p className="text-lg font-medium">
                                 This Privacy Policy applies to the site under
-                                the domain name russiadiscovery.ru This page
-                                contains information about which information we
-                                (site administration) or third persons can
-                                receive when you use our by site.
+                                the domain name vnature.kg This page contains
+                                information about which information we (site
+                                administration) or third persons can receive
+                                when you use our by site.
                             </p>
                         </div>
                         <div className="mt-8">
@@ -234,6 +234,17 @@ const PrivacyPolicyEng = () => {
                                 user information, which we collect. Using the
                                 site, you accept responsibility for periodic
                                 review of the policy privacy and changes to it.
+                            </p>
+                            <br />
+                            <p className="text-lg font-medium">
+                                We were inspired by the{" "}
+                                <a
+                                    className="text-[#00499f]"
+                                    href="http://russiadiscovery.ru/"
+                                >
+                                    russiadiscovery.ru{" "}
+                                </a>
+                                site
                             </p>
                             <br />
                             <strong className="text-lg">

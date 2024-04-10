@@ -1,6 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { translateLevel } from "../../../store/reducers/tourReducer";
+import {
+    nightsTransformer,
+    translateLevel,
+    wordTransformer,
+} from "../../../store/reducers/tourReducer";
 import { months, monthsEng } from "../../../consts";
 // import { tour } from "../../../consts";
 
@@ -42,11 +46,21 @@ const SideForm = ({ setPriceModal, tour, isMobile = false, setFormModal }) => {
                                 "linear-gradient(to bottom, #cbe3ff 24.9%, #a0ccff 97.9%)",
                         }}
                     >
-                        <p className="text-lg text-left text-black">
-                            {lang === "rus" ? "Дней" : "Days"}
+                        <p className="text-lg text-left text-black capitalize">
+                            {lang === "rus"
+                                ? wordTransformer(tour?.daysCount)
+                                : "Days"}{" "}
+                            {tour?.daysCount > 1 && (
+                                <>
+                                    /{" "}
+                                    {lang === "rus"
+                                        ? nightsTransformer(tour?.daysCount - 1)
+                                        : "Nights"}
+                                </>
+                            )}
                         </p>
                         <p className="text-xl text-left text-black">
-                            {tour?.daysCount}
+                            {tour?.daysCount} / {tour?.daysCount - 1}
                         </p>
                     </div>
                     <div
@@ -79,9 +93,8 @@ const SideForm = ({ setPriceModal, tour, isMobile = false, setFormModal }) => {
                         </p>
                         <p className="text-base md:text-lg font-medium text-left text-[#00499f] capitalize">
                             <span>
-                                {checkerLangMonth()[tour?.season?.start - 1]}
+                                {checkerLangMonth()[tour?.season?.start - 1]} -
                             </span>{" "}
-                            -
                             <span className="ml-1">
                                 {checkerLangMonth()[tour?.season?.end - 1]}
                             </span>

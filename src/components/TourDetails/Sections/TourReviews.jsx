@@ -11,7 +11,7 @@ const TourReviews = ({ tour, setReviewsModal }) => {
 
     const [sliderRef, setSliderRef] = useState(null);
     const [activeSlide, setActiveSlide] = useState(1);
-    let slideCount = 3;
+    let slideCount = 3 > tourReviews.length ? tourReviews.length : 3;
     let adapSlideCount = 1;
 
     function stringToColor(string) {
@@ -75,10 +75,6 @@ const TourReviews = ({ tour, setReviewsModal }) => {
         ],
     };
 
-    useEffect(() => {
-        dispatch(getOneTourReviews(tour?.id));
-    }, [tour]);
-
     return (
         <div id="reviewsAnchor">
             <div>
@@ -103,8 +99,8 @@ const TourReviews = ({ tour, setReviewsModal }) => {
                             />
                         </svg>
                         <p className="text-3xl text-[#00499f] font-semibold mx-8 noselect">
-                            {parseInt(activeSlide / slideCount + 1)}/
-                            {tour?.reviews?.length / slideCount}
+                            {parseInt(activeSlide / slideCount + 1) || 0}/
+                            {Math.ceil(tourReviews.length / slideCount) || 0}
                         </p>
                         <svg
                             width={40}
@@ -139,8 +135,9 @@ const TourReviews = ({ tour, setReviewsModal }) => {
                             />
                         </svg>
                         <p className="text-2xl text-[#00499f] font-semibold mx-8 noselect">
-                            {Math.ceil(activeSlide / adapSlideCount + 1)}/
-                            {Math.ceil(tour?.reviews?.length / adapSlideCount)}
+                            {Math.ceil(activeSlide / adapSlideCount + 1) || 0}/
+                            {Math.ceil(tourReviews.length / adapSlideCount) ||
+                                0}
                         </p>
                         <svg
                             width={24}
@@ -165,9 +162,14 @@ const TourReviews = ({ tour, setReviewsModal }) => {
                             <div className="rounded-[10px] bg-[#C0D6F4] p-4">
                                 <div className="flex items-center avatar_parent">
                                     <Avatar {...stringAvatar(item?.name)} />
-                                    <h3 className="ml-2 md:ml-4 text-sm md:text-lg font-medium">
-                                        {item?.name}
-                                    </h3>
+                                    <div className="ml-2 md:ml-4 flex flex-col">
+                                        <h3 className="text-sm md:text-lg font-medium">
+                                            {item?.name}
+                                        </h3>
+                                        <p className="md:text-sm text-xs font-semibold opacity-60">
+                                            {item?.country}
+                                        </p>
+                                    </div>
                                 </div>
                                 <p className="mt-4  text-xs md:text-base font-medium">
                                     {item?.reviewDesc}

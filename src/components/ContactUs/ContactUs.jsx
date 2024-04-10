@@ -1,11 +1,15 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 import shapka from "../../assets/shapka_banner.webp";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getMainData } from "../../store/reducers/adminReducer";
 
 const ContactUs = () => {
-    let navigate = useNavigate();
     let lang = useSelector((item) => item.tours.lang);
+    // let mainData = useSelector((item) => item.admin.mainData);
+    // let dispatch = useDispatch();
+    // useEffect(() => {
+    //     dispatch(getMainData());
+    // }, []);
     return (
         <div className="relative">
             <img
@@ -44,9 +48,9 @@ const ContactUs = () => {
                             </h4>
                             <a
                                 className="font-medium text-lg capitalize text-[#00499f]"
-                                href="tel:+996507034477"
+                                href="tel:+996554034477"
                             >
-                                +996 507 034 477
+                                +996 554 034 477
                             </a>
                         </div>
                         <div data-aos="fade-right" className="mt-8 md:mt-0">

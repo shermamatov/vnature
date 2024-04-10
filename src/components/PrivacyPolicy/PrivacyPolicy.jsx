@@ -248,6 +248,17 @@ const PrivacyPolicy = () => {
                             конфиденциальности и изменениями в ней.
                         </p>
                         <br />
+                        <p className="text-lg font-medium">
+                            Вдохновлялись сайтом{" "}
+                            <a
+                                className="text-[#00499f]"
+                                href="http://russiadiscovery.ru/"
+                            >
+                                {" "}
+                                russiadiscovery.ru
+                            </a>{" "}
+                        </p>
+                        <br />
                         <strong className="text-lg">
                             Как с нами связаться
                         </strong>

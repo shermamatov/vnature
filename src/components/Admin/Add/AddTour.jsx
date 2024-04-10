@@ -25,6 +25,8 @@ const AddTour = () => {
     let [importantModal, setImportantModal] = useState(false);
     let [importantModalEdit, setImportantModalEdit] = useState(false);
     let [dayModalEdit, setDayModalEdit] = useState(false);
+    let [optionalModal, setOptionalModal] = useState(false);
+    let [optionalModalEdit, setOptionalModalEdit] = useState(false);
     let dispatch = useDispatch();
     let navigate = useNavigate();
     // ! modal states
@@ -34,6 +36,8 @@ const AddTour = () => {
     let [oneImportantEng, setOneImportantEng] = useState({});
     let [oneDay, setOneDay] = useState({});
     let [oneDayEng, setOneDayEng] = useState({});
+    let [oneOptional, setOneOptional] = useState({});
+    let [oneOptionalEng, setOneOptionalEng] = useState({});
     // ! data states
     let [title, setTitle] = useState("");
     let [titleEng, setTitleEng] = useState("");
@@ -81,6 +85,10 @@ const AddTour = () => {
 
     let [programmDays, setProgrammDays] = useState([]);
     let [programmDaysEng, setProgrammDaysEng] = useState([]);
+
+    let [optional, setOptional] = useState([]);
+    let [optionalEng, setOptionalEng] = useState([]);
+
     const [uploadProgress, setUploadProgress] = useState(null);
 
     function dataCheck() {
@@ -103,10 +111,6 @@ const AddTour = () => {
             programmDesc &&
             programmDescEng &&
             age &&
-            include &&
-            notInclude &&
-            includeEng &&
-            notIncludeEng &&
             memories.length !== 0 &&
             memoriesEng.length !== 0 &&
             importantEng.length !== 0 &&
@@ -251,19 +255,22 @@ const AddTour = () => {
             programmDescriptionEng: programmDescEng,
             programmDays,
             programmDaysEng,
-            include,
-            includeEng,
-            notInclude,
-            notIncludeEng,
+            // include,
+            // includeEng,
+            // notInclude,
+            // notIncludeEng,
             important,
             importantEng,
             memories,
             memoriesEng,
             reviews: [],
+            optional,
+            optionalEng,
         };
         try {
+            setUploadProgress(true);
             dispatch(addTour(obj));
-            // navigate("/admin");
+            navigate("/admin/tours");
         } catch (e) {
             console.log(e);
         }
@@ -310,19 +317,19 @@ const AddTour = () => {
         setMemoriesEng(psevdoMemoriesArr);
     }
 
-    function addImportant(importantTitle, importantDesc) {
+    function addImportant(title, desc) {
         let psevdoImportant = [...important];
         psevdoImportant.push({
-            importantTitle,
-            importantDesc,
+            title,
+            desc,
         });
         setImportant(psevdoImportant);
     }
-    function addImportantEng(importantTitle, importantDesc) {
+    function addImportantEng(title, desc) {
         let psevdoImportant = [...importantEng];
         psevdoImportant.push({
-            importantTitle,
-            importantDesc,
+            title,
+            desc,
         });
         setImportantEng(psevdoImportant);
     }
@@ -353,11 +360,74 @@ const AddTour = () => {
         psevdoDay.splice(index, 1, item);
         setProgrammDays(psevdoDay);
     }
-
     function editProgrammDayEng(item, index) {
         let psevdoDay = [...programmDaysEng];
         psevdoDay.splice(index, 1, item);
         setProgrammDaysEng(psevdoDay);
+    }
+    function deleteProgrammDay(index) {
+        let psevdoArr = programmDays.filter(
+            (item, itemIndex) => itemIndex !== index
+        );
+        let psevdoArrEng = programmDaysEng.filter(
+            (item, itemIndex) => itemIndex !== index
+        );
+        setProgrammDays(psevdoArr);
+        setProgrammDaysEng(psevdoArrEng);
+    }
+
+    function addOptional(title, desc) {
+        let psevdoArr = [...optional];
+        psevdoArr.push({
+            title,
+            desc,
+        });
+        setOptional(psevdoArr);
+    }
+    function addOptionalEng(title, desc) {
+        let psevdoArr = [...optionalEng];
+        psevdoArr.push({
+            title,
+            desc,
+        });
+        setOptionalEng(psevdoArr);
+    }
+    function editOptional(item, index) {
+        let psevdoOptional = [...optional];
+        psevdoOptional.splice(index, 1, item);
+        setOptional(psevdoOptional);
+    }
+    function editOptionalEng(item, index) {
+        let psevdoOptional = [...optionalEng];
+        psevdoOptional.splice(index, 1, item);
+        setOptionalEng(psevdoOptional);
+    }
+    function deleteOptional(index) {
+        let psevdoOptional = optional.filter(
+            (item, itemIndex) => itemIndex !== index
+        );
+        let psevdoOptionalEng = optionalEng.filter(
+            (item, itemIndex) => itemIndex !== index
+        );
+        setOptional(psevdoOptional);
+        setOptionalEng(psevdoOptionalEng);
+    }
+
+    function deleteImageFromGalery(index = 0) {
+        let findDeleteImgRef = galery.find(
+            (item, itemIndex) => itemIndex === index
+        );
+
+        let filteredGalery = galery.filter(
+            (item, itemIndex) => itemIndex !== index
+        );
+        let filteredInputCount = inputCount.filter(
+            (item, itemIndex) => itemIndex !== index
+        );
+
+        findDeleteImgRef && deleteFile(findDeleteImgRef);
+        setGalery(filteredGalery);
+        setInputCount(filteredInputCount);
     }
 
     useEffect(() => {
@@ -365,8 +435,8 @@ const AddTour = () => {
             let psevdo = [];
             for (let i = 0; i < parseInt(days); i++) {
                 psevdo.push({
-                    dayTitle: `заголовок`,
-                    dayDesc: `описание`,
+                    title: `заголовок`,
+                    desc: `описание`,
                     day: i + 1,
                 });
                 setProgrammDays(psevdo);
@@ -419,6 +489,7 @@ const AddTour = () => {
                         addEng={addImportantEng}
                         add={addImportant}
                         setModal={setImportantModal}
+                        placeholder="важно знать"
                     />
                 </div>
             )}
@@ -433,6 +504,34 @@ const AddTour = () => {
                         editFunction={editImportant}
                         oneItem={oneImportant}
                         setModal={setImportantModalEdit}
+                        isDay={false}
+                    />
+                </div>
+            )}
+            {optionalModal && (
+                <div
+                    onClick={() => setOptionalModal(false)}
+                    className="fixed z-20 top-0 bottom-0 left-0 right-0 backdrop-blur-sm flex justify-center items-center"
+                >
+                    <AddModal
+                        add={addOptional}
+                        addEng={addOptionalEng}
+                        setModal={setOptionalModal}
+                        placeholder="дополнительно"
+                    />
+                </div>
+            )}
+            {optionalModalEdit && (
+                <div
+                    onClick={() => setOptionalModalEdit(false)}
+                    className="fixed z-20 top-0 bottom-0 left-0 right-0 backdrop-blur-sm flex justify-center items-center"
+                >
+                    <EditModal
+                        oneItem={oneOptional}
+                        oneItemEng={oneOptionalEng}
+                        editFunction={editOptional}
+                        editFunctionEng={editOptionalEng}
+                        setModal={setOptionalModalEdit}
                         isDay={false}
                     />
                 </div>
@@ -556,6 +655,7 @@ const AddTour = () => {
                             className="input"
                         >
                             <option value="высокая">высокая</option>
+                            <option value="выше среднего">выше среднего</option>
                             <option value="средняя">средняя</option>
                             <option value="низкая">низкая</option>
                         </select>
@@ -744,7 +844,6 @@ const AddTour = () => {
                         >
                             Главные фото тура
                         </label>
-
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 mt-2 mb-2 items-center">
                             {inputCount.slice(0, 5).map((item, index) => (
                                 <div key={index} className={`w-full max-w-96`}>
@@ -821,7 +920,7 @@ const AddTour = () => {
                                     key={index}
                                     className={`md:w-[30%] w-full max-w-96`}
                                 >
-                                    <div className="flex items-center justify-center w-full mt-2">
+                                    <div className="relative flex items-center justify-center w-full mt-2">
                                         <div
                                             style={{
                                                 backgroundImage: `url(${
@@ -868,6 +967,14 @@ const AddTour = () => {
                                                 className="absolute top-0 left-0 bottom-0 right-0 opacity-0"
                                             />
                                         </div>
+                                        <h3
+                                            className="absolute right-2 top-1 z-20 text-xl cursor-pointer text-red-500"
+                                            onClick={() =>
+                                                deleteImageFromGalery(index + 5)
+                                            }
+                                        >
+                                            ✖
+                                        </h3>
                                     </div>
                                 </div>
                             ))}
@@ -935,6 +1042,7 @@ const AddTour = () => {
                                 key={index}
                                 item={{ ...item, id: index }}
                                 isModal={true}
+                                deleteFunction={deleteProgrammDay}
                                 setModal={setDayModalEdit}
                                 setOneItem={setOneDay}
                                 setOneItemEng={setOneDayEng}
@@ -979,6 +1087,34 @@ const AddTour = () => {
                             htmlFor="inputname"
                             className="text-sm text-white font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         >
+                            Дополнительно
+                        </label>
+                        {optional.map((item, index) => (
+                            <AccordionElement2
+                                key={index}
+                                item={{ ...item, id: index }}
+                                deleteFunction={deleteOptional}
+                                setModal={setOptionalModalEdit}
+                                setOneItem={setOneOptional}
+                                setOneItemEng={setOneOptionalEng}
+                                itemEng={{ ...optionalEng[index], id: index }}
+                                isModal={true}
+                            />
+                        ))}
+                        <button
+                            className="input"
+                            onClick={() => {
+                                setOptionalModal(true);
+                            }}
+                        >
+                            добавить еще
+                        </button>
+                    </div>
+                    {/* <div className="mt-2 p-2 backdrop-blur-sm">
+                        <label
+                            htmlFor="inputname"
+                            className="text-sm text-white font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
                             включено в стоимость тура
                         </label>
                         <div className="grid md:gap-2 grid-cols-1 md:grid-cols-2">
@@ -1015,7 +1151,7 @@ const AddTour = () => {
                                 className="inputArea"
                             ></textarea>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="mt-2 p-2 shadowInput backdrop-blur-sm">
                         <label
                             htmlFor="inputname"
