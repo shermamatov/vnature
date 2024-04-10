@@ -1,7 +1,11 @@
 import React from "react";
 import AccordionForm from "../Elements/AccordionForm";
 import { useSelector } from "react-redux";
-import { translateLevel } from "../../../store/reducers/tourReducer";
+import {
+    nightsTransformer,
+    translateLevel,
+    wordTransformer,
+} from "../../../store/reducers/tourReducer";
 import { months, monthsEng } from "../../../consts";
 
 const TourForm = ({
@@ -37,11 +41,17 @@ const TourForm = ({
                                 "linear-gradient(to bottom, #cbe3ff 24.9%, #a0ccff 97.9%)",
                         }}
                     >
-                        <p className="text-lg text-left text-black">
-                            {lang === "rus" ? "Дней" : "Days"}
+                        <p className="text-lg text-left text-black capitalize">
+                            {lang === "rus"
+                                ? wordTransformer(tour?.daysCount)
+                                : "Days"}{" "}
+                            /{" "}
+                            {lang === "rus"
+                                ? nightsTransformer(tour?.daysCount - 1)
+                                : "Nights"}
                         </p>
                         <p className="text-xl text-left text-black mt-4">
-                            {tour?.daysCount}
+                            {tour?.daysCount} / {tour?.daysCount - 1}
                         </p>
                     </div>
                     <div

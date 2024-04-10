@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 
 const NavigationPanel = ({ section, setSection }) => {
     let lang = useSelector((item) => item.tours.lang);
+    let tourReviews = useSelector((item) => item.tours.oneTourReviews);
+
     return (
         <ul
             id="navigationAnchor"
@@ -51,16 +53,18 @@ const NavigationPanel = ({ section, setSection }) => {
                     {lang === "rus" ? "Бронирование" : "Booking"}
                 </a>
             </li>
-            <li
-                className={`ml-8 ${
-                    section === 5 && "underLine"
-                } cursor-pointer`}
-                onClick={() => setSection(5)}
-            >
-                <a href="#reviewsAnchor">
-                    {lang === "rus" ? "Отзывы" : "Reviews"}
-                </a>
-            </li>
+            {tourReviews.length > 0 && (
+                <li
+                    className={`ml-8 ${
+                        section === 5 && "underLine"
+                    } cursor-pointer`}
+                    onClick={() => setSection(5)}
+                >
+                    <a href="#reviewsAnchor">
+                        {lang === "rus" ? "Отзывы" : "Reviews"}
+                    </a>
+                </li>
+            )}
         </ul>
     );
 };

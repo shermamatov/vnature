@@ -12,6 +12,7 @@ export default function AccordionElement({
     setModal = null,
     setOneItem = null,
     setOneItemEng = null,
+    deleteFunction = null,
 }) {
     const [expanded, setExpanded] = React.useState(false);
     let lang = useSelector((item) => item.tours.lang);
@@ -56,10 +57,19 @@ export default function AccordionElement({
                             {lang === "rus" ? "День" : "Day"} {item?.day}
                         </button>
                         <div className="text-xs md:text-lg text-black ml-4 md:ml-8">
-                            {item?.dayTitle}
+                            {item?.title}
                         </div>
                         {isModal && (
                             <>
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        deleteFunction(item.id);
+                                    }}
+                                    className="px-4 bg-red-500 text-white rounded-md ml-4 h-full"
+                                >
+                                    удалить
+                                </button>
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
@@ -76,7 +86,7 @@ export default function AccordionElement({
                     </div>
                 </AccordionSummary>
                 <AccordionDetails>
-                    {item?.dayDesc?.split(";").map((item, index) => (
+                    {item?.desc?.split(";")?.map((item, index) => (
                         <div className="md:text-sm text-xs mt-2" key={index}>
                             {/* {item} */}
                             {/* {item?.split("!!")?.map((item, index) => ( */}
@@ -84,7 +94,9 @@ export default function AccordionElement({
                                 <p>{item?.split("!!")[0]}</p>
                             ) : (
                                 <p>
-                                    <strong>{item?.split("!!")[0]}</strong>
+                                    <span className="font-medium">
+                                        {item?.split("!!")[0]}
+                                    </span>
                                     {item?.split("!!")[1]}
                                 </p>
                             )}

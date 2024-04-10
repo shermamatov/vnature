@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import Slider from "react-slick";
+import Galery from "../Elements/Galery";
 
-const TourGalery = ({ tour, setGalery, setGaleryStart }) => {
+const TourGalery = ({ tour }) => {
+    let [galery, setGalery] = useState(false);
+    let [galeryStart, setGaleryStart] = useState(5);
     let lang = useSelector((item) => item.tours.lang);
     const [sliderRef, setSliderRef] = useState(null);
     const [activeSlide, setActiveSlide] = useState(1);
@@ -35,6 +38,13 @@ const TourGalery = ({ tour, setGalery, setGaleryStart }) => {
     };
     return (
         <div>
+            {galery && (
+                <Galery
+                    galeryStart={galeryStart}
+                    galery={tour?.galery?.slice(5)}
+                    setGalery={setGalery}
+                />
+            )}
             <div className="flex flex-row justify-between mt-16 mb-8 md:my-16">
                 <p className="text-3xl md:text-5xl font-semibold">
                     {lang === "rus" ? "Галерея" : "Gallery"}
@@ -56,7 +66,7 @@ const TourGalery = ({ tour, setGalery, setGaleryStart }) => {
                         />
                     </svg>
                     <p className="text-3xl text-[#00499f] font-semibold mx-8 noselect">
-                        {Math.ceil(activeSlide / slideCount + 1)}/
+                        {parseInt(activeSlide / slideCount + 1)}/
                         {Math.ceil(
                             tour?.galery?.slice(5)?.length / slideCount
                         ) || 1}
@@ -94,7 +104,7 @@ const TourGalery = ({ tour, setGalery, setGaleryStart }) => {
                         />
                     </svg>
                     <p className="text-2xl text-[#00499f] font-semibold mx-8 noselect">
-                        {Math.ceil(activeSlide / adapSlideCount + 1)}/
+                        {parseInt(activeSlide / adapSlideCount + 1)}/
                         {Math.ceil(
                             tour?.galery?.slice(5).length / adapSlideCount
                         ) || 1}
@@ -133,9 +143,9 @@ const TourGalery = ({ tour, setGalery, setGaleryStart }) => {
                             <img
                                 onClick={() => {
                                     setGalery(true);
-                                    setGaleryStart(index + 5);
+                                    setGaleryStart(index);
                                 }}
-                                className="aspect-[16/9] object-cover rounded-md cursor-pointer"
+                                className="w-full aspect-[16/9] object-cover rounded-md cursor-pointer"
                                 key={index}
                                 src={item}
                                 alt=""

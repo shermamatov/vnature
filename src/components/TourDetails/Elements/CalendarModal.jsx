@@ -24,7 +24,7 @@ export default function CalendarModal({ setCalendar, setCalendarValue, tour }) {
     return (
         <div
             onClick={() => setCalendar(false)}
-            className={`fixed z-30 top-0 bottom-0 left-0 right-0 backdrop-brightness-50 backdrop-blur-sm flex justify-center ${
+            className={`fixed z-30 top-0 bottom-0 left-0 right-0 backdrop-brightness-50 backdrop-blur-sm flex justify-center md:${
                 months?.length < 4 && "items-center"
             }`}
         >

@@ -34,7 +34,7 @@ const Footer = () => {
                             </p>
                         </a>
                         <p className="font-semibold text-base text-[#5E6282] mt-2">
-                            {lang === "rus" ? "адрес: " : "address: "}{" "}
+                            {lang === "rus" ? "Адрес: " : "Address: "}{" "}
                             {lang === "rus" ? (
                                 <>г Ош, улица Монуева 49</>
                             ) : (
@@ -42,7 +42,11 @@ const Footer = () => {
                             )}
                         </p>
                     </div>
-                    <div className="flex flex-col items-center mt-8 sm:mt-0 sm:ml-8">
+                    <div
+                        className={`flex flex-col items-center mt-8 sm:mt-0 ${
+                            lang === "rus" && "sm:ml-8"
+                        } `}
+                    >
                         <p className="font-bold text-xl">
                             {lang === "rus" ? "Больше" : "More"}
                         </p>
@@ -78,6 +82,16 @@ const Footer = () => {
                                 {lang === "rus"
                                     ? "Политика конфиденциальности"
                                     : "Privacy policy"}
+                            </p>
+                        </a>
+                        <a href="/forclient">
+                            <p
+                                // onClick={() => navigate("/privacy_policy")}
+                                className="font-semibold text-base text-[#5E6282] mt-2 cursor-pointer"
+                            >
+                                {lang === "rus"
+                                    ? "Оплата и бронирование"
+                                    : "Payment & Booking"}
                             </p>
                         </a>
                     </div>

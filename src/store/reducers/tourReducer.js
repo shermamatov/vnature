@@ -23,7 +23,6 @@ const stater = {
     reviews: [],
     allReviews: [],
     allAcceptedReviews: [],
-    tourists: [],
     oneTour: {},
     oneReview: {},
     oneTourReviews: [],
@@ -173,16 +172,6 @@ export const deleteTour = (id) => {
         }
     };
 };
-
-export function translateLevel(level = "средняя") {
-    if (level === "высокая") {
-        return "high";
-    } else if (level === "средняя") {
-        return "medium";
-    } else if (level === "низкая") {
-        return "low";
-    }
-}
 
 export const deleteFile = (deleteItem) => {
     const deleteRef = ref(storage, deleteItem);
@@ -377,3 +366,35 @@ export const deleteReview = (id) => {
         }
     };
 };
+
+export function translateLevel(level = "средняя") {
+    if (level === "высокая") {
+        return "high";
+    } else if (level === "средняя") {
+        return "medium";
+    } else if (level === "низкая") {
+        return "low";
+    } else if (level === "выше среднего") {
+        return "above average";
+    }
+}
+
+export function wordTransformer(day = 5) {
+    if (day === 1) {
+        return "день";
+    } else if (day > 1 && day < 5) {
+        return "дня";
+    } else if (day >= 5) {
+        return "дней";
+    }
+}
+
+export function nightsTransformer(nights) {
+    if (nights === 1) {
+        return "ночь";
+    } else if (nights > 1 && nights < 5) {
+        return "ночи";
+    } else if (nights >= 5) {
+        return "ночей";
+    }
+}

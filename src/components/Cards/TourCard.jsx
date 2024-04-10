@@ -1,7 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { translateLevel } from "../../store/reducers/tourReducer";
+import {
+    nightsTransformer,
+    translateLevel,
+    wordTransformer,
+} from "../../store/reducers/tourReducer";
 import { months, monthsEng } from "../../consts";
 const TourCard = ({ item }) => {
     let width = window.innerWidth;
@@ -33,7 +37,7 @@ const TourCard = ({ item }) => {
             >
                 <div>
                     <img
-                        className="rounded-t-[10px] aspect-video object-cover"
+                        className="rounded-t-[10px] aspect-video object-cover w-full"
                         src={item?.mainImg}
                         alt=""
                     />
@@ -54,13 +58,24 @@ const TourCard = ({ item }) => {
                         </p>
                     </div>
                     <p className="text-sm font-medium md:text-xl text-left text-[#00499f] mt-2">
-                        Сезонность:{" "}
+                        {lang === "rus" ? "Сезонность" : "Season"}{" "}
                         {checkerLangMonth()[item?.season?.start - 1]} -{" "}
                         {checkerLangMonth()[item?.season?.end - 1]}
                     </p>
                     <div className="flex justify-between items-center">
                         <p className="text-sm font-medium md:text-xl text-left text-[#00499f] mt-2">
-                            {item?.daysCount} {lang === "rus" ? "дней" : "days"}
+                            {item?.daysCount}{" "}
+                            {lang === "rus"
+                                ? wordTransformer(item?.daysCount)
+                                : "days"}{" "}
+                            {item?.daysCount > 1 && (
+                                <>
+                                    / {item?.daysCount - 1}{" "}
+                                    {lang === "rus"
+                                        ? nightsTransformer(item?.daysCount - 1)
+                                        : "nights"}
+                                </>
+                            )}
                         </p>
                         <svg
                             width={width < 768 ? 34 : 48}

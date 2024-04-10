@@ -222,11 +222,7 @@ const TourBlock2 = ({
                             setReviewsModal={setReviewsModal}
                             tour={tour}
                         />
-                        <TourGalery
-                            setGalery={setGalery}
-                            setGaleryStart={setGaleryStart}
-                            tour={tour}
-                        />
+                        <TourGalery tour={tour} />
                     </div>
                 </div>
             </div>

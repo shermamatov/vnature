@@ -46,39 +46,11 @@ const TourDetails = () => {
     return (
         <div>
             {galery && (
-                <div
-                    onClick={() => setGalery(false)}
-                    className="fixed z-30 top-0 bottom-0 left-0 right-0 backdrop-brightness-[.3] backdrop-blur-sm"
-                >
-                    <div className="relative w-full h-full">
-                        <Galery
-                            galeryStart={galeryStart}
-                            galery={tour?.galery}
-                            setGalery={setGalery}
-                        />
-                        <div
-                            onClick={() => setGalery(false)}
-                            className="absolute top-14 md:top-5 right-5"
-                        >
-                            <svg
-                                width={16}
-                                height={16}
-                                viewBox="0 0 16 16"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="w-12 h-12 relative cursor-pointer"
-                                preserveAspectRatio="xMidYMid meet"
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    clipRule="evenodd"
-                                    d="M13.9997 12.5L12.4999 14L7.99972 9.5L3.49978 14L1.99975 12.5L6.49987 7.99998L1.99975 3.49999L3.49978 1.99999L7.99972 6.49998L12.4999 1.99999L13.9997 3.49999L9.49977 7.99998L13.9997 12.5Z"
-                                    fill="white"
-                                />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
+                <Galery
+                    galeryStart={galeryStart}
+                    galery={tour?.galery?.slice(0, 5)}
+                    setGalery={setGalery}
+                />
             )}
             {calendar && (
                 <CalendarModal
@@ -116,7 +88,7 @@ const TourDetails = () => {
             {orderSuccess && (
                 <div
                     onClick={() => setOrderSuccess(false)}
-                    className="fixed z-20 top-0 bottom-0 left-0 right-0 backdrop-brightness-50 backdrop-blur-sm flex justify-center items-center"
+                    className="fixed z-30 top-0 bottom-0 left-0 right-0 backdrop-brightness-50 backdrop-blur-sm flex justify-center items-center"
                 >
                     <OrderSuccess setOrderSuccess={setOrderSuccess} />
                 </div>
@@ -124,7 +96,7 @@ const TourDetails = () => {
             {orderError && (
                 <div
                     onClick={() => setOrderError(false)}
-                    className="fixed z-20 top-0 bottom-0 left-0 right-0 backdrop-brightness-50 backdrop-blur-sm flex justify-center items-center"
+                    className="fixed z-30 top-0 bottom-0 left-0 right-0 backdrop-brightness-50 backdrop-blur-sm flex justify-center items-center"
                 >
                     <OrderError setOrderError={setOrderError} />
                 </div>

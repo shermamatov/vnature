@@ -24,7 +24,7 @@ const PriceTable = ({ tour }) => {
                 </p>
                 <div className="rounded-sm border border-[#00499f] rounded-l-md">
                     <div className="flex justify-between items-end ">
-                        <div className="tableSection tableSection2  rounded-tl-md border border-[#00499f]">
+                        <div className="tableSection tableSection2 tableRoundT border border-[#00499f]">
                             {lang === "rus" ? (
                                 <p>
                                     {width < 768 ? (
@@ -52,7 +52,7 @@ const PriceTable = ({ tour }) => {
                         ))}
                     </div>
                     <div className="flex justify-between items-start ">
-                        <div className=" tableSection tableSection2 rounded-bl-md border border-[#00499f]">
+                        <div className=" tableSection tableSection2 tableRoundB border border-[#00499f]">
                             {lang === "rus" ? (
                                 <>
                                     Цена <br className="md:hidden block" /> за{" "}

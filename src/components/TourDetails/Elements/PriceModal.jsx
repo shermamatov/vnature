@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { priceArr } from "../../../consts";
+import {
+    nightsTransformer,
+    wordTransformer,
+} from "../../../store/reducers/tourReducer";
 const PriceModal = ({ setPriceModal, tour }) => {
     let width = window.innerWidth;
     let lang = useSelector((item) => item.tours.lang);
@@ -59,9 +63,9 @@ const PriceModal = ({ setPriceModal, tour }) => {
                         </defs>
                     </svg>
                 </div>
-                <div className="border border-[#00499f] w-full ">
+                <div className="rounded-sm border border-[#00499f] rounded-l-md w-full ">
                     <div className="flex justify-between items-end">
-                        <div className="tableSection tableSection2 border border-[#00499f]">
+                        <div className="tableSection tableSection2 tableRoundT border border-[#00499f]">
                             {lang === "rus" ? (
                                 <p>
                                     {/* <br className="md:hidden block" /> */}
@@ -90,7 +94,7 @@ const PriceModal = ({ setPriceModal, tour }) => {
                         ))}
                     </div>
                     <div className="flex justify-between items-start ">
-                        <div className="border border-[#00499f] tableSection tableSection2">
+                        <div className="border border-[#00499f] tableRoundB tableSection tableSection2">
                             {lang === "rus" ? (
                                 <>
                                     Цена <br className="md:hidden block" /> за{" "}
@@ -111,6 +115,19 @@ const PriceModal = ({ setPriceModal, tour }) => {
                         ))}
                     </div>
                 </div>
+                <p className="text-sm  md:text-2xl font-montserrat text-center mt-4 md:mt-8 ">
+                    {" "}
+                    {tour?.daysCount}{" "}
+                    {lang === "rus" ? wordTransformer(tour?.daysCount) : "days"}{" "}
+                    {tour?.daysCount > 1 && (
+                        <>
+                            / {tour?.daysCount - 1}{" "}
+                            {lang === "rus"
+                                ? nightsTransformer(tour?.daysCount - 1)
+                                : "nights"}
+                        </>
+                    )}
+                </p>
                 {/* <div className="rounded-sm border border-[#00499f]">
                     <div className="flex justify-between">
                         <div className="tableSection tableSection2">

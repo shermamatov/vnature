@@ -3,9 +3,10 @@ import React, { useState } from "react";
 import AccordionElement from "../Elements/Accordion";
 import TourProgrammModal from "../Elements/TourProgrammModal";
 import { useSelector } from "react-redux";
-import hotel1 from "../../../assets/hotelBanner1.jpg";
-import hotel2 from "../../../assets/hotelBanner2.jpg";
-import hotel3 from "../../../assets/hotelBanner3.jpg";
+import hotel1 from "../../../assets/hotelBanner2.PNG";
+import hotel2 from "../../../assets/hotelBanner3.PNG";
+import hotel3 from "../../../assets/hotelBanner1.webp";
+import star from "../../../assets/star.svg";
 const TourProgram = ({ tour, setHotelModal }) => {
     let [programmState, setProgrammState] = useState(false);
     let lang = useSelector((item) => item.tours.lang);
@@ -53,7 +54,11 @@ const TourProgram = ({ tour, setHotelModal }) => {
                         >
                             “TES HOTEL”
                         </a>
-                        <p className="ml-2"> ⭐️⭐️⭐️ </p>
+                        <div className="flex ml-2">
+                            <img className="w-4 ml-1" src={star} alt="" />
+                            <img className="w-4 ml-1" src={star} alt="" />
+                            <img className="w-4 ml-1" src={star} alt="" />
+                        </div>
                     </div>
                 </div>
                 <p className="text-base md:text-xl font-normal mt-6">

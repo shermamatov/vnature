@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../TourDetails.scss";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
@@ -20,7 +20,7 @@ const OrderForm = ({
     let [dayStart, setDayStart] = React.useState(null);
     let [dayEnd, setDayEnd] = React.useState(null);
     let [childCount, setChildCount] = useState(0);
-    let [adultCount, setAdultCount] = useState(1);
+    let [adultCount, setAdultCount] = useState(0);
     let [phone, setPhone] = useState("");
     let [name, setName] = useState("");
     let [comments, setComments] = useState("");
@@ -30,10 +30,39 @@ const OrderForm = ({
     let [hotel, setHotel] = useState(false);
 
     let [nameChecker, setNameChecker] = useState(false);
+    let [adultCountChecker, setAdultCountChecker] = useState(false);
     let [phoneChecker, setPhoneChecker] = useState(false);
     let [emailChecker, setEmailChecker] = useState(false);
     let [calendarChecker, setCalendarChecker] = useState(false);
     let [checkboxChecker, setCheckBoxChecker] = useState(false);
+
+    const inputRefs = useRef([]);
+
+    const handleKeyDown = (e, index) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            const nextIndex = index + 1;
+            if (nextIndex < inputRefs.current.length) {
+                inputRefs.current[nextIndex].focus();
+            } else {
+                inputRefs.current[0].focus(); // Focus on the first input field
+            }
+        }
+    };
+
+    const handleInputChange = (e, index) => {
+        // Handle your input change logic here
+        console.log(e.target.value);
+    };
+
+    const addInputRef = (ref, index) => {
+        if (ref && !inputRefs.current.includes(ref)) {
+            inputRefs.current.push(ref);
+            if (index === inputRefs.current.length - 1) {
+                ref.onkeydown = (e) => handleKeyDown(e, index);
+            }
+        }
+    };
 
     function submitHandler() {
         if (!name) {
@@ -50,6 +79,9 @@ const OrderForm = ({
         }
         if (!checkBox1) {
             setCheckBoxChecker(true);
+        }
+        if (!adultCount) {
+            setAdultCountChecker(true);
         }
         if (
             name &&
@@ -105,7 +137,10 @@ const OrderForm = ({
             .format("DD/MM/YYYY");
         setDayStart(start);
         setDayEnd(end);
+        inputRefs.current[0].focus();
     }, [calendarValue]);
+
+    useEffect(() => {}, []);
 
     useEffect(() => {
         const tx = document.getElementById("autoTextarea2");
@@ -204,14 +239,14 @@ const OrderForm = ({
                             )}
                             <div
                                 onClick={() => setCalendar(true)}
-                                className="text-xs md:text-base flex items-center border border-[#00499F] p-2 mt-2 h-12 cursor-pointer"
+                                className="text-xs md:text-base flex items-center border border-[#00499F] rounded p-2 mt-2 h-12 cursor-pointer"
                                 id="datePicker"
                             >
                                 {dayStart === "Invalid Date" ? (
                                     <p className="opacity-55">
                                         {lang === "rus"
-                                            ? "пожалуйста выберите дату*"
-                                            : "Please select date*"}
+                                            ? "пожалуйста выберите дату: *"
+                                            : "Please select date: *"}
                                     </p>
                                 ) : (
                                     <>
@@ -227,16 +262,30 @@ const OrderForm = ({
                             >
                                 {lang === "rus" ? "Взрослые" : "Adults"}
                             </label>
+                            {adultCountChecker && (
+                                <label
+                                    className="text-red-500 -mb-2 text-xs"
+                                    htmlFor="datePicker"
+                                >
+                                    {lang === "rus"
+                                        ? "Укажите количество человек*"
+                                        : "Add the number of people*"}
+                                </label>
+                            )}
                             <input
-                                onChange={(e) => setAdultCount(e.target.value)}
+                                ref={(ref) => addInputRef(ref, 0)}
+                                onChange={(e) => {
+                                    setAdultCount(e.target.value);
+                                    handleInputChange(e, 0);
+                                }}
                                 type="number"
                                 min="0"
                                 placeholder={`${
                                     lang === "rus"
-                                        ? "Количество..."
-                                        : "Number..."
+                                        ? "Количество: *"
+                                        : "Number: *"
                                 } `}
-                                className="border border-[#00499F] p-2 mt-2 h-12 md:w-full w-[70%]"
+                                className="border border-[#00499F] p-2 mt-2 h-12 md:w-full w-[70%] rounded"
                                 id="datePicker"
                             />
                         </div>
@@ -248,15 +297,17 @@ const OrderForm = ({
                                 {lang === "rus" ? "Дети" : "Kids"}
                             </label>
                             <input
-                                onChange={(e) => setChildCount(e.target.value)}
+                                ref={(ref) => addInputRef(ref, 1)}
+                                onChange={(e) => {
+                                    setChildCount(e.target.value);
+                                    handleInputChange(e, 1);
+                                }}
                                 type="number"
                                 min="0"
                                 placeholder={`${
-                                    lang === "rus"
-                                        ? "Количество..."
-                                        : "Number..."
+                                    lang === "rus" ? "Количество:" : "Number:"
                                 } `}
-                                className="border border-[#00499F] p-2 mt-2 h-12 md:w-full w-[70%]"
+                                className="border border-[#00499F] p-2 mt-2 h-12 md:w-full w-[70%] rounded"
                                 id="datePicker"
                             />
                         </div>
@@ -280,17 +331,19 @@ const OrderForm = ({
                                 </label>
                             )}
                             <input
+                                ref={(ref) => addInputRef(ref, 2)}
                                 onChange={(e) => {
                                     setName(e.target.value);
                                     setNameChecker(false);
+                                    handleInputChange(e, 2);
                                 }}
                                 type="text"
                                 placeholder={`${
                                     lang === "rus"
-                                        ? "Фамилия Имя Отчество *"
-                                        : "Name and LastName"
+                                        ? "Фамилия Имя Отчество: *"
+                                        : "Name and LastName: *"
                                 } `}
-                                className="border border-[#00499F] p-2 mt-2 h-12"
+                                className="border border-[#00499F] p-2 mt-2 h-12 rounded"
                                 id="datePicker"
                             />
                         </div>
@@ -307,14 +360,16 @@ const OrderForm = ({
                                     </label>
                                 )}
                                 <input
+                                    ref={(ref) => addInputRef(ref, 3)}
                                     onChange={(e) => {
                                         setEmail(e.target.value);
                                         setEmailChecker(false);
                                         setPhoneChecker(false);
+                                        handleInputChange(e, 3);
                                     }}
                                     type="text"
-                                    placeholder="E - mail *"
-                                    className="border border-[#00499F] p-2 mt-2 h-12 w-full"
+                                    placeholder="E - mail: *"
+                                    className="border border-[#00499F] p-2 mt-2 h-12 w-full rounded"
                                     id="datePicker"
                                 />
                             </div>
@@ -332,12 +387,13 @@ const OrderForm = ({
                                 <PhoneInput
                                     placeholder={`${
                                         lang === "rus"
-                                            ? "Телефон *"
-                                            : "Number *"
+                                            ? "Телефон: *"
+                                            : "Number: *"
                                     } `}
-                                    className="border border-[#00499F] p-2 mt-2 h-12"
+                                    className="border border-[#00499F] p-2 mt-2 h-12 rounded"
                                     value={phone}
                                     onChange={setPhone}
+                                    ref={(ref) => addInputRef(ref, 4)}
                                 />
                             </div>
                         </div>
@@ -350,14 +406,18 @@ const OrderForm = ({
                             {lang === "rus" ? "Дополнительно" : "Additionally"}
                         </label>
                         <textarea
-                            onChange={(e) => setComments(e.target.value)}
+                            ref={(ref) => addInputRef(ref, 5)}
+                            onChange={(e) => {
+                                setComments(e.target.value);
+                                handleInputChange(e, 5);
+                            }}
                             type="text"
                             placeholder={`${
                                 lang === "rus"
-                                    ? "Комментарии (необезательно)"
-                                    : "Comments (no pressure)"
+                                    ? "Комментарии: (необезательно)"
+                                    : "Comments: (no pressure)"
                             }`}
-                            className="border border-[#00499F] p-2 mt-2 min-h-24"
+                            className="border border-[#00499F] p-2 mt-2 min-h-24 rounded"
                             id="autoTextarea2"
                         ></textarea>
                     </div>
@@ -372,7 +432,9 @@ const OrderForm = ({
                         </p>
                         <input
                             checked={hotel}
-                            onChange={(e) => setHotel(e.target.checked)}
+                            onChange={(e) => {
+                                setHotel(e.target.checked);
+                            }}
                             type="checkbox"
                             className="ui-checkbox ml-2 md:ml-4"
                             id="checkbox-hotel"
@@ -396,7 +458,9 @@ const OrderForm = ({
                         </p>
                     </a>
                     <button
+                        ref={(ref) => addInputRef(ref, 6)}
                         onClick={submitHandler}
+                        onKeyDown={(e) => e.key === "Enter" && submitHandler()}
                         className={`w-full h-12 text-white mt-4 bg-[#0fa03f]`}
                     >
                         {lang === "rus" ? "Оставить заявку" : "Leave a request"}

@@ -39,7 +39,7 @@ export default function AccordionElement2({
                 >
                     <div className="flex items-center">
                         <div className="text-sm md:text-lg text-black">
-                            {item?.importantTitle}
+                            {item?.title}
                         </div>
                         {isModal && (
                             <>
@@ -69,16 +69,18 @@ export default function AccordionElement2({
                 </AccordionSummary>
                 <AccordionDetails>
                     <div className="-mt-4">
-                        {item?.importantDesc.split(";").map((item, index) => (
+                        {item?.desc?.split(";")?.map((item, index) => (
                             <div
                                 className="md:text-sm text-xs mt-2 "
                                 key={index}
                             >
-                                {item?.split("!!").length === 1 ? (
+                                {item?.split("!!")?.length === 1 ? (
                                     <p>{item?.split("!!")[0]}</p>
                                 ) : (
                                     <p>
-                                        <strong>{item?.split("!!")[0]}</strong>
+                                        <span className="font-medium">
+                                            {item?.split("!!")[0]}
+                                        </span>
                                         {item?.split("!!")[1]}
                                     </p>
                                 )}

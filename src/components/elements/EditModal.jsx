@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 const EditModal = ({
-    setModal = console.log("hello"),
+    setModal = null,
     oneItem = {},
-    editFunction = console.log("hello"),
-    editFunctionEng = console.log("hello"),
+    editFunction = null,
+    editFunctionEng = null,
     isDay,
     oneItemEng,
 }) => {
@@ -12,34 +12,27 @@ const EditModal = ({
     let [desc, setDesc] = useState("");
     let [titleEng, setTitleEng] = useState("");
     let [descEng, setDescEng] = useState("");
-
     useEffect(() => {
-        if (isDay) {
-            setTitle(oneItem?.dayTitle);
-            setDesc(oneItem?.dayDesc);
-            setTitleEng(oneItemEng?.dayTitle);
-            setDescEng(oneItemEng?.dayDesc);
-        } else {
-            setTitle(oneItem?.importantTitle);
-            setDesc(oneItem?.importantDesc);
-            setTitleEng(oneItemEng?.importantTitle);
-            setDescEng(oneItemEng?.importantDesc);
-        }
+        setTitle(oneItem?.title);
+        setDesc(oneItem?.desc);
+        setTitleEng(oneItemEng?.title);
+        setDescEng(oneItemEng?.desc);
+        console.log(oneItem);
     }, []);
 
     function editDay() {
         editFunction(
             {
-                dayTitle: title,
-                dayDesc: desc,
+                title: title,
+                desc: desc,
                 day: oneItem.day,
             },
             oneItem.id
         );
         editFunctionEng(
             {
-                dayTitle: titleEng,
-                dayDesc: descEng,
+                title: titleEng,
+                desc: descEng,
                 day: oneItemEng.day,
             },
             oneItemEng.id
@@ -49,15 +42,15 @@ const EditModal = ({
     function editImportant() {
         editFunction(
             {
-                importantTitle: title,
-                importantDesc: desc,
+                title,
+                desc,
             },
             oneItem.id
         );
         editFunctionEng(
             {
-                importantTitle: titleEng,
-                importantDesc: descEng,
+                title: titleEng,
+                desc: descEng,
             },
             oneItemEng.id
         );

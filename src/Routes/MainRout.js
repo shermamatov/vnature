@@ -17,6 +17,7 @@ import AdminToursPage from "../pages/AdminToursPage";
 import AdminReviewsPage from "../pages/AdminReviewsPage";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage";
 import NotFound from "../components/NotFound/NotFound";
+import ForClientPage from "../pages/ForClientPage";
 
 const MainRout = () => {
     let user = useSelector((item) => item.tours.user);
@@ -33,7 +34,8 @@ const MainRout = () => {
         { link: "/tours", element: <ToursListPage />, id: 6 },
         { link: "/auth", element: <AuthPage />, id: 10 },
         { link: "/privacy_policy", element: <PrivacyPolicyPage />, id: 11 },
-        { link: "/*", element: <NotFound />, id: 12 },
+        { link: "/forclient", element: <ForClientPage />, id: 12 },
+        { link: "/*", element: <NotFound />, id: 13 },
     ];
     let privateRoutes = [
         { link: "/admin/add", element: <AddTourPage />, id: 7 },
