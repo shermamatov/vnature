@@ -12,7 +12,7 @@ const TourGalery = ({ tour }) => {
     let slideCount = 2;
     let adapSlideCount = 1;
     const sliderSettings = {
-        initialSlide: 1,
+        initialSlide: 0,
         arrows: false,
         slidesToShow: slideCount,
         slidesToScroll: slideCount,
