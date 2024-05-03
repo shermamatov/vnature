@@ -5,13 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getOneTourReviews } from "../../../store/reducers/tourReducer";
 import "../TourDetails.scss";
 import OneReviewModal from "../Elements/OneReviewModal";
+import { useParams } from "react-router-dom";
 const TourReviews = ({ tour, setReviewsModal }) => {
     let lang = useSelector((item) => item.tours.lang);
     let tourReviews = useSelector((item) => item.tours.oneTourReviews);
     let [oneReviewModalState, setOneReviewModalState] = useState(false);
     let [oneReview, setOneReview] = useState({});
     let dispatch = useDispatch();
-
+    let { id } = useParams();
     const [sliderRef, setSliderRef] = useState(null);
     const [activeSlide, setActiveSlide] = useState(1);
     let slideCount = 3 > tourReviews.length ? tourReviews.length : 3;
@@ -79,7 +80,7 @@ const TourReviews = ({ tour, setReviewsModal }) => {
     };
 
     useEffect(() => {
-        dispatch(getOneTourReviews(tour?.id));
+        dispatch(getOneTourReviews(id));
     }, [tour]);
 
     return (

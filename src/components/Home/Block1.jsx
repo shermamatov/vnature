@@ -1,6 +1,5 @@
 import React from "react";
 import banner from "../../assets/heroBanner.webp";
-import bannerAdap from "../../assets/heroBannerAdap.webp";
 import location from "../../assets/locationIcon.svg";
 import { useSelector } from "react-redux";
 const Block1 = () => {
@@ -8,11 +7,30 @@ const Block1 = () => {
     let width = window.innerWidth;
     return (
         <div className="relative">
-            <img
+            {/* <img
                 className="absolute brightness-[.60] top-0 left-0 right-0 md:h-[100vh] h-[33vh] w-[100%] object-cover"
-                src={width < 786 ? bannerAdap : banner}
+                src={
+                    width < 786
+                        ? "https://ik.imagekit.io/vnature/heroBannerAdap.webp?updatedAt=1713895146761"
+                        : "https://ik.imagekit.io/vnature/heroBanner.webp?updatedAt=1713896401429"
+                }
                 alt=""
-            />
+            /> */}
+            <picture>
+                <source
+                    media="(max-width: 768px)"
+                    srcSet="https://ik.imagekit.io/vnature/heroBannerAdap.webp?updatedAt=1713895146761"
+                />
+                <source
+                    media="(min-width: 769px)"
+                    srcSet="https://ik.imagekit.io/vnature/heroBanner.webp?updatedAt=1713896401429"
+                />
+                <img
+                    className="absolute brightness-[.60] top-0 left-0 right-0 md:h-[100vh] h-[33vh] w-[100%] object-cover"
+                    src="https://ik.imagekit.io/vnature/heroBanner.webp?updatedAt=1713896401429"
+                    alt="баннер"
+                />
+            </picture>
             <div className="content flex flex-col justify-around text-white relative z-10 md:h-[100vh] h-[35vh]">
                 <div
                     data-aos="fade-right"

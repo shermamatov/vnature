@@ -11,8 +11,8 @@ const PriceModal = ({ setPriceModal, tour }) => {
     let [arr, setArr] = useState([]);
     useEffect(() => {
         let arr2 = [];
-        for (let i in tour?.price) {
-            arr2.push(tour?.price[i]);
+        for (let i of tour?.price) {
+            arr2.push(i?.price);
         }
         setArr(arr2);
     }, [tour]);
@@ -105,12 +105,12 @@ const PriceModal = ({ setPriceModal, tour }) => {
                                 <>Price per person</>
                             )}
                         </div>
-                        {priceArr.map((item, index) => (
+                        {arr.map((item, index) => (
                             <div
                                 key={index}
                                 className="tableSection border border-[#00499f]"
                             >
-                                {tour?.price && tour?.price["" + item]}
+                                {item}
                             </div>
                         ))}
                     </div>

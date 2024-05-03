@@ -42,3 +42,19 @@ export let priceArr = [
     "price9",
     "price10",
 ];
+
+export const api = {
+    tours: "https://test.vnature.webtm.ru/api/v1/tours/",
+    price: "https://test.vnature.webtm.ru/api/v1/price/",
+    programmDays: "https://test.vnature.webtm.ru/api/v1/programm_days/",
+    gallery: "https://test.vnature.webtm.ru/api/v1/gallery/",
+    programmDaysEng: "https://test.vnature.webtm.ru/api/v1/programm_dayseng/",
+    important: "https://test.vnature.webtm.ru/api/v1/important/",
+    importantEng: "https://test.vnature.webtm.ru/api/v1/importanteng/",
+    memories: "https://test.vnature.webtm.ru/api/v1/memories/",
+    memoriesEng: "https://test.vnature.webtm.ru/api/v1/memorieseng/",
+    optional: "https://test.vnature.webtm.ru/api/v1/optional/",
+    optionalEng: "https://test.vnature.webtm.ru/api/v1/optionaleng/",
+    reviews: "https://test.vnature.webtm.ru/api/v1/reviews/",
+    admin: "https://test.vnature.webtm.ru/api/v1/admin/",
+};

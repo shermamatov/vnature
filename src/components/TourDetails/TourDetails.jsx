@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 import { nowDate } from "../../consts";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getOneTour } from "../../store/reducers/tourReducer";
+import { getOneTour, reduxTypes } from "../../store/reducers/tourReducer";
 import OrderSuccess from "./Elements/OrderSuccess";
 import OrderError from "./Elements/OrderError";
 import Galery from "./Elements/Galery";
@@ -18,19 +18,18 @@ import HotelModal from "./Elements/HotelModal";
 
 const TourDetails = () => {
     let tour = useSelector((item) => item.tours.oneTour);
-
     let [section, setSection] = useState(1);
     let [priceModal, setPriceModal] = useState(false);
     let [calendar, setCalendar] = useState(false);
     let [formModal, setFormModal] = useState(false);
     let [orderSuccess, setOrderSuccess] = useState(false);
     let [orderError, setOrderError] = useState(false);
-    let [galery, setGalery] = useState(false);
+    let [gallery, setGalery] = useState(false);
     let [loader, setLoader] = useState(false);
     let [reviewsModal, setReviewsModal] = useState(false);
     let [reviewSuccess, setReviewSuccess] = useState(false);
     let [hotelModal, setHotelModal] = useState(false);
-    let [galeryStart, setGaleryStart] = useState(0);
+    let [galleryStart, setGaleryStart] = useState(0);
 
     const [calendarValue, setCalendarValue] = React.useState(
         dayjs(`${nowDate?.year()}-${tour?.season?.start}-1`)
@@ -41,14 +40,17 @@ const TourDetails = () => {
 
     useEffect(() => {
         dispatch(getOneTour(id));
+        return () => {
+            dispatch({ type: reduxTypes.GET_ONE_TOUR, payload: {} });
+        };
     }, []);
 
     return (
         <div>
-            {galery && (
+            {gallery && (
                 <Galery
-                    galeryStart={galeryStart}
-                    galery={tour?.galery?.slice(0, 5)}
+                    galleryStart={galleryStart}
+                    gallery={tour?.gallery?.slice(0, 5)}
                     setGalery={setGalery}
                 />
             )}

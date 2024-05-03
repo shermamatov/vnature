@@ -4,7 +4,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
     deleteFile,
     editTour,
+    editorFunction,
     getOneTour,
+    getTours,
+    reduxTypes,
+    replaceUrlToImageKit,
 } from "../../../store/reducers/tourReducer";
 import {
     deleteObject,
@@ -15,11 +19,12 @@ import {
 import { storage } from "../../../fire";
 import AccordionElement from "../../TourDetails/Elements/Accordion";
 import AccordionElement2 from "../../TourDetails/Elements/AccordionElement2";
-import { months } from "../../../consts";
+import { api, months } from "../../../consts";
 import EditModal from "../../elements/EditModal";
 import AddModal from "../../elements/AddModal";
 import EditMemoriesModal from "../../elements/EditMemoriesModal";
 import AddMemoriesModal from "../../elements/AddMemoriesModal";
+import axios from "axios";
 
 const EditTour = () => {
     let oneTour = useSelector((item) => item.tours.oneTour);
@@ -32,6 +37,7 @@ const EditTour = () => {
     let [memoriesModalEdit, setMemoriesModalEdit] = useState(false);
     let [importantModal, setImportantModal] = useState(false);
     let [importantModalEdit, setImportantModalEdit] = useState(false);
+    let [dayModal, setDayModal] = useState(false);
     let [dayModalEdit, setDayModalEdit] = useState(false);
     let [optionalModal, setOptionalModal] = useState(false);
     let [optionalModalEdit, setOptionalModalEdit] = useState(false);
@@ -56,19 +62,15 @@ const EditTour = () => {
             level &&
             days &&
             cardImg &&
-            galery[0] !== null &&
-            galery[1] !== null &&
-            galery[2] !== null &&
-            galery[3] !== null &&
-            galery[4] !== null &&
-            galery[5] !== null &&
+            gallery[0] !== null &&
+            gallery[1] !== null &&
+            gallery[2] !== null &&
+            gallery[3] !== null &&
+            gallery[4] !== null &&
+            gallery[5] !== null &&
             programmDesc &&
             programmDescEng &&
             age &&
-            // include &&
-            // notInclude &&
-            // includeEng &&
-            // notIncludeEng &&
             memories.length !== 0 &&
             memoriesEng.length !== 0 &&
             importantEng.length !== 0 &&
@@ -92,7 +94,7 @@ const EditTour = () => {
     let [level, setLevel] = useState("средняя");
     let [days, setDays] = useState(1);
     let [cardImg, setCardImg] = useState("");
-    let [galery, setGalery] = useState([
+    let [gallery, setGalery] = useState([
         null,
         null,
         null,
@@ -117,10 +119,7 @@ const EditTour = () => {
     let [price8, setPrice8] = useState(0);
     let [price9, setPrice9] = useState(0);
     let [price10, setPrice10] = useState(0);
-    // let [include, setInclude] = useState("");
-    // let [includeEng, setIncludeEng] = useState("");
-    // let [notInclude, setNotInclude] = useState("");
-    // let [notIncludeEng, setNotIncludeEng] = useState("");
+
     let [memories, setMemories] = useState([]);
     let [memoriesEng, setMemoriesEng] = useState([]);
 
@@ -137,8 +136,60 @@ const EditTour = () => {
     // todo data states{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
 
     //! Functions {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
-    function dataConstructor() {
-        let filtredGalery = [...galery]?.filter((item) => item !== null);
+    async function dataConstructor() {
+        let filtredGalery = [...gallery]?.filter((item) => item !== null);
+        let priceArr = [
+            {
+                price: price1,
+                id: oneTour?.price[0]?.id,
+                peopleCount: 1,
+            },
+            {
+                price: price2,
+                id: oneTour?.price[1]?.id,
+                peopleCount: 2,
+            },
+            {
+                price: price3,
+                id: oneTour?.price[2]?.id,
+                peopleCount: 3,
+            },
+            {
+                price: price4,
+                id: oneTour?.price[3]?.id,
+                peopleCount: 4,
+            },
+            {
+                price: price5,
+                id: oneTour?.price[4]?.id,
+                peopleCount: 5,
+            },
+            {
+                price: price6,
+                id: oneTour?.price[5]?.id,
+                peopleCount: 6,
+            },
+            {
+                price: price7,
+                id: oneTour?.price[6]?.id,
+                peopleCount: 7,
+            },
+            {
+                price: price8,
+                id: oneTour?.price[7]?.id,
+                peopleCount: 8,
+            },
+            {
+                price: price9,
+                id: oneTour?.price[8]?.id,
+                peopleCount: 9,
+            },
+            {
+                price: price10,
+                id: oneTour?.price[9]?.id,
+                peopleCount: 10,
+            },
+        ];
         let obj = {
             title,
             titleEng,
@@ -147,43 +198,46 @@ const EditTour = () => {
             daysCount: days,
             level,
             age,
-            season: { start: month1, end: month2 },
-            price: {
-                price1,
-                price2,
-                price3,
-                price4,
-                price5,
-                price6,
-                price7,
-                price8,
-                price9,
-                price10,
-            },
+            start: month1,
+            end: month2,
             mainImg: cardImg,
-            galery: filtredGalery,
             description,
             descriptionEng,
             programmDescription: programmDesc,
             programmDescriptionEng: programmDescEng,
-            programmDays,
-            programmDaysEng,
-            // include,
-            // includeEng,
-            // notInclude,
-            // notIncludeEng,
-            important,
-            importantEng,
-            memories,
-            memoriesEng,
-            optional,
-            optionalEng,
-            reviews: oneTour?.reviews,
+            price: [],
+            gallery: [],
+            programmDays: [],
+            programmDaysEng: [],
+            important: [],
+            importantEng: [],
+            memories: [],
+            memoriesEng: [],
+            optional: [],
+            optionalEng: [],
         };
         try {
-            dispatch(editTour(id, obj));
-            navigate("/admin");
+            // dispatch(editTour(id, obj));
+            await axios.patch(`${api.tours}${id}/`, obj);
+            dispatch(getTours());
+            dispatch({ type: reduxTypes.CLOSE_LOADER });
+            editorFunction(filtredGalery, id, api.gallery);
+            editorFunction(programmDays, id, api.programmDays);
+            editorFunction(programmDaysEng, id, api.programmDaysEng);
+            editorFunction(important, id, api.important);
+            editorFunction(importantEng, id, api.importantEng);
+            editorFunction(memories, id, api.memories);
+            editorFunction(memoriesEng, id, api.memoriesEng);
+            editorFunction(optional, id, api.optional);
+            editorFunction(optionalEng, id, api.optionalEng);
+            editorFunction(priceArr, id, api.price);
+            navigate("/admin/tours");
         } catch (e) {
+            dispatch({
+                type: reduxTypes.OPEN_ERROR,
+                payload: e,
+            });
+            dispatch({ type: reduxTypes.CLOSE_LOADER });
             console.log(e);
         }
     }
@@ -195,7 +249,8 @@ const EditTour = () => {
         index = false
     ) => {
         if (stateName) {
-            const storageRef = ref(storage, "images/" + stateName.name);
+            let x = Math.floor(Math.random() * 100 + 1);
+            const storageRef = ref(storage, "images/" + stateName.name + x);
             const uploadTask = uploadBytesResumable(storageRef, stateName);
             uploadTask.on(
                 "state_changed",
@@ -236,216 +291,344 @@ const EditTour = () => {
                 },
                 () => {
                     getDownloadURL(uploadTask.snapshot.ref).then(
-                        (downloadURL) => {
+                        async (downloadURL) => {
+                            let downloadObj = {
+                                imgUrl: replaceUrlToImageKit(downloadURL),
+                                id: gallery[index]?.id,
+                            };
                             if (isLoop) {
-                                let psevdoArr = [...galery];
+                                let psevdoArr = [...gallery];
                                 if (index !== false) {
                                     let deleteItem = psevdoArr.splice(
                                         index,
                                         1,
-                                        downloadURL
+                                        downloadObj
                                     );
                                     let psevdoInputCountArr = [...inputCount];
                                     psevdoInputCountArr.splice(
                                         index,
                                         1,
-                                        downloadURL
+                                        downloadObj
                                     );
                                     setInputCount(psevdoInputCountArr);
                                     if (
                                         deleteItem[0] !== "" &&
-                                        deleteItem.length != 0 &&
+                                        deleteItem.length !== 0 &&
                                         deleteItem[0] !== null
                                     ) {
-                                        console.log(deleteItem);
-                                        const deleteRef = ref(
-                                            storage,
-                                            deleteItem
-                                        );
-                                        deleteObject(deleteRef)
-                                            .then(() => {
-                                                console.log("удалено");
-                                                // File deleted successfully
-                                            })
-                                            .catch((error) => {
-                                                console.log("ОШИБКА" + error);
-                                                // Uh-oh, an error occurred!
-                                            });
+                                        deleteFile(deleteItem[0].imgUrl);
                                     }
                                 } else {
-                                    psevdoArr.push(downloadURL);
+                                    let obj = {
+                                        imgUrl: replaceUrlToImageKit(
+                                            downloadURL
+                                        ),
+                                        tour: id,
+                                    };
+                                    let res = await axios.post(
+                                        api.gallery,
+                                        obj
+                                    );
+                                    obj.id = res.data.id;
+                                    psevdoArr.push(obj);
                                 }
                                 setStateName(psevdoArr);
                             } else {
-                                setStateName(downloadURL);
-                                console.log("sasd");
+                                setStateName(replaceUrlToImageKit(downloadURL));
                             }
                             // setUploadProgress(downloadURL && true);
-                            console.log("File available at", downloadURL);
+                            console.log(
+                                "File available at",
+                                replaceUrlToImageKit(downloadURL)
+                            );
                         }
                     );
                 }
             );
         }
     };
-    function addMemories(memoriesTitle, memoriesImage) {
+
+    async function addMemories(memoriesTitle, memoriesImage) {
         let psevdoMemoriesArr = [...memories];
-        psevdoMemoriesArr.push({
+        let obj = {
             memoriesTitle: memoriesTitle,
             memoriesImage: memoriesImage,
-        });
+            tour: id,
+        };
+        try {
+            let res = await axios.post(api.memories, obj);
+            obj.id = res.data.id;
+            psevdoMemoriesArr.push(obj);
+        } catch (error) {
+            console.log(error);
+        }
         setMemories(psevdoMemoriesArr);
     }
-    function addMemoriesEng(memoriesTitle, memoriesImage) {
+    async function addMemoriesEng(memoriesTitle, memoriesImage) {
         let psevdoMemoriesArr = [...memoriesEng];
-        psevdoMemoriesArr.push({
+        let obj = {
             memoriesTitle: memoriesTitle,
             memoriesImage: memoriesImage,
-        });
+            tour: id,
+        };
+        try {
+            let res = await axios.post(api.memoriesEng, obj);
+            obj.id = res.data.id;
+            psevdoMemoriesArr.push(obj);
+        } catch (error) {
+            console.log(error);
+        }
         setMemoriesEng(psevdoMemoriesArr);
     }
-    function deleteMemories(index) {
-        let psevdoMemoriesArr = memories.filter(
-            (item, itemIndex) => itemIndex !== index
-        );
+    async function deleteMemories(id, idEng) {
+        let psevdoMemoriesArr = memories.filter((item) => item.id !== id);
         let psevdoMemoriesArrEng = memoriesEng.filter(
-            (item, itemIndex) => itemIndex !== index
+            (item) => item.id !== idEng
         );
-        let deleteItem = memories.find(
-            (item, itemIndex) => index === itemIndex
-        );
-        deleteFile(deleteItem.memoriesImage);
+        let deleteItem = memories?.find((item) => item.id === id);
+        deleteFile(deleteItem?.memoriesImage);
+        // console.log(id);
         setMemories(psevdoMemoriesArr);
         setMemoriesEng(psevdoMemoriesArrEng);
+        try {
+            await axios.delete(`${api.memories}${id}`);
+        } catch (error) {
+            console.log(error);
+        }
+        try {
+            await axios.delete(`${api.memoriesEng}${idEng}`);
+            console.log("deleted");
+        } catch (e) {
+            console.log(e);
+        }
     }
-    function editMemories(item, index) {
+    function editMemories(item) {
         let psevdoMemoriesArr = [...memories];
+        let index = psevdoMemoriesArr.findIndex((elem) => elem.id === item.id);
         psevdoMemoriesArr.splice(index, 1, item);
         setMemories(psevdoMemoriesArr);
     }
-    function editMemoriesEng(item, index) {
+    function editMemoriesEng(item) {
         let psevdoMemoriesArr = [...memoriesEng];
+        let index = psevdoMemoriesArr.findIndex((elem) => elem.id === item.id);
         psevdoMemoriesArr.splice(index, 1, item);
         setMemoriesEng(psevdoMemoriesArr);
     }
 
-    function addImportant(title, desc) {
+    async function addImportant(title, desc) {
         let psevdoImportant = [...important];
-        psevdoImportant.push({
+        let obj = {
             title,
             desc,
-        });
+            tour: id,
+        };
+        try {
+            let res = await axios.post(api.important, obj);
+            obj.id = res.data.id;
+            psevdoImportant.push(obj);
+        } catch (error) {
+            console.log(error);
+        }
         setImportant(psevdoImportant);
     }
-    function addImportantEng(title, desc) {
+    async function addImportantEng(title, desc) {
         let psevdoImportant = [...importantEng];
-        psevdoImportant.push({
+        let obj = {
             title,
             desc,
-        });
+            tour: id,
+        };
+        try {
+            let res = await axios.post(api.importantEng, obj);
+            obj.id = res.data.id;
+            psevdoImportant.push(obj);
+        } catch (error) {
+            console.log(error);
+        }
         setImportantEng(psevdoImportant);
     }
-
-    function editImportant(item, index) {
+    function editImportant(item) {
         let psevdoImportant = [...important];
+        let index = psevdoImportant.findIndex((elem) => elem.id === item.id);
         psevdoImportant.splice(index, 1, item);
         setImportant(psevdoImportant);
     }
-    function editImportantEng(item, index) {
+    function editImportantEng(item) {
         let psevdoImportant = [...importantEng];
+        let index = psevdoImportant.findIndex((elem) => elem.id === item.id);
         psevdoImportant.splice(index, 1, item);
         setImportantEng(psevdoImportant);
     }
-
-    function deleteImportant(index) {
-        let psevdoImportant = important.filter(
-            (item, itemIndex) => itemIndex !== index
-        );
+    async function deleteImportant(id, idEng) {
+        let psevdoImportant = important.filter((item) => item.id !== id);
         let psevdoImportantEng = importantEng.filter(
-            (item, itemIndex) => itemIndex !== index
+            (item) => item.id !== idEng
         );
         setImportant(psevdoImportant);
         setImportantEng(psevdoImportantEng);
+        try {
+            await axios.delete(`${api.important}${id}`);
+        } catch (error) {
+            console.log(error);
+        }
+        try {
+            await axios.delete(`${api.importantEng}${idEng}`);
+            console.log("deleted");
+        } catch (e) {
+            console.log(e);
+        }
     }
 
-    function editProgrammDay(item, index) {
+    async function addProgrammDay(title, desc) {
+        dispatch({ type: reduxTypes.OPEN_LOADER });
+        let psevdoArr = [...programmDays];
+        let obj = {
+            title,
+            desc,
+            day: psevdoArr.length + 1,
+            tour: id,
+        };
+        try {
+            let res = await axios.post(api.programmDays, obj);
+            obj.id = res.data.id;
+            psevdoArr?.push(obj);
+            dispatch({ type: reduxTypes.CLOSE_LOADER });
+        } catch (e) {
+            dispatch({
+                type: reduxTypes.OPEN_ERROR,
+                payload: e,
+            });
+            dispatch({ type: reduxTypes.CLOSE_LOADER });
+            console.log(e);
+        }
+        setProgrammDays(psevdoArr);
+    }
+    async function addProgrammDayEng(title, desc) {
+        let psevdoArr = [...programmDaysEng];
+        let obj = {
+            title,
+            desc,
+            day: psevdoArr.length + 1,
+            tour: id,
+        };
+        try {
+            let res = await axios.post(api.programmDaysEng, obj);
+            obj.id = res.data.id;
+            psevdoArr?.push(obj);
+        } catch (e) {
+            console.log(e);
+        }
+        setProgrammDaysEng(psevdoArr);
+    }
+    function editProgrammDay(item) {
         let psevdoDay = [...programmDays];
+        let index = psevdoDay.findIndex((elem) => elem.id == item.id);
         psevdoDay.splice(index, 1, item);
         setProgrammDays(psevdoDay);
     }
-
-    function editProgrammDayEng(item, index) {
+    function editProgrammDayEng(item) {
         let psevdoDay = [...programmDaysEng];
+        let index = psevdoDay.findIndex((elem) => elem.id == item.id);
         psevdoDay.splice(index, 1, item);
         setProgrammDaysEng(psevdoDay);
     }
-
-    function deleteProgrammDay(index) {
-        let psevdoArr = programmDays.filter(
-            (item, itemIndex) => itemIndex !== index
-        );
+    async function deleteProgrammDay(id, idEng) {
+        let psevdoArr = programmDays.filter((item) => item.id !== id);
         let psevdoArrEng = programmDaysEng.filter(
-            (item, itemIndex) => itemIndex !== index
+            (item2) => item2.id !== idEng
         );
         setProgrammDays(psevdoArr);
         setProgrammDaysEng(psevdoArrEng);
+        try {
+            await axios.delete(`${api.programmDays}${id}`);
+            console.log("deleted");
+        } catch (e) {
+            console.log(e);
+        }
+        try {
+            await axios.delete(`${api.programmDaysEng}${idEng}`);
+            console.log("deleted");
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    async function addOptional(title, desc) {
+        let psevdoArr = [...optional];
+        let obj = {
+            title,
+            desc,
+            tour: id,
+        };
+        try {
+            let res = await axios.post(api.optional, obj);
+            obj.id = res.data.id;
+            psevdoArr?.push(obj);
+        } catch (e) {
+            console.log(e);
+        }
+        setOptional(psevdoArr);
+    }
+    async function addOptionalEng(title, desc) {
+        let psevdoArr = [...optionalEng];
+        let obj = {
+            title,
+            desc,
+            tour: id,
+        };
+        try {
+            let res = await axios.post(api.optionalEng, obj);
+            obj.id = res.data.id;
+            psevdoArr.push(obj);
+        } catch (error) {
+            console.log(error);
+        }
+        setOptionalEng(psevdoArr);
+    }
+    function editOptional(item) {
+        let psevdoOptional = [...optional];
+        let index = psevdoOptional.findIndex((elem) => elem.id === item.id);
+        psevdoOptional.splice(index, 1, item);
+        setOptional(psevdoOptional);
+    }
+    function editOptionalEng(item) {
+        let psevdoOptional = [...optionalEng];
+        let index = psevdoOptional.findIndex((elem) => elem.id === item.id);
+        psevdoOptional.splice(index, 1, item);
+        setOptionalEng(psevdoOptional);
+    }
+    async function deleteOptional(id, idEng) {
+        let psevdoOptional = optional.filter((item) => item.id !== id);
+        let psevdoOptionalEng = optionalEng.filter((item) => item.id !== id);
+        setOptional(psevdoOptional);
+        setOptionalEng(psevdoOptionalEng);
+        try {
+            await axios.delete(`${api.optional}${id}`);
+            await axios.delete(`${api.optionalEng}${idEng}`);
+            console.log("deleted");
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     function deleteImageFromGalery(index = 0) {
-        let findDeleteImgRef = galery.find(
-            (item, itemIndex) => itemIndex === index
-        );
-
-        let filteredGalery = galery.filter(
-            (item, itemIndex) => itemIndex !== index
-        );
-        let filteredInputCount = inputCount.filter(
-            (item, itemIndex) => itemIndex !== index
-        );
-
-        findDeleteImgRef && deleteFile(findDeleteImgRef);
+        let findDeleteImgRef = gallery.find((item) => item.id === index);
+        let filteredGalery = gallery.filter((item) => item.id !== index);
+        let filteredInputCount = inputCount.filter((item) => item.id !== index);
+        findDeleteImgRef && deleteFile(findDeleteImgRef.imgUrl);
         setGalery(filteredGalery);
         setInputCount(filteredInputCount);
     }
 
-    function addOptional(title, desc) {
-        let psevdoArr = [...optional];
-        psevdoArr?.push({
-            title,
-            desc,
-        });
-        setOptional(psevdoArr);
-    }
-    function addOptionalEng(title, desc) {
-        let psevdoArr = [...optionalEng];
-        psevdoArr.push({
-            title,
-            desc,
-        });
-        setOptionalEng(psevdoArr);
-    }
-    function editOptional(item, index) {
-        let psevdoOptional = [...optional];
-        psevdoOptional.splice(index, 1, item);
-        setOptional(psevdoOptional);
-    }
-    function editOptionalEng(item, index) {
-        let psevdoOptional = [...optionalEng];
-        psevdoOptional.splice(index, 1, item);
-        setOptionalEng(psevdoOptional);
-    }
-    function deleteOptional(index) {
-        let psevdoOptional = optional.filter(
-            (item, itemIndex) => itemIndex !== index
-        );
-        let psevdoOptionalEng = optionalEng.filter(
-            (item, itemIndex) => itemIndex !== index
-        );
-        setOptional(psevdoOptional);
-        setOptionalEng(psevdoOptionalEng);
+    async function deleteImage(id) {
+        try {
+            await axios.delete(`${api.gallery}${id}/`);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
-    //! Functions {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+    //! Functions {{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
     useEffect(() => {
         dispatch(getOneTour(id));
     }, []);
@@ -462,26 +645,22 @@ const EditTour = () => {
         setAge(oneTour?.age);
         setMonth1(oneTour?.season?.start);
         setMonth2(oneTour?.season?.end);
-        setPrice1(oneTour?.price?.price1);
-        setPrice2(oneTour?.price?.price2);
-        setPrice3(oneTour?.price?.price3);
-        setPrice4(oneTour?.price?.price4);
-        setPrice5(oneTour?.price?.price5);
-        setPrice6(oneTour?.price?.price6);
-        setPrice7(oneTour?.price?.price7);
-        setPrice8(oneTour?.price?.price8);
-        setPrice9(oneTour?.price?.price9);
-        setPrice10(oneTour?.price?.price10);
+        setPrice1(oneTour?.price && oneTour?.price[0]?.price);
+        setPrice2(oneTour?.price && oneTour?.price[1]?.price);
+        setPrice3(oneTour?.price && oneTour?.price[2]?.price);
+        setPrice4(oneTour?.price && oneTour?.price[3]?.price);
+        setPrice5(oneTour?.price && oneTour?.price[4]?.price);
+        setPrice6(oneTour?.price && oneTour?.price[5]?.price);
+        setPrice7(oneTour?.price && oneTour?.price[6]?.price);
+        setPrice8(oneTour?.price && oneTour?.price[7]?.price);
+        setPrice9(oneTour?.price && oneTour?.price[8]?.price);
+        setPrice10(oneTour?.price && oneTour?.price[9]?.price);
         setCardImg(oneTour?.mainImg);
-        setGalery(oneTour?.galery);
+        setGalery(oneTour?.gallery);
         setProgrammDesc(oneTour?.programmDescription);
         setProgrammDescEng(oneTour?.programmDescriptionEng);
         setProgrammDays(oneTour?.programmDays);
         setProgrammDaysEng(oneTour?.programmDaysEng);
-        // setInclude(oneTour?.include);
-        // setIncludeEng(oneTour?.includeEng);
-        // setNotInclude(oneTour?.notInclude);
-        // setNotIncludeEng(oneTour?.notIncludeEng);
         setImportant(oneTour?.important);
         setImportantEng(oneTour?.importantEng);
         setMemories(oneTour?.memories);
@@ -490,34 +669,50 @@ const EditTour = () => {
         setOptionalEng(oneTour?.optionalEng || []);
     }, [oneTour]);
 
-    useEffect(() => {
-        if (
-            parseInt(days) < 50 &&
-            oneTour.programmDays &&
-            oneTour.programmDaysEng
-        ) {
-            let psevdo = [...oneTour?.programmDays];
-            let psevdoEng = [...oneTour?.programmDaysEng];
-            for (
-                let i = oneTour?.programmDays.length;
-                i < parseInt(days);
-                i++
-            ) {
-                psevdo.push({
-                    title: `заголовок`,
-                    desc: `описание`,
-                    day: i + 1,
-                });
-                psevdoEng.push({
-                    title: `заголовок`,
-                    desc: `описание`,
-                    day: i + 1,
-                });
-            }
-            setProgrammDays(psevdo);
-            setProgrammDaysEng(psevdoEng);
-        }
-    }, [days]);
+    // useEffect(() => {
+    //     if (
+    //         parseInt(days) < 30 &&
+    //         oneTour.programmDays &&
+    //         oneTour.programmDaysEng
+    //     ) {
+    //         let psevdo = [...oneTour?.programmDays];
+    //         let psevdoEng = [...oneTour?.programmDaysEng];
+    //         for (
+    //             let i = oneTour?.programmDays.length;
+    //             i < parseInt(days);
+    //             i++
+    //         ) {
+    //             let proObj = {
+    //                 title: `заголовок`,
+    //                 desc: `описание`,
+    //                 day: i + 1,
+    //                 tour: id,
+    //             };
+    //             // let res = axios
+    //             //     .post(api.programmDays, proObj)
+    //             //     .then((response) => {
+    //             //         return response.data;
+    //             //     })
+    //             //     .catch((error) => {
+    //             //         console.error("Ошибка при добавлении тура:", error);
+    //             //         throw error; // Пробрасываем ошибку дальше для обработки
+    //             //     });
+    //             // let resEng = axios
+    //             //     .post(api.programmDaysEng, proObj)
+    //             //     .then((response) => {
+    //             //         return response.data;
+    //             //     })
+    //             //     .catch((error) => {
+    //             //         console.error("Ошибка при добавлении тура:", error);
+    //             //         throw error; // Пробрасываем ошибку дальше для обработки
+    //             //     });
+    //             // psevdo.push(res);
+    //             // psevdoEng.push(resEng);
+    //         }
+    //         setProgrammDays(psevdo);
+    //         setProgrammDaysEng(psevdoEng);
+    //     }
+    // }, [days]);
 
     function langChecker(rusArr, engArr) {
         if (lang === "eng") {
@@ -571,6 +766,7 @@ const EditTour = () => {
                         addEng={addImportantEng}
                         add={addImportant}
                         setModal={setImportantModal}
+                        placeholder={"важно знать"}
                     />
                 </div>
             )}
@@ -586,6 +782,19 @@ const EditTour = () => {
                         oneItem={oneImportant}
                         setModal={setImportantModalEdit}
                         isDay={false}
+                    />
+                </div>
+            )}
+            {dayModal && (
+                <div
+                    onClick={() => setDayModal(false)}
+                    className="fixed z-20 top-0 bottom-0 left-0 right-0 backdrop-blur-sm flex justify-center items-center"
+                >
+                    <AddModal
+                        addEng={addProgrammDayEng}
+                        add={addProgrammDay}
+                        setModal={setDayModal}
+                        placeholder={"программа тура"}
                     />
                 </div>
             )}
@@ -947,12 +1156,12 @@ const EditTour = () => {
                         </label>
 
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 mt-2 mb-2 items-center">
-                            {galery?.slice(0, 5).map((item, index) => (
+                            {gallery?.slice(0, 5).map((item, index) => (
                                 <div key={index} className={`w-full max-w-96`}>
                                     <div className="flex items-center justify-center w-full mt-2">
                                         <div
                                             style={{
-                                                backgroundImage: `url(${item})`,
+                                                backgroundImage: `url(${item?.imgUrl})`,
                                                 backgroundSize: "cover",
                                                 backgroundPosition: "center",
                                             }}
@@ -1017,14 +1226,12 @@ const EditTour = () => {
                             Галерея тура
                         </label>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-                            {galery?.slice(5).map((item, index) => (
+                            {gallery?.slice(5).map((item, index) => (
                                 <div key={index} className={`w-full max-w-96`}>
                                     <div className="relative flex items-center justify-center w-full mt-2">
                                         <div
                                             style={{
-                                                backgroundImage: `url(${
-                                                    item + 5
-                                                })`,
+                                                backgroundImage: `url(${item?.imgUrl})`,
                                                 backgroundSize: "cover",
                                                 backgroundPosition: "center",
                                             }}
@@ -1068,9 +1275,10 @@ const EditTour = () => {
                                         </div>
                                         <h3
                                             className="absolute right-2 top-1 z-20 text-xl cursor-pointer text-red-500"
-                                            onClick={() =>
-                                                deleteImageFromGalery(index + 5)
-                                            }
+                                            onClick={() => {
+                                                deleteImageFromGalery(item?.id);
+                                                deleteImage(item?.id);
+                                            }}
                                         >
                                             ✖
                                         </h3>
@@ -1154,19 +1362,25 @@ const EditTour = () => {
                             (item, index) => (
                                 <AccordionElement
                                     key={index}
-                                    item={{ ...item, id: index }}
+                                    item={item}
                                     isModal={true}
                                     setModal={setDayModalEdit}
                                     setOneItem={setOneDay}
                                     setOneItemEng={setOneDayEng}
                                     deleteFunction={deleteProgrammDay}
-                                    itemEng={{
-                                        ...programmDaysEng[index],
-                                        id: index,
-                                    }}
+                                    itemEng={programmDaysEng[index]}
+                                    index={index + 1}
                                 />
                             )
                         )}
+                        <button
+                            className="input"
+                            onClick={() => {
+                                setDayModal(true);
+                            }}
+                        >
+                            добавить еще
+                        </button>
                     </div>
                     <div className="mt-2 p-2 shadowInput backdrop-blur-sm">
                         <label
@@ -1180,15 +1394,12 @@ const EditTour = () => {
                             (item, index) => (
                                 <AccordionElement2
                                     key={index}
-                                    item={{ ...item, id: index }}
+                                    item={item}
                                     deleteFunction={deleteImportant}
                                     setModal={setImportantModalEdit}
                                     setOneItem={setOneImportant}
                                     setOneItemEng={setOneImportantEng}
-                                    itemEng={{
-                                        ...importantEng[index],
-                                        id: index,
-                                    }}
+                                    itemEng={importantEng[index]}
                                     isModal={true}
                                 />
                             )
@@ -1215,15 +1426,12 @@ const EditTour = () => {
                                 <AccordionElement2
                                     key={index}
                                     isModal={true}
-                                    item={{ ...item, id: index }}
+                                    item={item}
                                     setModal={setOptionalModalEdit}
                                     setOneItem={setOneOptional}
                                     setOneItemEng={setOneOptionalEng}
                                     deleteFunction={deleteOptional}
-                                    itemEng={{
-                                        ...optionalEng[index],
-                                        id: index,
-                                    }}
+                                    itemEng={optionalEng[index]}
                                 />
                             )
                         )}
@@ -1236,52 +1444,6 @@ const EditTour = () => {
                             добавить еще
                         </button>
                     </div>
-                    {/* <div className="mt-2 p-2 backdrop-blur-sm">
-                        <label
-                            htmlFor="inputname"
-                            className="text-sm text-white font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                            включено в стоимость тура
-                        </label>
-                        <div className="grid md:gap-2 grid-cols-1 md:grid-cols-2">
-                            <textarea
-                                value={include}
-                                onChange={(e) => setInclude(e.target.value)}
-                                placeholder="включено в стоимость на русском..."
-                                className="inputArea"
-                            ></textarea>
-                            <textarea
-                                value={includeEng}
-                                onChange={(e) => setIncludeEng(e.target.value)}
-                                placeholder="включено в стоимость на английском..."
-                                className="inputArea"
-                            ></textarea>
-                        </div>
-                    </div>
-                    <div className="mt-2 p-2 backdrop-blur-sm">
-                        <label
-                            htmlFor="inputname"
-                            className="text-sm text-white font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                            НЕ включено в стоимость тура
-                        </label>
-                        <div className="grid md:gap-2 grid-cols-1 md:grid-cols-2">
-                            <textarea
-                                value={notInclude}
-                                onChange={(e) => setNotInclude(e.target.value)}
-                                placeholder="НЕ включено в стоимость на русском..."
-                                className="inputArea"
-                            ></textarea>
-                            <textarea
-                                value={notIncludeEng}
-                                onChange={(e) =>
-                                    setNotIncludeEng(e.target.value)
-                                }
-                                placeholder="НЕ включено в стоимость на английском..."
-                                className="inputArea"
-                            ></textarea>
-                        </div>
-                    </div> */}
                     <div className="mt-2 p-2 shadowInput backdrop-blur-sm">
                         <label
                             htmlFor="inputname"
@@ -1294,11 +1456,8 @@ const EditTour = () => {
                                 <div
                                     onClick={() => {
                                         setMemoriesModalEdit(true);
-                                        setOneMemories({ ...item, id: index });
-                                        setOneMemoriesEng({
-                                            ...memoriesEng[index],
-                                            id: index,
-                                        });
+                                        setOneMemories(item);
+                                        setOneMemoriesEng(memoriesEng[index]);
                                     }}
                                     key={index}
                                     className="w-[1fr] relative rounded-[10px] bg-[#ffff] h-auto"
@@ -1309,7 +1468,11 @@ const EditTour = () => {
                                                 <svg
                                                     onClick={(e) => {
                                                         e.stopPropagation();
-                                                        deleteMemories(index);
+                                                        deleteMemories(
+                                                            item?.id,
+                                                            memoriesEng[index]
+                                                                ?.id
+                                                        );
                                                     }}
                                                     width={20}
                                                     height={20}
@@ -1380,7 +1543,10 @@ const EditTour = () => {
                         </div>
                     </div>
                     <button
-                        onClick={() => dataCheck() && dataConstructor()}
+                        onClick={() => {
+                            dataCheck() && dataConstructor();
+                            dispatch({ type: reduxTypes.OPEN_LOADER });
+                        }}
                         className={`doneButton mt-8 ${
                             dataCheck()
                                 ? "bg-green-500 text-white"

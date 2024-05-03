@@ -17,20 +17,16 @@ const EditMemoriesModal = ({
         setMemoriesTitleEng(oneMemoriesEng.memoriesTitle);
     }, []);
     function handler() {
-        editMemories(
-            {
-                memoriesImage,
-                memoriesTitle,
-            },
-            oneMemories.id
-        );
-        editMemoriesEng(
-            {
-                memoriesImage,
-                memoriesTitle: memoriesTitleEng,
-            },
-            oneMemories.id
-        );
+        editMemories({
+            memoriesImage,
+            memoriesTitle,
+            id: oneMemories.id,
+        });
+        editMemoriesEng({
+            memoriesImage,
+            memoriesTitle: memoriesTitleEng,
+            id: oneMemoriesEng.id,
+        });
         setMemoriesModal(false);
     }
 

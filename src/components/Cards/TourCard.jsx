@@ -21,19 +21,19 @@ const TourCard = ({ item }) => {
     }
     return (
         <div>
-            <a
+            {/* <a
                 href={`/tour/${lang === "rus" ? item?.title : item?.titleEng}/${
                     item?.id
                 }`}
-            >
+            > */}
                 <div
                     onClick={() => {
-                        // navigate(
-                        //     `/tour/${
-                        //         lang === "rus" ? item?.title : item?.titleEng
-                        //     }/${item?.id}`
-                        // );
-                        // window.scrollTo(0, 0);
+                        navigate(
+                            `/tour/${
+                                lang === "rus" ? item?.title : item?.titleEng
+                            }/${item?.id}`
+                        );
+                        window.scrollTo(0, 0);
                     }}
                     className="rounded-[10px] border border-[#00499f] font-montserrat p-0 md:p-8 cursor-pointer"
                     style={{
@@ -102,7 +102,7 @@ const TourCard = ({ item }) => {
                         </div>
                     </div>
                 </div>
-            </a>
+            {/* </a> */}
         </div>
     );
 };

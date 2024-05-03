@@ -5,6 +5,11 @@ const AddModal = ({ setModal, add, addEng, placeholder }) => {
     let [desc, setDesc] = useState("");
     let [titleEng, setTitleEng] = useState("");
     let [descEng, setDescEng] = useState("");
+    function handler() {
+        add(title, desc);
+        addEng(titleEng, descEng);
+        setModal(false);
+    }
     return (
         <div
             onClick={(e) => e.stopPropagation()}
@@ -85,11 +90,13 @@ const AddModal = ({ setModal, add, addEng, placeholder }) => {
             ></textarea>
             <button
                 onClick={() => {
-                    add(title, desc);
-                    addEng(titleEng, descEng);
-                    setModal(false);
+                    title && titleEng && desc && descEng && handler();
                 }}
-                className="doneButton mt-4 bg-green-500 text-white"
+                className={`doneButton mt-4 ${
+                    title && desc && titleEng && descEng
+                        ? "bg-green-500 text-white"
+                        : "bg-gray-500 text-black"
+                }`}
             >
                 готово
             </button>

@@ -6,24 +6,32 @@ import {
     ref,
     uploadBytesResumable,
 } from "firebase/storage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { storage } from "../../../fire";
-import { addTour, deleteFile } from "../../../store/reducers/tourReducer";
+import {
+    deleteFile,
+    posterFunction,
+    reduxTypes,
+    replaceUrlToImageKit,
+} from "../../../store/reducers/tourReducer";
 import AddMemoriesModal from "../../elements/AddMemoriesModal";
 import EditMemoriesModal from "../../elements/EditMemoriesModal";
 import AccordionElement2 from "../../TourDetails/Elements/AccordionElement2";
 import AddModal from "../../elements/AddModal";
 import EditModal from "../../elements/EditModal";
 import AccordionElement from "../../TourDetails/Elements/Accordion";
-import { months } from "../../../consts";
+import { api, months } from "../../../consts";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const AddTour = () => {
+    let loader = useSelector((item) => item.tours.loader);
     let [inputCount, setInputCount] = useState([1, 1, 1, 1, 1, 1, 1, 1]);
     let [memoriesModal, setMemoriesModal] = useState(false);
     let [memoriesModalEdit, setMemoriesModalEdit] = useState(false);
     let [importantModal, setImportantModal] = useState(false);
     let [importantModalEdit, setImportantModalEdit] = useState(false);
+    let [dayModal, setDayModal] = useState(false);
     let [dayModalEdit, setDayModalEdit] = useState(false);
     let [optionalModal, setOptionalModal] = useState(false);
     let [optionalModalEdit, setOptionalModalEdit] = useState(false);
@@ -48,7 +56,7 @@ const AddTour = () => {
     let [level, setLevel] = useState("средняя");
     let [days, setDays] = useState(1);
     let [cardImg, setCardImg] = useState("");
-    let [galery, setGalery] = useState([
+    let [gallery, setGalery] = useState([
         null,
         null,
         null,
@@ -73,10 +81,6 @@ const AddTour = () => {
     let [price8, setPrice8] = useState(0);
     let [price9, setPrice9] = useState(0);
     let [price10, setPrice10] = useState(0);
-    let [include, setInclude] = useState("");
-    let [includeEng, setIncludeEng] = useState("");
-    let [notInclude, setNotInclude] = useState("");
-    let [notIncludeEng, setNotIncludeEng] = useState("");
     let [memories, setMemories] = useState([]);
     let [memoriesEng, setMemoriesEng] = useState([]);
 
@@ -91,6 +95,8 @@ const AddTour = () => {
 
     const [uploadProgress, setUploadProgress] = useState(null);
 
+    const [tourId, setTourId] = useState("");
+
     function dataCheck() {
         if (
             title &&
@@ -102,12 +108,12 @@ const AddTour = () => {
             level &&
             days &&
             cardImg &&
-            galery[0] !== null &&
-            galery[1] !== null &&
-            galery[2] !== null &&
-            galery[3] !== null &&
-            galery[4] !== null &&
-            galery[5] !== null &&
+            gallery[0] !== null &&
+            gallery[1] !== null &&
+            gallery[2] !== null &&
+            gallery[3] !== null &&
+            gallery[4] !== null &&
+            gallery[5] !== null &&
             programmDesc &&
             programmDescEng &&
             age &&
@@ -131,7 +137,8 @@ const AddTour = () => {
         index = false
     ) => {
         if (stateName) {
-            const storageRef = ref(storage, "images/" + stateName.name);
+            let x = Math.floor(Math.random() * 100 + 1);
+            const storageRef = ref(storage, "images/" + stateName.name + x);
             const uploadTask = uploadBytesResumable(storageRef, stateName);
             uploadTask.on(
                 "state_changed",
@@ -173,19 +180,22 @@ const AddTour = () => {
                 () => {
                     getDownloadURL(uploadTask.snapshot.ref).then(
                         (downloadURL) => {
+                            let downloadObj = {
+                                imgUrl: replaceUrlToImageKit(downloadURL),
+                            };
                             if (isLoop) {
-                                let psevdoArr = [...galery];
+                                let psevdoArr = [...gallery];
                                 if (index !== false) {
                                     let deleteItem = psevdoArr.splice(
                                         index,
                                         1,
-                                        downloadURL
+                                        downloadObj
                                     );
                                     let psevdoInputCountArr = [...inputCount];
                                     psevdoInputCountArr.splice(
                                         index,
                                         1,
-                                        downloadURL
+                                        downloadObj
                                     );
                                     setInputCount(psevdoInputCountArr);
                                     if (
@@ -193,30 +203,20 @@ const AddTour = () => {
                                         deleteItem.length != 0 &&
                                         deleteItem[0] !== null
                                     ) {
-                                        console.log(deleteItem);
-                                        const deleteRef = ref(
-                                            storage,
-                                            deleteItem
-                                        );
-                                        deleteObject(deleteRef)
-                                            .then(() => {
-                                                console.log("удалено");
-                                                // File deleted successfully
-                                            })
-                                            .catch((error) => {
-                                                console.log("ОШИБКА" + error);
-                                                // Uh-oh, an error occurred!
-                                            });
+                                        deleteFile(deleteItem[0].imgUrl);
                                     }
                                 } else {
-                                    psevdoArr.push(downloadURL);
+                                    psevdoArr.push(downloadObj);
                                 }
                                 setStateName(psevdoArr);
                             } else {
-                                setStateName(downloadURL);
+                                setStateName(replaceUrlToImageKit(downloadURL));
                             }
                             // setUploadProgress(downloadURL && true);
-                            console.log("File available at", downloadURL);
+                            console.log(
+                                "File available at",
+                                replaceUrlToImageKit(downloadURL)
+                            );
                         }
                     );
                 }
@@ -224,8 +224,60 @@ const AddTour = () => {
         }
     };
 
-    function dataConstructor() {
-        let filtredGalery = [...galery]?.filter((item) => item !== null);
+    async function dataConstructor() {
+        let filtredGalery = [...gallery]?.filter((item) => item !== null);
+        let priceArr = [
+            {
+                price: price1,
+                id: 1,
+                peopleCount: 1,
+            },
+            {
+                price: price2,
+                id: 2,
+                peopleCount: 2,
+            },
+            {
+                price: price3,
+                id: 3,
+                peopleCount: 3,
+            },
+            {
+                price: price4,
+                id: 4,
+                peopleCount: 4,
+            },
+            {
+                price: price5,
+                id: 5,
+                peopleCount: 5,
+            },
+            {
+                price: price6,
+                id: 6,
+                peopleCount: 6,
+            },
+            {
+                price: price7,
+                id: 7,
+                peopleCount: 7,
+            },
+            {
+                price: price8,
+                id: 8,
+                peopleCount: 8,
+            },
+            {
+                price: price9,
+                id: 9,
+                peopleCount: 9,
+            },
+            {
+                price: price10,
+                id: 10,
+                peopleCount: 10,
+            },
+        ];
         let obj = {
             title,
             titleEng,
@@ -234,44 +286,46 @@ const AddTour = () => {
             daysCount: days,
             level,
             age,
-            season: { start: month1, end: month2 },
-            price: {
-                price1,
-                price2,
-                price3,
-                price4,
-                price5,
-                price6,
-                price7,
-                price8,
-                price9,
-                price10,
-            },
-            mainImg: cardImg,
-            galery: filtredGalery,
+            start: month1,
+            end: month2,
             description,
             descriptionEng,
             programmDescription: programmDesc,
             programmDescriptionEng: programmDescEng,
-            programmDays,
-            programmDaysEng,
-            // include,
-            // includeEng,
-            // notInclude,
-            // notIncludeEng,
-            important,
-            importantEng,
-            memories,
-            memoriesEng,
-            reviews: [],
-            optional,
-            optionalEng,
+            mainImg: cardImg,
+            gallery: [],
+            programmDays: [],
+            programmDaysEng: [],
+            important: [],
+            importantEng: [],
+            memories: [],
+            memoriesEng: [],
+            optional: [],
+            optionalEng: [],
+            price: [],
         };
         try {
-            setUploadProgress(true);
-            dispatch(addTour(obj));
+            let tourResponse = await axios.post(api.tours, obj);
+            const newTourId = tourResponse.data.id;
+            setTourId(newTourId);
+            posterFunction(filtredGalery, newTourId, api.gallery);
+            posterFunction(programmDays, newTourId, api.programmDays);
+            posterFunction(programmDaysEng, newTourId, api.programmDaysEng);
+            posterFunction(important, newTourId, api.important);
+            posterFunction(importantEng, newTourId, api.importantEng);
+            posterFunction(memories, newTourId, api.memories);
+            posterFunction(memoriesEng, newTourId, api.memoriesEng);
+            posterFunction(optional, newTourId, api.optional);
+            posterFunction(optionalEng, newTourId, api.optionalEng);
+            posterFunction(priceArr, newTourId, api.price);
+            dispatch({ type: reduxTypes.CLOSE_LOADER });
             navigate("/admin/tours");
         } catch (e) {
+            dispatch({
+                type: reduxTypes.OPEN_ERROR,
+                payload: e,
+            });
+            dispatch({ type: reduxTypes.CLOSE_LOADER });
             console.log(e);
         }
     }
@@ -355,6 +409,26 @@ const AddTour = () => {
         setImportantEng(psevdoImportantEng);
     }
 
+    function addProgrammDay(title, desc) {
+        let psevdoArr = [...programmDays];
+        let obj = {
+            title,
+            desc,
+            day: psevdoArr.length + 1,
+        };
+        psevdoArr?.push(obj);
+        setProgrammDays(psevdoArr);
+    }
+    async function addProgrammDayEng(title, desc) {
+        let psevdoArr = [...programmDaysEng];
+        let obj = {
+            title,
+            desc,
+            day: psevdoArr.length + 1,
+        };
+        psevdoArr?.push(obj);
+        setProgrammDaysEng(psevdoArr);
+    }
     function editProgrammDay(item, index) {
         let psevdoDay = [...programmDays];
         psevdoDay.splice(index, 1, item);
@@ -414,36 +488,36 @@ const AddTour = () => {
     }
 
     function deleteImageFromGalery(index = 0) {
-        let findDeleteImgRef = galery.find(
+        let findDeleteImgRef = gallery.find(
             (item, itemIndex) => itemIndex === index
         );
 
-        let filteredGalery = galery.filter(
+        let filteredGalery = gallery.filter(
             (item, itemIndex) => itemIndex !== index
         );
         let filteredInputCount = inputCount.filter(
             (item, itemIndex) => itemIndex !== index
         );
 
-        findDeleteImgRef && deleteFile(findDeleteImgRef);
+        findDeleteImgRef && deleteFile(findDeleteImgRef.imgUrl);
         setGalery(filteredGalery);
         setInputCount(filteredInputCount);
     }
 
-    useEffect(() => {
-        if (parseInt(days) < 50) {
-            let psevdo = [];
-            for (let i = 0; i < parseInt(days); i++) {
-                psevdo.push({
-                    title: `заголовок`,
-                    desc: `описание`,
-                    day: i + 1,
-                });
-                setProgrammDays(psevdo);
-                setProgrammDaysEng(psevdo);
-            }
-        }
-    }, [days]);
+    // useEffect(() => {
+    //     if (parseInt(days) < 50) {
+    //         let psevdo = [];
+    //         for (let i = 0; i < parseInt(days); i++) {
+    //             psevdo.push({
+    //                 title: `заголовок`,
+    //                 desc: `описание`,
+    //                 day: i + 1,
+    //             });
+    //             setProgrammDays(psevdo);
+    //             setProgrammDaysEng(psevdo);
+    //         }
+    //     }
+    // }, [days]);
 
     return (
         <div>
@@ -533,6 +607,19 @@ const AddTour = () => {
                         editFunctionEng={editOptionalEng}
                         setModal={setOptionalModalEdit}
                         isDay={false}
+                    />
+                </div>
+            )}
+            {dayModal && (
+                <div
+                    onClick={() => setDayModal(false)}
+                    className="fixed z-20 top-0 bottom-0 left-0 right-0 backdrop-blur-sm flex justify-center items-center"
+                >
+                    <AddModal
+                        addEng={addProgrammDayEng}
+                        add={addProgrammDay}
+                        setModal={setDayModal}
+                        placeholder={"программа тура"}
                     />
                 </div>
             )}
@@ -850,7 +937,7 @@ const AddTour = () => {
                                     <div className="flex items-center justify-center w-full mt-2">
                                         <div
                                             style={{
-                                                backgroundImage: `url(${item})`,
+                                                backgroundImage: `url(${item?.imgUrl})`,
                                                 backgroundSize: "cover",
                                                 backgroundPosition: "center",
                                             }}
@@ -923,9 +1010,7 @@ const AddTour = () => {
                                     <div className="relative flex items-center justify-center w-full mt-2">
                                         <div
                                             style={{
-                                                backgroundImage: `url(${
-                                                    item + 5
-                                                })`,
+                                                backgroundImage: `url(${item.imgUrl})`,
                                                 backgroundSize: "cover",
                                                 backgroundPosition: "center",
                                             }}
@@ -981,7 +1066,10 @@ const AddTour = () => {
                         </div>
                         <button
                             className="input"
-                            onClick={() => setInputCount((e) => [...e, 1])}
+                            onClick={() => {
+                                setInputCount((e) => [...e, 1]);
+                                setGalery((e) => [...e, null]);
+                            }}
                         >
                             добавить еще фото
                         </button>
@@ -1050,8 +1138,17 @@ const AddTour = () => {
                                     ...programmDaysEng[index],
                                     id: index,
                                 }}
+                                index={index + 1}
                             />
                         ))}
+                        <button
+                            className="input"
+                            onClick={() => {
+                                setDayModal(true);
+                            }}
+                        >
+                            добавить еще
+                        </button>
                     </div>
                     <div className="mt-2 p-2 shadowInput backdrop-blur-sm">
                         <label
@@ -1110,48 +1207,7 @@ const AddTour = () => {
                             добавить еще
                         </button>
                     </div>
-                    {/* <div className="mt-2 p-2 backdrop-blur-sm">
-                        <label
-                            htmlFor="inputname"
-                            className="text-sm text-white font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                            включено в стоимость тура
-                        </label>
-                        <div className="grid md:gap-2 grid-cols-1 md:grid-cols-2">
-                            <textarea
-                                onChange={(e) => setInclude(e.target.value)}
-                                placeholder="включено в стоимость на русском..."
-                                className="inputArea"
-                            ></textarea>
-                            <textarea
-                                onChange={(e) => setIncludeEng(e.target.value)}
-                                placeholder="включено в стоимость на английском..."
-                                className="inputArea"
-                            ></textarea>
-                        </div>
-                    </div>
-                    <div className="mt-2 p-2 backdrop-blur-sm">
-                        <label
-                            htmlFor="inputname"
-                            className="text-sm text-white font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                            НЕ включено в стоимость тура
-                        </label>
-                        <div className="grid md:gap-2 grid-cols-1 md:grid-cols-2">
-                            <textarea
-                                onChange={(e) => setNotInclude(e.target.value)}
-                                placeholder="НЕ включено в стоимость на русском..."
-                                className="inputArea"
-                            ></textarea>
-                            <textarea
-                                onChange={(e) =>
-                                    setNotIncludeEng(e.target.value)
-                                }
-                                placeholder="НЕ включено в стоимость на английском..."
-                                className="inputArea"
-                            ></textarea>
-                        </div>
-                    </div> */}
+
                     <div className="mt-2 p-2 shadowInput backdrop-blur-sm">
                         <label
                             htmlFor="inputname"
@@ -1250,7 +1306,12 @@ const AddTour = () => {
                         </div>
                     </div>
                     <button
-                        onClick={() => dataCheck() && dataConstructor()}
+                        onClick={() => {
+                            dataConstructor();
+                            // dataCheck() && dataConstructor();
+                            dispatch({ type: reduxTypes.OPEN_LOADER });
+                        }}
+                        // onClick={dataConstructor}
                         className={`doneButton mt-8 ${
                             dataCheck()
                                 ? "bg-green-500 text-white"
