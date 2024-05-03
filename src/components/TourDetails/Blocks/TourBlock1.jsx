@@ -9,7 +9,7 @@ const TourBlock1 = memo(function TourBlock1({
     let width = window.innerWidth;
     return (
         <div className="content">
-            {tour?.galery?.length > 0 && tour ? (
+            {tour?.gallery?.length > 0 && tour ? (
                 width > 768 ? (
                     <div className="flex justify-between mt-8">
                         <div className="w-[64%] mr-2 aspect-video h-auto">
@@ -19,7 +19,7 @@ const TourBlock1 = memo(function TourBlock1({
                                     setGaleryStart(0);
                                 }}
                                 className="w-[100%] object-cover h-[100%] rounded-md cursor-pointer "
-                                src={tour?.galery[0]}
+                                src={tour?.gallery[0]?.imgUrl}
                                 alt=""
                             />
                         </div>
@@ -31,7 +31,7 @@ const TourBlock1 = memo(function TourBlock1({
                                         setGaleryStart(1);
                                     }}
                                     className="w-[100%] object-cover h-[100%] rounded-md cursor-pointer  "
-                                    src={tour?.galery[1]}
+                                    src={tour?.gallery[1]?.imgUrl}
                                     alt=""
                                 />
                             </div>
@@ -42,7 +42,7 @@ const TourBlock1 = memo(function TourBlock1({
                                         setGaleryStart(2);
                                     }}
                                     className="w-[100%] object-cover h-[100%] rounded-md cursor-pointer "
-                                    src={tour?.galery[2]}
+                                    src={tour?.gallery[2]?.imgUrl}
                                     alt=""
                                 />
                             </div>
@@ -53,7 +53,7 @@ const TourBlock1 = memo(function TourBlock1({
                                         setGaleryStart(3);
                                     }}
                                     className="w-[100%] object-cover  h-[100%] rounded-md"
-                                    src={tour?.galery[3]}
+                                    src={tour?.gallery[3]?.imgUrl}
                                     alt=""
                                 />
                             </div>
@@ -64,7 +64,7 @@ const TourBlock1 = memo(function TourBlock1({
                                         setGaleryStart(4);
                                     }}
                                     className="w-[100%] object-cover  h-[100%] rounded-md"
-                                    src={tour?.galery[4]}
+                                    src={tour?.gallery[4]?.imgUrl}
                                     alt=""
                                 />
                             </div>
@@ -79,7 +79,7 @@ const TourBlock1 = memo(function TourBlock1({
                                     setGaleryStart(0);
                                 }}
                                 className="w-[100%] object-cover h-[100%] rounded-md cursor-pointer  "
-                                src={tour?.galery[0]}
+                                src={tour?.gallery[0]?.imgUrl}
                                 alt=""
                             />
                         </div>
@@ -90,7 +90,7 @@ const TourBlock1 = memo(function TourBlock1({
                                     setGaleryStart(1);
                                 }}
                                 className="w-[100%] object-cover h-[100%] rounded-md cursor-pointer "
-                                src={tour?.galery[1]}
+                                src={tour?.gallery[1]?.imgUrl}
                                 alt=""
                             />
                         </div>
@@ -101,7 +101,7 @@ const TourBlock1 = memo(function TourBlock1({
                                     setGaleryStart(2);
                                 }}
                                 className="w-[100%] object-cover  h-[100%] rounded-md"
-                                src={tour?.galery[2]}
+                                src={tour?.gallery[2]?.imgUrl}
                                 alt=""
                             />
                         </div>
@@ -112,7 +112,7 @@ const TourBlock1 = memo(function TourBlock1({
                                     setGaleryStart(3);
                                 }}
                                 className="w-[100%] object-cover  h-[100%] rounded-md"
-                                src={tour?.galery[3]}
+                                src={tour?.gallery[3]?.imgUrl}
                                 alt=""
                             />
                         </div>

@@ -11,6 +11,9 @@ const TourListBlock1 = () => {
     let dispatch = useDispatch();
     useEffect(() => {
         dispatch(getTours());
+        setTimeout(() => {
+            dispatch(getTours());
+        }, 5000);
     }, []);
     return (
         <div className="relative">
@@ -36,7 +39,7 @@ const TourListBlock1 = () => {
                 <div className="mt-16">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {tours?.length > 0 ? (
-                            tours.map((item, index) => (
+                            tours?.map((item, index) => (
                                 <TourCard key={index} item={item} />
                             ))
                         ) : (

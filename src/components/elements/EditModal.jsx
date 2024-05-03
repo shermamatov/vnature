@@ -17,43 +17,35 @@ const EditModal = ({
         setDesc(oneItem?.desc);
         setTitleEng(oneItemEng?.title);
         setDescEng(oneItemEng?.desc);
-        console.log(oneItem);
+        // console.log(oneItem);
     }, []);
 
     function editDay() {
-        editFunction(
-            {
-                title: title,
-                desc: desc,
-                day: oneItem.day,
-            },
-            oneItem.id
-        );
-        editFunctionEng(
-            {
-                title: titleEng,
-                desc: descEng,
-                day: oneItemEng.day,
-            },
-            oneItemEng.id
-        );
+        editFunction({
+            title: title,
+            desc: desc,
+            day: oneItem.day,
+            id: oneItem.id,
+        });
+        editFunctionEng({
+            title: titleEng,
+            desc: descEng,
+            day: oneItemEng.day,
+            id: oneItemEng.id,
+        });
     }
 
     function editImportant() {
-        editFunction(
-            {
-                title,
-                desc,
-            },
-            oneItem.id
-        );
-        editFunctionEng(
-            {
-                title: titleEng,
-                desc: descEng,
-            },
-            oneItemEng.id
-        );
+        editFunction({
+            title,
+            desc,
+            id: oneItem.id,
+        });
+        editFunctionEng({
+            title: titleEng,
+            desc: descEng,
+            id: oneItemEng.id,
+        });
     }
 
     function handler() {

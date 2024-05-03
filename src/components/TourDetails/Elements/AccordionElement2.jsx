@@ -46,7 +46,7 @@ export default function AccordionElement2({
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        deleteFunction(item.id);
+                                        deleteFunction(item.id, itemEng.id);
                                     }}
                                     className="px-4 bg-red-500 text-white rounded-md ml-6 h-full"
                                 >

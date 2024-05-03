@@ -4,8 +4,8 @@ import Slider from "react-slick";
 import Galery from "../Elements/Galery";
 
 const TourGalery = ({ tour }) => {
-    let [galery, setGalery] = useState(false);
-    let [galeryStart, setGaleryStart] = useState(5);
+    let [gallery, setGalery] = useState(false);
+    let [galleryStart, setGaleryStart] = useState(5);
     let lang = useSelector((item) => item.tours.lang);
     const [sliderRef, setSliderRef] = useState(null);
     const [activeSlide, setActiveSlide] = useState(1);
@@ -16,7 +16,7 @@ const TourGalery = ({ tour }) => {
         arrows: false,
         slidesToShow: slideCount,
         slidesToScroll: slideCount,
-        infinite: tour?.galery?.length <= slideCount ? false : true,
+        infinite: tour?.gallery?.length <= slideCount ? false : true,
         beforeChange: (current, next) => {
             setActiveSlide(next);
         },
@@ -27,7 +27,7 @@ const TourGalery = ({ tour }) => {
                     slidesToShow: adapSlideCount,
                     slidesToScroll: adapSlideCount,
                     infinite:
-                        tour?.galery?.length <= adapSlideCount ? false : true,
+                        tour?.gallery?.length <= adapSlideCount ? false : true,
                     dots: true,
                     beforeChange: (current, next) => {
                         setActiveSlide(next < 0 ? 0 : next);
@@ -38,10 +38,10 @@ const TourGalery = ({ tour }) => {
     };
     return (
         <div>
-            {galery && (
+            {gallery && (
                 <Galery
-                    galeryStart={galeryStart}
-                    galery={tour?.galery?.slice(5)}
+                    galleryStart={galleryStart}
+                    gallery={tour?.gallery?.slice(5)}
                     setGalery={setGalery}
                 />
             )}
@@ -68,7 +68,7 @@ const TourGalery = ({ tour }) => {
                     <p className="text-3xl text-[#00499f] font-semibold mx-8 noselect">
                         {parseInt(activeSlide / slideCount + 1)}/
                         {Math.ceil(
-                            tour?.galery?.slice(5)?.length / slideCount
+                            tour?.gallery?.slice(5)?.length / slideCount
                         ) || 1}
                     </p>
                     <svg
@@ -106,7 +106,7 @@ const TourGalery = ({ tour }) => {
                     <p className="text-2xl text-[#00499f] font-semibold mx-8 noselect">
                         {parseInt(activeSlide / adapSlideCount + 1)}/
                         {Math.ceil(
-                            tour?.galery?.slice(5).length / adapSlideCount
+                            tour?.gallery?.slice(5).length / adapSlideCount
                         ) || 1}
                     </p>
                     <svg
@@ -126,19 +126,19 @@ const TourGalery = ({ tour }) => {
                     </svg>
                 </div>
             </div>
-            {tour?.galery?.slice(5)?.length < 2 ? (
+            {tour?.gallery?.slice(5)?.length < 2 ? (
                 <img
                     onClick={() => {
                         setGalery(true);
                         setGaleryStart();
                     }}
                     className="max-w-screen-sm aspect-[16/9] object-cover rounded-md cursor-pointer"
-                    src={tour?.galery[5]}
+                    src={tour?.gallery[5]}
                     alt=""
                 />
             ) : (
                 <Slider ref={setSliderRef} {...sliderSettings}>
-                    {tour?.galery?.slice(5)?.map((item, index) => (
+                    {tour?.gallery?.slice(5)?.map((item, index) => (
                         <div key={index} className="px-2">
                             <img
                                 onClick={() => {
@@ -147,7 +147,7 @@ const TourGalery = ({ tour }) => {
                                 }}
                                 className="w-full aspect-[16/9] object-cover rounded-md cursor-pointer"
                                 key={index}
-                                src={item}
+                                src={item.imgUrl}
                                 alt=""
                             />
                         </div>

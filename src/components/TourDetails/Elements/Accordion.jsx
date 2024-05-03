@@ -13,6 +13,7 @@ export default function AccordionElement({
     setOneItem = null,
     setOneItemEng = null,
     deleteFunction = null,
+    index = 1,
 }) {
     const [expanded, setExpanded] = React.useState(false);
     let lang = useSelector((item) => item.tours.lang);
@@ -54,7 +55,7 @@ export default function AccordionElement({
                 >
                     <div className="flex items-center">
                         <button className="accordionBtn rounded-[8px] text-[8px] md:text-[12px] h-6 md:h-8 md:w-20 min-w-16 bg-[#00499F] text-white">
-                            {lang === "rus" ? "День" : "Day"} {item?.day}
+                            {lang === "rus" ? "День" : "Day"} {index}
                         </button>
                         <div className="text-xs md:text-lg text-black ml-4 md:ml-8">
                             {item?.title}
@@ -64,7 +65,7 @@ export default function AccordionElement({
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        deleteFunction(item.id);
+                                        deleteFunction(item?.id, itemEng?.id);
                                     }}
                                     className="px-4 bg-red-500 text-white rounded-md ml-4 h-full"
                                 >

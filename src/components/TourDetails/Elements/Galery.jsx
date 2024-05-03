@@ -2,13 +2,13 @@ import React, { Component, useEffect, useState } from "react";
 import Slider from "react-slick";
 // import { baseUrl } from "./config";
 
-function Galery({ galery, setGalery, galeryStart }) {
+function Galery({ gallery, setGalery, galleryStart }) {
     const [sliderRef, setSliderRef] = useState(null);
     const settings = {
         customPaging: function (i) {
             return (
                 <a>
-                    <img className="w-16" src={galery[i]} alt="1" />
+                    <img className="w-16" src={gallery[i].imgUrl} alt="1" />
                 </a>
             );
         },
@@ -18,7 +18,7 @@ function Galery({ galery, setGalery, galeryStart }) {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        initialSlide: galeryStart,
+        initialSlide: galleryStart,
         arrows: false,
     };
     function clikckArrows(e) {
@@ -96,12 +96,12 @@ function Galery({ galery, setGalery, galeryStart }) {
                         </svg>
                     </div>
                     <Slider ref={setSliderRef} {...settings}>
-                        {galery?.map((item, index) => (
+                        {gallery?.map((item, index) => (
                             <div className="w-full h-full" key={index}>
                                 <div>
                                     <img
                                         className="max-w-[90%] max-h-[80vh] md:min-h-[60vh] w-auto h-auto m-auto "
-                                        src={item}
+                                        src={item?.imgUrl}
                                         alt="1"
                                     />
                                 </div>

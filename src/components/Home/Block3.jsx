@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // import { tours } from "../../consts";
 import TourCard from "../Cards/TourCard";
 import { useNavigate } from "react-router-dom";
@@ -7,13 +7,18 @@ import { getTours } from "../../store/reducers/tourReducer";
 import SceletonCard from "../Cards/SceletonCard";
 
 const Block3 = () => {
-    let navigate = useNavigate();
-    let dispatch = useDispatch();
     let tours = useSelector((item) => item.tours.tours);
     let lang = useSelector((item) => item.tours.lang);
+    let navigate = useNavigate();
+    let dispatch = useDispatch();
+
     useEffect(() => {
         dispatch(getTours());
+        setTimeout(() => {
+            dispatch(getTours());
+        }, 5000);
     }, []);
+
     return (
         <div className="">
             <h2 className="text-4xl md:text-5xl font-semibold text-center capitalize text-[#14183e]">
@@ -24,8 +29,8 @@ const Block3 = () => {
                     data-aos="fade-up"
                     className="content grid grid-cols-1 md:grid-cols-2 gap-8"
                 >
-                    {tours.length > 0 && tours ? (
-                        tours.map((item, index) => (
+                    {tours?.length > 0 && tours ? (
+                        tours?.map((item, index) => (
                             <TourCard key={index} item={item} />
                         ))
                     ) : (

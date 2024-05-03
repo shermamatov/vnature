@@ -9,8 +9,10 @@ const PriceTable = ({ tour }) => {
 
     useEffect(() => {
         let arr2 = [];
-        for (let i in tour?.price) {
-            arr2.push(tour?.price[i]);
+        if (tour?.price) {
+            for (let i of tour?.price) {
+                arr2.push(i?.price);
+            }
         }
         setArr(arr2);
     }, [tour]);
@@ -63,12 +65,12 @@ const PriceTable = ({ tour }) => {
                                 <>Price per person</>
                             )}
                         </div>
-                        {priceArr?.map((item, index) => (
+                        {arr?.map((item, index) => (
                             <div
                                 key={index}
                                 className="tableSection border border-[#00499f]"
                             >
-                                {tour?.price && tour?.price["" + item]}
+                                {item}
                             </div>
                         ))}
                         {}

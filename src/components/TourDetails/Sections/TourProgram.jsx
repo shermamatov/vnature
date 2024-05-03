@@ -113,7 +113,7 @@ const TourProgram = ({ tour, setHotelModal }) => {
                         className="w-full object-cover aspect-[16/9] rounded-md"
                         alt=""
                     />
-                    {/* {tour?.galery?.slice(0, 3)?.map((item, index) => (
+                    {/* {tour?.gallery?.slice(0, 3)?.map((item, index) => (
                         <img
                             className="object-cover aspect-[16/9] rounded-md"
                             key={index}
@@ -131,7 +131,7 @@ const TourProgram = ({ tour, setHotelModal }) => {
                     <div className="w-full border border-black opacity-40 mt-2"></div>
                     {checkerLangProgramm()?.map((item, index) => (
                         <div key={index}>
-                            <AccordionElement item={item} />
+                            <AccordionElement index={index + 1} item={item} />
                             <div className="w-full border border-black opacity-40"></div>
                         </div>
                     ))}

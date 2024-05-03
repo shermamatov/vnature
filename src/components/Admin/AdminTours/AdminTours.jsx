@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteTour, getTours } from "../../../store/reducers/tourReducer";
-import { months, monthsEng } from "../../../consts";
+import {
+    deleteTour,
+    deleterFunction,
+    getTours,
+} from "../../../store/reducers/tourReducer";
+import { api, months, monthsEng } from "../../../consts";
 import {
     Button,
     Dialog,
@@ -33,6 +37,21 @@ const AdminTours = () => {
             return monthsEng;
         }
     }
+
+    function deleteHandler() {
+        deleterFunction(tourId?.gallery, api.gallery);
+        deleterFunction(tourId?.programmDays, api.programmDays);
+        deleterFunction(tourId?.programmDaysEng, api.programmDaysEng);
+        deleterFunction(tourId?.important, api.important);
+        deleterFunction(tourId?.importantEng, api.importantEng);
+        deleterFunction(tourId?.memories, api.memories);
+        deleterFunction(tourId?.memoriesEng, api.memoriesEng);
+        deleterFunction(tourId?.optional, api.optional);
+        deleterFunction(tourId?.optionalEng, api.optionalEng);
+        deleterFunction(tourId?.price, api.price);
+        dispatch(deleteTour(tourId?.id));
+    }
+
     return (
         <div>
             <Dialog
@@ -57,7 +76,7 @@ const AdminTours = () => {
                         variant="contained"
                         color="success"
                         onClick={() => {
-                            dispatch(deleteTour(tourId));
+                            deleteHandler();
                             setDeleteModal(false);
                         }}
                         autoFocus
@@ -138,7 +157,7 @@ const AdminTours = () => {
                                     <button
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            setTourId(item?.id);
+                                            setTourId(item);
                                             setDeleteModal(true);
                                         }}
                                         className="ml-2 py-1 md:ml-4 px-4 text-xs md:text-sm bg-red-500 text-white rounded-md h-full"
